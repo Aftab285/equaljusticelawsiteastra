@@ -318,11 +318,11 @@ const isSpanish = lang === 'es';
               <p class="success-message">
                 {isSpanish
                   ? 'Gracias por comunicarse con Equal Justice Lawyers. Un miembro de nuestro equipo de admisión revisará sus datos confidencialmente y se pondrá en contacto a la brevedad.'
-                  : 'Thank you for reaching out to Equal Justice Lawyers. A member of our California intake team is reviewing your facts and will contact you promptly at the phone number provided.'}
+                  : 'Thank you for reaching out to Equal Justice Lawyers. A member of our California intake team is reviewing your facts and will contact you promptly at the information provided.'}
               </p>
               <div class="success-callout">
-                <span>{isSpanish ? '¿Requiere atención urgente?' : 'Need immediate assistance?'}</span>
-                <strong>(800) 555-JUSTICE</strong>
+                <span>{isSpanish ? 'Correo de Admisión Confidencial:' : 'Confidential Intake Email:'}</span>
+                <strong>legal@equaljusticelawyers.com</strong>
               </div>
             </div>
           </div>
@@ -366,13 +366,45 @@ const isSpanish = lang === 'es';
     });
   });
 
-  form?.addEventListener('submit', (e) => {
+  form?.addEventListener('submit', async (e) => {
     e.preventDefault();
-    // Simulate safe local submission
+    const submitBtn = form.querySelector('button[type="submit"]') as HTMLButtonElement | null;
+    const origBtnText = submitBtn ? submitBtn.innerHTML : '';
+    if (submitBtn) {
+      submitBtn.disabled = true;
+      submitBtn.innerHTML = '<span>Transmitting...</span>';
+    }
+
+    const formData = new FormData(form);
+    const payload = {
+      source: 'Website 4-Step Case Evaluation Form',
+      case_type: formData.get('case_type') || 'Not Selected',
+      county: formData.get('county') || '',
+      timeframe: formData.get('timeframe') || '',
+      incident_summary: formData.get('incident_summary') || '',
+      has_attorney: formData.get('has_attorney') || 'No',
+      full_name: formData.get('full_name') || '',
+      phone: formData.get('phone') || '',
+      email: formData.get('email') || '',
+      preferred_language: formData.get('preferred_language') || 'English'
+    };
+
+    try {
+      await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+    } catch (err) {
+      console.warn('Form intake transmission:', err);
+    }
+
+    // Advance to success pane
     steps.forEach(p => p.classList.remove('is-active'));
     const successPane = document.getElementById('step-pane-success');
     if (successPane) {
       successPane.classList.add('is-active');
+      successPane.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
     }
   });
 </script>

@@ -261,8 +261,8 @@ const isSpanish = lang === 'es';
       setTimeout(() => {
         appendMessage(
           isEs
-            ? 'Por favor, comparta su Nombre Completo y Número de Teléfono para que nuestro equipo legal pueda revisar sus datos y comunicarse de manera confidencial.'
-            : 'Please provide your Full Name and best Callback Phone Number so our California legal intake team can review your facts confidentially.'
+            ? 'Por favor, comparta su Nombre Completo y Correo Electrónico o Teléfono para que nuestro equipo legal pueda revisar sus datos y comunicarse de manera confidencial.'
+            : 'Please provide your Full Name and Email or Phone Number so our California legal intake team can review your facts confidentially.'
         );
         currentStep = 5;
         chatInput?.focus();
@@ -271,11 +271,36 @@ const isSpanish = lang === 'es';
       collectedData.contactName = userInput;
       appendMessage(userInput, true);
 
+      // Transmit chat intake lead via /api/contact -> delivers to aftabnew77@gmail.com
+      const chatPayload = {
+        source: 'Interactive Intake Chat Assistant',
+        full_name: userInput,
+        contact: userInput,
+        email: userInput.includes('@') ? userInput : 'See contact info: ' + userInput,
+        phone: userInput,
+        case_type: collectedData.caseType || 'General Legal Dispute',
+        county: collectedData.county || 'Not Specified',
+        timeframe: collectedData.timeframe || 'Not Specified',
+        has_attorney: collectedData.hasAttorney || 'No',
+        incident_summary: `Chat lead collected via Equal Justice Case Assistant.\nCase Type: ${collectedData.caseType || 'N/A'}\nCounty: ${collectedData.county || 'N/A'}\nTimeframe: ${collectedData.timeframe || 'N/A'}\nPrior Attorney: ${collectedData.hasAttorney || 'No'}\nContact Info Provided: ${userInput}`,
+        preferred_language: isEs ? 'Español' : 'English'
+      };
+
+      try {
+        fetch('/api/contact', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(chatPayload)
+        }).catch(err => console.warn('Chat lead transmission error:', err));
+      } catch (err) {
+        console.warn('Chat transmission:', err);
+      }
+
       setTimeout(() => {
         appendMessage(
           isEs
-            ? '✅ Información recibida de forma segura. Un miembro de nuestro equipo de admisión revisará sus datos confidencialmente. Recuerde que esta comunicación preliminar no constituye representación formal.'
-            : '✅ Intake information securely received. A member of our California intake team will review your situation confidentially. Note: submitting this intake does not constitute formal legal representation.'
+            ? '✅ Información recibida y enviada con éxito a nuestro equipo legal. Un miembro de admisión revisará sus datos confidencialmente. Recuerde que esta comunicación preliminar no constituye representación formal.'
+            : '✅ Intake information received and securely sent to our legal team. A member of our California intake team will review your situation confidentially. Note: submitting this intake does not constitute formal legal representation.'
         );
         if (chatInput) {
           chatInput.disabled = true;
