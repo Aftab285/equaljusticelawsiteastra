@@ -21,9 +21,11 @@ export const POST: APIRoute = async ({ request, locals }) => {
     const apiKey = 
       lEnv.RESEND_API_KEY ||
       wEnv.RESEND_API_KEY ||
+      (import.meta.env as any)?.RESEND_API_KEY ||
       pEnv.RESEND_API_KEY ||
       lEnv.RESEND_KEY ||
       wEnv.RESEND_KEY ||
+      (import.meta.env as any)?.RESEND_KEY ||
       pEnv.RESEND_KEY ||
       lEnv.resend_api_key ||
       wEnv.resend_api_key;
