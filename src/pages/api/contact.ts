@@ -1,8 +1,9 @@
 ﻿import type { APIRoute } from 'astro';
+import { env } from 'cloudflare:workers';
 
 export const prerender = false;
 
-export const POST: APIRoute = async ({ request, locals }) => {
+export const POST: APIRoute = async ({ request }) => {
   const corsHeaders = {
     'Access-Control-Allow-Origin': '*',
     'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
@@ -13,9 +14,8 @@ export const POST: APIRoute = async ({ request, locals }) => {
     const data = await request.json() as Record<string, any>;
 
     // Cloudflare environment variables
-    const runtimeEnv = (locals as any)?.runtime?.env || {};
-    const apiKey = runtimeEnv.RESEND_API_KEY || (typeof process !== 'undefined' ? process.env?.RESEND_API_KEY : undefined);
-    const fromEmail = runtimeEnv.RESEND_FROM_EMAIL || (typeof process !== 'undefined' ? process.env?.RESEND_FROM_EMAIL : undefined) || 'Equal Justice Lawyers <onboarding@resend.dev>';
+    const apiKey = (env as any)?.RESEND_API_KEY || (typeof process !== 'undefined' ? process.env?.RESEND_API_KEY : undefined);
+    const fromEmail = (env as any)?.RESEND_FROM_EMAIL || (typeof process !== 'undefined' ? process.env?.RESEND_FROM_EMAIL : undefined) || 'Equal Justice Lawyers <onboarding@resend.dev>';
     const recipient = 'aftabnew77@gmail.com';
 
     if (!apiKey) {
@@ -169,4 +169,3 @@ export const OPTIONS: APIRoute = async () => {
     },
   });
 };
-
