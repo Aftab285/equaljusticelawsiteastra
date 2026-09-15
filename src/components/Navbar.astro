@@ -31,7 +31,7 @@ const links = isSpanish
     <div class="navbar-inner">
       <!-- Logo -->
       <a href={isSpanish ? '/es' : '/'} class="logo" aria-label="Equal Justice Lawyers Home">
-        <img src="/images/logo-white.png" alt="Equal Justice Lawyers" class="logo-img" width="180" height="60" />
+        <img src="/images/logo-white.png" alt="Equal Justice Lawyers" class="logo-img" width="280" height="90" />
       </a>
 
       <!-- Navigation Links -->
@@ -149,7 +149,7 @@ const links = isSpanish
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 1.1rem 0;
+    padding: 0.5rem 0;
   }
 
   /* Logo */
@@ -160,10 +160,12 @@ const links = isSpanish
   }
 
   .logo-img {
-    height: 42px;
+    height: 72px;
+    max-height: 78px;
     width: auto;
     object-fit: contain;
     display: block;
+    transition: transform 0.2s ease;
   }
 
   /* Nav Links */
@@ -367,6 +369,10 @@ const links = isSpanish
   @media (max-width: 768px) {
     .navbar {
       padding: 0 1rem;
+    }
+    .logo-img {
+      height: 54px;
+      max-height: 58px;
     }
     .lang-selector {
       display: none;

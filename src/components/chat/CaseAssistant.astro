@@ -8,13 +8,15 @@ const isSpanish = lang === 'es';
 ---
 
 <div class="case-assistant-wrapper" id="case-assistant-modal" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="assistant-title">
+  <!-- Dim Backdrop -->
   <div class="assistant-backdrop" id="assistant-backdrop"></div>
   
-  <div class="assistant-panel">
+  <!-- Assistant Panel -->
+  <div class="assistant-panel" id="assistant-panel">
     <!-- Header -->
     <div class="assistant-header">
       <div class="assistant-avatar">
-        <svg width="24" height="24" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <svg width="26" height="26" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
           <circle cx="22" cy="22" r="20" stroke="#c8a04a" stroke-width="2.5" fill="none"/>
           <path d="M22 8 L22 14 M16 12 L22 14 L28 12 M14 14 L14 18 M30 14 L30 18 M12 18 L16 18 M28 18 L32 18" stroke="#c8a04a" stroke-width="2" stroke-linecap="round"/>
           <path d="M22 14 L22 28" stroke="#c8a04a" stroke-width="2.5" stroke-linecap="round"/>
@@ -23,14 +25,14 @@ const isSpanish = lang === 'es';
       </div>
       <div class="assistant-title-box">
         <h3 id="assistant-title" class="assistant-name">
-          {isSpanish ? 'Asistente de Casos Equal Justice' : 'Equal Justice Case Assistant'}
+          {isSpanish ? 'Asistente de Casos Equal Justice' : 'Equal Justice Case Intake'}
         </h3>
         <span class="assistant-status">
           <span class="status-indicator"></span>
-          {isSpanish ? 'En línea • Confidencial' : 'Online • Confidential Intake'}
+          {isSpanish ? 'En Línea • Evaluación Confidencial' : 'Online • Confidential Legal Review'}
         </span>
       </div>
-      <button class="assistant-close-btn" id="assistant-close-btn" aria-label="Close Assistant">
+      <button class="assistant-close-btn" id="assistant-close-btn" aria-label={isSpanish ? "Cerrar asistente" : "Close Assistant"}>
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <line x1="18" y1="6" x2="6" y2="18"></line>
           <line x1="6" y1="6" x2="18" y2="18"></line>
@@ -38,111 +40,232 @@ const isSpanish = lang === 'es';
       </button>
     </div>
 
-    <!-- Ethics Notice Bar -->
+    <!-- Trust / Ethics Bar -->
     <div class="assistant-disclaimer-bar">
       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#c8a04a" stroke-width="2">
-        <circle cx="12" cy="12" r="10"></circle>
-        <line x1="12" y1="8" x2="12" y2="12"></line>
-        <line x1="12" y1="16" x2="12.01" y2="16"></line>
+        <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+        <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
       </svg>
       <span>
         {isSpanish 
-          ? 'Herramienta informativa automatizada. No proporciona asesoría legal ni crea relación abogado-cliente.' 
-          : 'Automated intake tool. Does not provide legal advice or create an attorney-client relationship.'}
+          ? 'Admisión directa confidencial. Protegido bajo privilegio previo de consulta legal.' 
+          : 'Confidential case intake. Free initial review across California.'}
       </span>
     </div>
 
-    <!-- Chat Messages Container -->
-    <div class="assistant-messages" id="assistant-messages" role="log" aria-live="polite">
-      <!-- Initial Bot Welcome Message -->
-      <div class="chat-bubble bot-bubble">
-        <p>
-          {isSpanish
-            ? 'Hola. Soy el Asistente de Casos de Equal Justice. Puedo ayudarle a recopilar información básica sobre su asunto legal para una evaluación del caso. No soy abogado y esta conversación no crea una relación abogado-cliente.'
-            : "Hello! I'm the Equal Justice Case Assistant. I can help collect basic information about your legal issue for a case evaluation. I am not a lawyer, and this chat does not create an attorney-client relationship."}
-        </p>
-        <p class="chat-sub">
-          {isSpanish
-            ? '¿Qué tipo de problema legal le ha afectado en California?'
-            : 'To start, what type of legal issue are you facing in California?'}
-        </p>
+    <!-- Scrollable Body Container -->
+    <div class="assistant-body" id="assistant-body">
+      <!-- FORM VIEW -->
+      <div class="assistant-form-view" id="assistant-form-view">
+        <div class="intake-greeting">
+          <p class="greeting-lead">
+            {isSpanish
+              ? 'Conecte directamente con nuestro equipo legal de California. Complete estos detalles para iniciar su revisión confidencial:'
+              : 'Connect directly with our California legal team. Provide your details below for immediate confidential review:'}
+          </p>
+        </div>
+
+        <form id="assistant-lead-form" class="assistant-lead-form" novalidate>
+          <!-- Category Pills -->
+          <div class="form-field-group">
+            <label class="field-label">
+              {isSpanish ? '1. Tipo de Asunto Legal *' : '1. Legal Case Category *'}
+            </label>
+            <div class="category-pills" id="category-pills">
+              <button type="button" class="category-pill is-active" data-val="Personal Injury">
+                {isSpanish ? 'Lesiones / Accidente' : 'Personal Injury'}
+              </button>
+              <button type="button" class="category-pill" data-val="Employment Law">
+                {isSpanish ? 'Trabajo / Despido' : 'Employment Law'}
+              </button>
+              <button type="button" class="category-pill" data-val="Medical Malpractice">
+                {isSpanish ? 'Negligencia Médica' : 'Medical Malpractice'}
+              </button>
+              <button type="button" class="category-pill" data-val="Disability Rights">
+                {isSpanish ? 'Discapacidad / ADA' : 'Disability Rights'}
+              </button>
+              <button type="button" class="category-pill" data-val="Consumer Protection">
+                {isSpanish ? 'Protección Consumidor' : 'Consumer Rights'}
+              </button>
+              <button type="button" class="category-pill" data-val="Other Legal Dispute">
+                {isSpanish ? 'Otro Asunto' : 'Other Matter'}
+              </button>
+            </div>
+            <input type="hidden" id="chat-case-type" name="case_type" value="Personal Injury" />
+          </div>
+
+          <!-- Name Field -->
+          <div class="form-field-group">
+            <label for="chat-full-name" class="field-label">
+              {isSpanish ? '2. Su Nombre Completo *' : '2. Your Full Name *'}
+            </label>
+            <input 
+              type="text" 
+              id="chat-full-name" 
+              name="full_name" 
+              class="field-input" 
+              placeholder={isSpanish ? "Nombre y apellido..." : "First and last name..."} 
+              required 
+            />
+          </div>
+
+          <!-- Email & Phone Dual Row -->
+          <div class="form-row-2">
+            <div class="form-field-group">
+              <label for="chat-email" class="field-label">
+                {isSpanish ? '3. Correo Electrónico *' : '3. Email Address *'}
+              </label>
+              <input 
+                type="email" 
+                id="chat-email" 
+                name="email" 
+                class="field-input" 
+                placeholder="name@example.com" 
+                required 
+              />
+            </div>
+
+            <div class="form-field-group">
+              <label for="chat-phone" class="field-label">
+                {isSpanish ? '4. Teléfono de Contacto *' : '4. Phone Number *'}
+              </label>
+              <input 
+                type="tel" 
+                id="chat-phone" 
+                name="phone" 
+                class="field-input" 
+                placeholder="(555) 000-0000" 
+                required 
+              />
+            </div>
+          </div>
+
+          <!-- California County / Location -->
+          <div class="form-field-group">
+            <label for="chat-county" class="field-label">
+              {isSpanish ? '5. Condado o Ciudad en California' : '5. California County or City'}
+            </label>
+            <input 
+              type="text" 
+              id="chat-county" 
+              name="county" 
+              class="field-input" 
+              placeholder={isSpanish ? "Ej: Los Ángeles, Orange County, San Diego, SF Bay Area..." : "e.g. Los Angeles, Orange County, San Diego, Bay Area..."} 
+            />
+          </div>
+
+          <!-- Incident Summary Textarea -->
+          <div class="form-field-group">
+            <label for="chat-summary" class="field-label">
+              {isSpanish ? '6. ¿Qué sucedió? (Breve resumen) *' : '6. What happened? (Brief summary) *'}
+            </label>
+            <textarea 
+              id="chat-summary" 
+              name="incident_summary" 
+              class="field-textarea" 
+              rows="3" 
+              placeholder={isSpanish ? "Describa brevemente lo ocurrido, lesiones, fechas o detalles relevantes..." : "Briefly describe your incident, injuries, dispute, or employer actions..."}
+              required
+            ></textarea>
+          </div>
+
+          <!-- Alert / Error Notice if submission fails -->
+          <div class="chat-form-alert" id="chat-form-alert" style="display: none;"></div>
+
+          <!-- Submit Button -->
+          <button type="submit" class="assistant-submit-btn" id="assistant-submit-btn">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+              <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+            </svg>
+            <span id="submit-btn-text">
+              {isSpanish ? 'Enviar Evaluación de Caso' : 'Submit Confidential Case Evaluation'}
+            </span>
+          </button>
+
+          <!-- Disclaimer Small -->
+          <p class="form-fineprint">
+            {isSpanish
+              ? 'La información enviada es confidencial. No crea una relación abogado-cliente hasta que se firme un acuerdo formal por escrito.'
+              : 'Submissions are confidential. An attorney-client relationship is only created once a formal written representation agreement is signed.'}
+          </p>
+        </form>
       </div>
 
-      <!-- Quick Action Buttons for Step 1 -->
-      <div class="chat-options" id="chat-options-step1">
-        <button type="button" class="chat-option-btn" data-type="Personal Injury / Accident">
-          {isSpanish ? 'Accidente / Lesiones Personales' : 'Personal Injury / Accident'}
-        </button>
-        <button type="button" class="chat-option-btn" data-type="Employment / Workplace Law">
-          {isSpanish ? 'Trabajo / Despido / Salarios' : 'Employment / Workplace Law'}
-        </button>
-        <button type="button" class="chat-option-btn" data-type="Disability Rights">
-          {isSpanish ? 'Derechos de Discapacidad' : 'Disability Rights'}
-        </button>
-        <button type="button" class="chat-option-btn" data-type="Medical Malpractice">
-          {isSpanish ? 'Negligencia Médica' : 'Medical Malpractice'}
-        </button>
-        <button type="button" class="chat-option-btn" data-type="Consumer Protection">
-          {isSpanish ? 'Protección al Consumidor' : 'Consumer Protection'}
-        </button>
-        <button type="button" class="chat-option-btn" data-type="Other Legal Problem">
-          {isSpanish ? 'Otro Asunto Legal' : 'Other Legal Problem'}
-        </button>
-      </div>
-    </div>
-
-    <!-- Input Form -->
-    <div class="assistant-input-area" id="assistant-input-area">
-      <form id="assistant-chat-form" class="assistant-form">
-        <input 
-          type="text" 
-          id="assistant-user-input" 
-          class="assistant-text-input" 
-          placeholder={isSpanish ? "Escriba su respuesta o detalles..." : "Type your answer or details..."}
-          aria-label="Your response"
-          autocomplete="off"
-        />
-        <button type="submit" class="assistant-send-btn" aria-label="Send message">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-            <line x1="22" y1="2" x2="11" y2="13"></line>
-            <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+      <!-- SUCCESS CONFIRMATION VIEW -->
+      <div class="assistant-success-view" id="assistant-success-view" style="display: none;">
+        <div class="success-icon-wrap">
+          <svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="#c8a04a" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+            <polyline points="22 4 12 14.01 9 11.01"></polyline>
           </svg>
+        </div>
+
+        <h4 class="success-title">
+          {isSpanish ? '¡Evaluación Recibida con Éxito!' : 'Case Evaluation Received!'}
+        </h4>
+
+        <p class="success-message">
+          {isSpanish
+            ? 'Gracias por comunicarse. Sus datos han sido transmitidos confidencialmente a nuestro equipo legal en California. Revisaremos su caso a la brevedad y nos comunicaremos con usted.'
+            : 'Thank you for contacting Equal Justice Lawyers. Your intake details have been securely delivered directly to our California legal team. We will review your matter and reach out confidentially.'}
+        </p>
+
+        <div class="success-reassurance-box">
+          <div class="reassurance-row">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#c8a04a" stroke-width="2">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+            </svg>
+            <span>{isSpanish ? 'Privilegio de Consulta Confidencial' : 'Strict Confidentiality Protected'}</span>
+          </div>
+          <div class="reassurance-row">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#c8a04a" stroke-width="2">
+              <circle cx="12" cy="12" r="10"></circle>
+              <polyline points="12 6 12 12 16 14"></polyline>
+            </svg>
+            <span>{isSpanish ? 'Respuesta rápida de admisión' : 'Prompt intake team review'}</span>
+          </div>
+        </div>
+
+        <button type="button" class="btn-gold success-close-btn" id="success-close-btn">
+          {isSpanish ? 'Cerrar Ventana' : 'Done & Close'}
         </button>
-      </form>
+
+        <button type="button" class="reset-form-link" id="reset-form-link">
+          {isSpanish ? 'Enviar otra consulta legal' : 'Submit another inquiry'}
+        </button>
+      </div>
     </div>
   </div>
 
-  <!-- Floating Launcher Bubble -->
-  <button type="button" class="floating-chat-trigger" id="floating-chat-trigger" aria-label="Open Equal Justice Legal Intake Assistant">
+  <!-- Floating Launcher Trigger -->
+  <button type="button" class="floating-chat-trigger" id="floating-chat-trigger" aria-label={isSpanish ? "Abrir Asistente de Casos" : "Open Confidential Legal Assistant"}>
     <div class="trigger-icon">
-      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
         <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
       </svg>
+      <span class="trigger-pulse"></span>
     </div>
-    <span class="trigger-label">{isSpanish ? 'Chat Confidencial' : 'Chat With Us'}</span>
+    <span class="trigger-label">{isSpanish ? 'Chat Confidencial' : 'Chat / Case Intake'}</span>
   </button>
 </div>
 
 <script>
-  // Case Assistant interactive lightweight logic
+  // Case Assistant Intake Form Component
   const modal = document.getElementById('case-assistant-modal');
   const backdrop = document.getElementById('assistant-backdrop');
   const closeBtn = document.getElementById('assistant-close-btn');
   const floatingTrigger = document.getElementById('floating-chat-trigger');
-  const messagesBox = document.getElementById('assistant-messages');
-  const chatForm = document.getElementById('assistant-chat-form');
-  const chatInput = document.getElementById('assistant-user-input') as HTMLInputElement;
-  const optionsStep1 = document.getElementById('chat-options-step1');
-
-  let currentStep = 1;
-  const collectedData: Record<string, string> = {
-    caseType: '',
-    county: '',
-    timeframe: '',
-    hasAttorney: '',
-    contactName: '',
-    contactPhone: ''
-  };
+  const leadForm = document.getElementById('assistant-lead-form') as HTMLFormElement;
+  const formView = document.getElementById('assistant-form-view');
+  const successView = document.getElementById('assistant-success-view');
+  const successCloseBtn = document.getElementById('success-close-btn');
+  const resetFormLink = document.getElementById('reset-form-link');
+  const submitBtn = document.getElementById('assistant-submit-btn') as HTMLButtonElement;
+  const submitBtnText = document.getElementById('submit-btn-text');
+  const formAlert = document.getElementById('chat-form-alert');
+  const caseTypeHidden = document.getElementById('chat-case-type') as HTMLInputElement;
+  const categoryPills = document.querySelectorAll('.category-pill');
 
   const isEs = document.documentElement.lang === 'es';
 
@@ -150,12 +273,11 @@ const isSpanish = lang === 'es';
     if (modal) {
       modal.classList.add('is-active');
       modal.setAttribute('aria-hidden', 'false');
+      // Focus name field on open
       setTimeout(() => {
-        chatInput?.focus();
-        if (messagesBox) {
-          messagesBox.scrollTop = messagesBox.scrollHeight;
-        }
-      }, 50);
+        const nameInput = document.getElementById('chat-full-name');
+        nameInput?.focus();
+      }, 150);
     }
   }
 
@@ -166,13 +288,14 @@ const isSpanish = lang === 'es';
     }
   }
 
-  // Expose globally
+  // Expose globally for header/footer and any CTAs
   (window as any).openLegalChat = openChat;
   (window as any).closeLegalChat = closeChat;
 
   floatingTrigger?.addEventListener('click', openChat);
   closeBtn?.addEventListener('click', closeChat);
   backdrop?.addEventListener('click', closeChat);
+  successCloseBtn?.addEventListener('click', closeChat);
 
   // Close on Escape key
   document.addEventListener('keydown', (e) => {
@@ -181,7 +304,7 @@ const isSpanish = lang === 'es';
     }
   });
 
-  // Attach to all explicit chat triggers across the site safely
+  // Attach to all explicit chat links across the site
   const chatSelector = 'a[href="#chat"], [data-trigger-chat], #trigger-chat-btn, .chat-trigger-btn, .open-chat-btn';
   document.querySelectorAll(chatSelector).forEach(el => {
     el.addEventListener('click', (e) => {
@@ -202,135 +325,153 @@ const isSpanish = lang === 'es';
     }
   });
 
-  function appendMessage(text: string, isUser = false) {
-    if (!messagesBox) return;
-    const bubble = document.createElement('div');
-    bubble.className = `chat-bubble ${isUser ? 'user-bubble' : 'bot-bubble'}`;
-    const p = document.createElement('p');
-    p.textContent = text;
-    bubble.appendChild(p);
-    messagesBox.appendChild(bubble);
-    messagesBox.scrollTop = messagesBox.scrollHeight;
-  }
-
-  function advanceStep(userInput: string) {
-    if (currentStep === 1) {
-      collectedData.caseType = userInput;
-      appendMessage(userInput, true);
-      optionsStep1?.remove();
-      
-      setTimeout(() => {
-        appendMessage(
-          isEs
-            ? `Gracias. Entendido: asunto de ${userInput}. ¿En qué condado o ciudad de California ocurrió esto (ej. Los Ángeles, Orange County, San Diego, San Francisco, Sacramento)?`
-            : `Thank you. Understood regarding your ${userInput} matter. What California county or city did this occur in (e.g. Los Angeles, Orange County, San Diego, San Francisco, Sacramento)?`
-        );
-        currentStep = 2;
-        chatInput?.focus();
-      }, 400);
-    } else if (currentStep === 2) {
-      collectedData.county = userInput;
-      appendMessage(userInput, true);
-
-      setTimeout(() => {
-        appendMessage(
-          isEs
-            ? 'Aproximadamente, ¿cuándo ocurrió o cuándo fue despedido/lesionado? (Esto ayuda a verificar los plazos de prescripción de California)'
-            : 'Approximately when did this incident or dispute occur? (This helps check California statutory deadlines)'
-        );
-        currentStep = 3;
-        chatInput?.focus();
-      }, 400);
-    } else if (currentStep === 3) {
-      collectedData.timeframe = userInput;
-      appendMessage(userInput, true);
-
-      setTimeout(() => {
-        appendMessage(
-          isEs
-            ? '¿Tiene actualmente un abogado representándole para este asunto? (Sí / No)'
-            : 'Do you currently have an attorney representing you for this legal matter? (Yes / No)'
-        );
-        currentStep = 4;
-        chatInput?.focus();
-      }, 400);
-    } else if (currentStep === 4) {
-      collectedData.hasAttorney = userInput;
-      appendMessage(userInput, true);
-
-      setTimeout(() => {
-        appendMessage(
-          isEs
-            ? 'Por favor, comparta su Nombre Completo y Correo Electrónico o Teléfono para que nuestro equipo legal pueda revisar sus datos y comunicarse de manera confidencial.'
-            : 'Please provide your Full Name and Email or Phone Number so our California legal intake team can review your facts confidentially.'
-        );
-        currentStep = 5;
-        chatInput?.focus();
-      }, 400);
-    } else if (currentStep === 5) {
-      collectedData.contactName = userInput;
-      appendMessage(userInput, true);
-
-      // Transmit chat intake lead via /api/contact -> delivers to aftabnew77@gmail.com
-      const chatPayload = {
-        source: 'Interactive Intake Chat Assistant',
-        full_name: userInput,
-        contact: userInput,
-        email: userInput.includes('@') ? userInput : 'See contact info: ' + userInput,
-        phone: userInput,
-        case_type: collectedData.caseType || 'General Legal Dispute',
-        county: collectedData.county || 'Not Specified',
-        timeframe: collectedData.timeframe || 'Not Specified',
-        has_attorney: collectedData.hasAttorney || 'No',
-        incident_summary: `Chat lead collected via Equal Justice Case Assistant.\nCase Type: ${collectedData.caseType || 'N/A'}\nCounty: ${collectedData.county || 'N/A'}\nTimeframe: ${collectedData.timeframe || 'N/A'}\nPrior Attorney: ${collectedData.hasAttorney || 'No'}\nContact Info Provided: ${userInput}`,
-        preferred_language: isEs ? 'Español' : 'English'
-      };
-
-      try {
-        fetch('/api/contact', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(chatPayload)
-        }).catch(err => console.warn('Chat lead transmission error:', err));
-      } catch (err) {
-        console.warn('Chat transmission:', err);
+  // Category pill selection
+  categoryPills.forEach(pill => {
+    pill.addEventListener('click', () => {
+      categoryPills.forEach(p => p.classList.remove('is-active'));
+      pill.classList.add('is-active');
+      const val = pill.getAttribute('data-val') || 'Personal Injury';
+      if (caseTypeHidden) {
+        caseTypeHidden.value = val;
       }
-
-      setTimeout(() => {
-        appendMessage(
-          isEs
-            ? '✅ Información recibida y enviada con éxito a nuestro equipo legal. Un miembro de admisión revisará sus datos confidencialmente. Recuerde que esta comunicación preliminar no constituye representación formal.'
-            : '✅ Intake information received and securely sent to our legal team. A member of our California intake team will review your situation confidentially. Note: submitting this intake does not constitute formal legal representation.'
-        );
-        if (chatInput) {
-          chatInput.disabled = true;
-          chatInput.placeholder = isEs ? 'Revisión solicitada con éxito' : 'Intake submitted successfully';
-        }
-      }, 500);
-    }
-  }
-
-  // Handle option click
-  optionsStep1?.querySelectorAll('.chat-option-btn').forEach(btn => {
-    btn.addEventListener('click', () => {
-      const type = (btn as HTMLElement).dataset.type || btn.textContent || '';
-      advanceStep(type.trim());
     });
   });
 
-  // Handle text input submission
-  chatForm?.addEventListener('submit', (e) => {
+  // Reset form link on success view
+  resetFormLink?.addEventListener('click', () => {
+    if (leadForm) leadForm.reset();
+    if (formView) formView.style.display = 'block';
+    if (successView) successView.style.display = 'none';
+    if (submitBtn) {
+      submitBtn.disabled = false;
+      if (submitBtnText) {
+        submitBtnText.textContent = isEs ? 'Enviar Evaluación de Caso' : 'Submit Confidential Case Evaluation';
+      }
+    }
+  });
+
+  // Handle Form Submission
+  leadForm?.addEventListener('submit', async (e) => {
     e.preventDefault();
-    if (!chatInput) return;
-    const val = chatInput.value.trim();
-    if (!val) return;
-    chatInput.value = '';
-    advanceStep(val);
+
+    const nameInput = document.getElementById('chat-full-name') as HTMLInputElement;
+    const emailInput = document.getElementById('chat-email') as HTMLInputElement;
+    const phoneInput = document.getElementById('chat-phone') as HTMLInputElement;
+    const countyInput = document.getElementById('chat-county') as HTMLInputElement;
+    const summaryInput = document.getElementById('chat-summary') as HTMLTextAreaElement;
+
+    // Reset error highlights
+    [nameInput, emailInput, phoneInput, summaryInput].forEach(inp => inp?.classList.remove('has-error'));
+    if (formAlert) {
+      formAlert.style.display = 'none';
+      formAlert.textContent = '';
+    }
+
+    const nameVal = nameInput?.value.trim();
+    const emailVal = emailInput?.value.trim();
+    const phoneVal = phoneInput?.value.trim();
+    const countyVal = countyInput?.value.trim();
+    const summaryVal = summaryInput?.value.trim();
+    const caseTypeVal = caseTypeHidden?.value || 'Personal Injury';
+
+    // Basic validation
+    let hasError = false;
+    if (!nameVal) {
+      nameInput?.classList.add('has-error');
+      hasError = true;
+    }
+    if (!emailVal || !emailVal.includes('@')) {
+      emailInput?.classList.add('has-error');
+      hasError = true;
+    }
+    if (!phoneVal || phoneVal.length < 7) {
+      phoneInput?.classList.add('has-error');
+      hasError = true;
+    }
+    if (!summaryVal) {
+      summaryInput?.classList.add('has-error');
+      hasError = true;
+    }
+
+    if (hasError) {
+      if (formAlert) {
+        formAlert.style.display = 'block';
+        formAlert.textContent = isEs 
+          ? 'Por favor complete todos los campos obligatorios (*) para que nuestro equipo pueda evaluar su caso.' 
+          : 'Please complete all required fields (*) so our legal team can evaluate your case.';
+      }
+      return;
+    }
+
+    // Set submitting state
+    if (submitBtn) {
+      submitBtn.disabled = true;
+      if (submitBtnText) {
+        submitBtnText.textContent = isEs ? 'Transmitiendo confidencialmente...' : 'Sending to legal team...';
+      }
+    }
+
+    const payload = {
+      source: 'Equal Justice Case Assistant Form',
+      full_name: nameVal,
+      email: emailVal,
+      phone: phoneVal,
+      case_type: caseTypeVal,
+      county: countyVal || 'California (Unspecified)',
+      timeframe: 'Recent matter',
+      has_attorney: 'No',
+      incident_summary: summaryVal,
+      preferred_language: isEs ? 'Español' : 'English'
+    };
+
+    try {
+      // Primary transmission to /api/contact
+      let response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+
+      // Fallback transmission to /api/submit if needed
+      if (!response.ok) {
+        response = await fetch('/api/submit', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+      }
+
+      const resData = await response.json().catch(() => ({}));
+
+      if (response.ok || (resData && resData.success !== false)) {
+        // Success
+        if (formView) formView.style.display = 'none';
+        if (successView) successView.style.display = 'block';
+        const bodyEl = document.getElementById('assistant-body');
+        if (bodyEl) bodyEl.scrollTop = 0;
+      } else {
+        throw new Error(resData?.error || 'Submission failed');
+      }
+    } catch (err: any) {
+      console.error('Case Assistant submission error:', err);
+      if (formAlert) {
+        formAlert.style.display = 'block';
+        formAlert.textContent = isEs
+          ? 'Hubo un error de conexión al enviar su consulta. Por favor intente de nuevo o escríbanos a legal@equaljusticelawyers.com'
+          : 'A temporary connection error occurred. Please try again or email us directly at legal@equaljusticelawyers.com';
+      }
+      if (submitBtn) {
+        submitBtn.disabled = false;
+        if (submitBtnText) {
+          submitBtnText.textContent = isEs ? 'Reintentar Envío' : 'Retry Submission';
+        }
+      }
+    }
   });
 </script>
 
 <style>
-  /* Assistant Wrapper & Backdrop */
+  /* Assistant Wrapper & Dim Backdrop */
   .case-assistant-wrapper {
     position: relative;
     z-index: 9999;
@@ -343,8 +484,10 @@ const isSpanish = lang === 'es';
     left: 0;
     width: 100vw;
     height: 100vh;
-    background: rgba(10, 20, 15, 0.6);
+    background: rgba(8, 18, 13, 0.65);
     backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    z-index: 9990;
   }
 
   .case-assistant-wrapper.is-active .assistant-backdrop {
@@ -354,23 +497,24 @@ const isSpanish = lang === 'es';
   /* Assistant Drawer / Modal Panel */
   .assistant-panel {
     position: fixed;
-    bottom: 90px;
+    bottom: 85px;
     right: 25px;
-    width: 380px;
-    max-width: calc(100vw - 40px);
-    height: 560px;
-    max-height: calc(100vh - 120px);
-    background: var(--color-dark-green-deep);
-    border: 1px solid rgba(200, 160, 74, 0.35);
-    border-radius: var(--radius-md);
-    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.45);
+    width: 420px;
+    max-width: calc(100vw - 32px);
+    height: 620px;
+    max-height: calc(100vh - 110px);
+    background: #112119;
+    border: 1.5px solid rgba(200, 160, 74, 0.4);
+    border-radius: 12px;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.55), 0 0 30px rgba(200, 160, 74, 0.1);
     display: flex;
     flex-direction: column;
     overflow: hidden;
-    transform: translateY(20px) scale(0.95);
+    transform: translateY(20px) scale(0.96);
     opacity: 0;
     pointer-events: none;
-    transition: all 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+    transition: transform 0.26s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.22s ease;
+    z-index: 9995;
   }
 
   .case-assistant-wrapper.is-active .assistant-panel {
@@ -381,37 +525,48 @@ const isSpanish = lang === 'es';
 
   /* Header */
   .assistant-header {
-    background: var(--color-dark-green);
-    padding: 0.9rem 1.1rem;
+    background: #172d22;
+    padding: 0.95rem 1.15rem;
     display: flex;
     align-items: center;
     gap: 0.75rem;
-    border-bottom: 1px solid rgba(200, 160, 74, 0.2);
+    border-bottom: 1px solid rgba(200, 160, 74, 0.25);
+    flex-shrink: 0;
   }
 
   .assistant-avatar {
     flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 
   .assistant-title-box {
     flex: 1;
+    min-width: 0;
   }
 
   .assistant-name {
-    font-family: var(--font-serif);
-    font-size: 0.95rem;
+    font-family: var(--font-serif, "Cinzel", "Playfair Display", serif);
+    font-size: 0.98rem;
     font-weight: 700;
-    color: var(--color-white);
-    line-height: 1.2;
+    color: #ffffff;
+    line-height: 1.25;
+    margin: 0;
+    letter-spacing: 0.02em;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
   .assistant-status {
     display: flex;
     align-items: center;
-    gap: 0.35rem;
-    font-size: 0.72rem;
-    color: var(--color-gold);
+    gap: 0.4rem;
+    font-size: 0.74rem;
+    color: var(--color-gold, #c8a04a);
     font-weight: 500;
+    margin-top: 2px;
   }
 
   .status-indicator {
@@ -420,197 +575,373 @@ const isSpanish = lang === 'es';
     background: #4ade80;
     border-radius: 50%;
     display: inline-block;
+    box-shadow: 0 0 6px #4ade80;
   }
 
   .assistant-close-btn {
-    color: var(--color-text-muted);
-    padding: 4px;
-    border-radius: 4px;
-    transition: color 0.2s;
+    background: transparent;
+    border: none;
+    color: #a8b3ac;
+    padding: 6px;
+    border-radius: 6px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: color 0.2s, background 0.2s;
   }
 
   .assistant-close-btn:hover {
-    color: var(--color-white);
+    color: #ffffff;
+    background: rgba(255, 255, 255, 0.08);
   }
 
-  /* Disclaimer Bar */
+  /* Disclaimer / Trust Bar */
   .assistant-disclaimer-bar {
-    background: rgba(200, 160, 74, 0.08);
-    border-bottom: 1px solid rgba(200, 160, 74, 0.15);
-    padding: 0.4rem 0.8rem;
+    background: rgba(200, 160, 74, 0.09);
+    border-bottom: 1px solid rgba(200, 160, 74, 0.18);
+    padding: 0.45rem 1rem;
     display: flex;
     align-items: center;
-    gap: 0.4rem;
-    font-size: 0.68rem;
-    color: var(--color-text-light);
+    gap: 0.5rem;
+    font-size: 0.72rem;
+    color: #dfd8cb;
     line-height: 1.35;
+    flex-shrink: 0;
   }
 
   .assistant-disclaimer-bar svg {
     flex-shrink: 0;
   }
 
-  /* Messages Area */
-  .assistant-messages {
+  /* Scrollable Body */
+  .assistant-body {
     flex: 1;
-    padding: 1rem;
+    padding: 1.15rem;
     overflow-y: auto;
-    display: flex;
-    flex-direction: column;
-    gap: 0.8rem;
-    background: radial-gradient(circle at top right, rgba(26, 51, 40, 0.4), transparent 70%);
+    background: radial-gradient(circle at top right, rgba(30, 60, 46, 0.4), transparent 75%), #112119;
   }
 
-  .chat-bubble {
-    max-width: 85%;
-    padding: 0.75rem 0.95rem;
-    border-radius: 12px;
+  .greeting-lead {
     font-size: 0.84rem;
+    color: #dfd8cb;
     line-height: 1.5;
+    margin-bottom: 1rem;
   }
 
-  .bot-bubble {
-    align-self: flex-start;
-    background: rgba(26, 51, 40, 0.75);
-    border: 1px solid rgba(200, 160, 74, 0.25);
-    color: var(--color-text-light);
-    border-bottom-left-radius: 3px;
-  }
-
-  .chat-sub {
-    margin-top: 0.45rem;
-    font-weight: 600;
-    color: var(--color-gold);
-  }
-
-  .user-bubble {
-    align-self: flex-end;
-    background: var(--color-gold);
-    color: var(--color-dark-green);
-    font-weight: 600;
-    border-bottom-right-radius: 3px;
-  }
-
-  .chat-options {
+  /* Form Styling */
+  .assistant-lead-form {
     display: flex;
     flex-direction: column;
-    gap: 0.4rem;
-    margin-top: 0.2rem;
+    gap: 0.85rem;
   }
 
-  .chat-option-btn {
-    text-align: left;
+  .form-field-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+  }
+
+  .field-label {
+    font-size: 0.76rem;
+    font-weight: 600;
+    color: var(--color-gold, #c8a04a);
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+  }
+
+  /* Category selection pills */
+  .category-pills {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.4rem;
+  }
+
+  .category-pill {
     background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(200, 160, 74, 0.35);
-    color: var(--color-white);
-    padding: 0.55rem 0.85rem;
-    border-radius: var(--radius-sm);
-    font-size: 0.8rem;
+    border: 1px solid rgba(200, 160, 74, 0.28);
+    color: #dfd8cb;
+    font-size: 0.76rem;
     font-weight: 500;
+    padding: 0.48rem 0.55rem;
+    border-radius: 6px;
+    cursor: pointer;
+    text-align: center;
     transition: all 0.2s ease;
   }
 
-  .chat-option-btn:hover {
-    background: var(--color-gold);
-    color: var(--color-dark-green);
-    border-color: var(--color-gold);
-    transform: translateX(3px);
+  .category-pill:hover {
+    background: rgba(200, 160, 74, 0.15);
+    color: #ffffff;
+    border-color: var(--color-gold, #c8a04a);
   }
 
-  /* Input Area */
-  .assistant-input-area {
-    padding: 0.75rem;
-    background: var(--color-dark-green);
-    border-top: 1px solid rgba(200, 160, 74, 0.2);
+  .category-pill.is-active {
+    background: var(--color-gold, #c8a04a);
+    color: #0e1c14;
+    font-weight: 700;
+    border-color: var(--color-gold, #c8a04a);
+    box-shadow: 0 2px 8px rgba(200, 160, 74, 0.35);
   }
 
-  .assistant-form {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-  }
-
-  .assistant-text-input {
-    flex: 1;
-    background: rgba(18, 32, 25, 0.9);
-    border: 1px solid rgba(200, 160, 74, 0.35);
-    border-radius: var(--radius-pill);
-    padding: 0.55rem 1rem;
-    color: var(--color-white);
+  /* Inputs */
+  .field-input,
+  .field-textarea {
+    width: 100%;
+    background: rgba(9, 18, 13, 0.85);
+    border: 1px solid rgba(200, 160, 74, 0.3);
+    border-radius: 6px;
+    padding: 0.55rem 0.75rem;
     font-size: 0.84rem;
+    color: #ffffff;
     outline: none;
-    transition: border-color 0.2s;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    font-family: inherit;
   }
 
-  .assistant-text-input:focus {
-    border-color: var(--color-gold);
+  .field-input::placeholder,
+  .field-textarea::placeholder {
+    color: #718278;
+    font-size: 0.8rem;
   }
 
-  .assistant-send-btn {
-    width: 36px;
-    height: 36px;
-    border-radius: 50%;
-    background: var(--color-gold);
-    color: var(--color-dark-green);
+  .field-input:focus,
+  .field-textarea:focus {
+    border-color: var(--color-gold, #c8a04a);
+    box-shadow: 0 0 0 2px rgba(200, 160, 74, 0.2);
+  }
+
+  .field-input.has-error,
+  .field-textarea.has-error {
+    border-color: #f87171 !important;
+    background: rgba(239, 68, 68, 0.08);
+  }
+
+  .field-textarea {
+    resize: vertical;
+    min-height: 70px;
+    line-height: 1.45;
+  }
+
+  .form-row-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.6rem;
+  }
+
+  /* Alert / Error Box */
+  .chat-form-alert {
+    background: rgba(239, 68, 68, 0.15);
+    border: 1px solid #f87171;
+    color: #fca5a5;
+    font-size: 0.78rem;
+    padding: 0.6rem 0.8rem;
+    border-radius: 6px;
+    line-height: 1.4;
+  }
+
+  /* Submit Button */
+  .assistant-submit-btn {
+    margin-top: 0.4rem;
+    background: linear-gradient(135deg, #c8a04a 0%, #dfba6b 100%);
+    color: #0e1c14;
+    border: none;
+    border-radius: 6px;
+    padding: 0.75rem 1rem;
+    font-size: 0.88rem;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
+    gap: 0.5rem;
+    box-shadow: 0 4px 14px rgba(200, 160, 74, 0.3);
+    transition: transform 0.2s, box-shadow 0.2s, opacity 0.2s;
+  }
+
+  .assistant-submit-btn:hover:not(:disabled) {
+    transform: translateY(-1px);
+    box-shadow: 0 6px 18px rgba(200, 160, 74, 0.45);
+  }
+
+  .assistant-submit-btn:disabled {
+    opacity: 0.65;
+    cursor: not-allowed;
+  }
+
+  .form-fineprint {
+    font-size: 0.69rem;
+    color: #92a197;
+    line-height: 1.4;
+    text-align: center;
+    margin: 0.2rem 0 0;
+  }
+
+  /* Success State View */
+  .assistant-success-view {
+    text-align: center;
+    padding: 2rem 1rem 1.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .success-icon-wrap {
+    width: 68px;
+    height: 68px;
+    border-radius: 50%;
+    background: rgba(200, 160, 74, 0.12);
+    border: 2px solid var(--color-gold, #c8a04a);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 0 25px rgba(200, 160, 74, 0.25);
+  }
+
+  .success-title {
+    font-family: var(--font-serif, "Cinzel", "Playfair Display", serif);
+    font-size: 1.25rem;
+    color: #ffffff;
+    margin: 0;
+  }
+
+  .success-message {
+    font-size: 0.86rem;
+    color: #dfd8cb;
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  .success-reassurance-box {
+    width: 100%;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(200, 160, 74, 0.25);
+    border-radius: 8px;
+    padding: 0.8rem 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    text-align: left;
+  }
+
+  .reassurance-row {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    font-size: 0.78rem;
+    color: #ffffff;
+  }
+
+  .success-close-btn {
+    width: 100%;
+    padding: 0.75rem;
+    background: var(--color-gold, #c8a04a);
+    color: #0e1c14;
+    border: none;
+    border-radius: 6px;
+    font-weight: 700;
+    cursor: pointer;
+    font-size: 0.88rem;
     transition: all 0.2s ease;
-    flex-shrink: 0;
   }
 
-  .assistant-send-btn:hover {
-    background: var(--color-gold-light);
-    transform: scale(1.05);
+  .success-close-btn:hover {
+    background: #dfba6b;
+    transform: translateY(-1px);
   }
 
-  /* Floating Trigger Launcher */
+  .reset-form-link {
+    background: transparent;
+    border: none;
+    color: var(--color-gold, #c8a04a);
+    font-size: 0.78rem;
+    cursor: pointer;
+    text-decoration: underline;
+  }
+
+  /* Floating Launcher Trigger */
   .floating-chat-trigger {
     position: fixed;
     bottom: 25px;
     right: 25px;
-    background: var(--color-dark-green);
-    border: 1.5px solid var(--color-gold);
-    border-radius: var(--radius-pill);
-    padding: 0.65rem 1.25rem;
-    color: var(--color-white);
+    background: #14281e;
+    border: 1.5px solid var(--color-gold, #c8a04a);
+    border-radius: 50px;
+    padding: 0.65rem 1.15rem;
+    color: #ffffff;
     display: inline-flex;
     align-items: center;
     gap: 0.6rem;
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4), 0 0 15px rgba(200, 160, 74, 0.18);
+    cursor: pointer;
     transition: all 0.25s ease;
-    z-index: 995;
+    z-index: 9980;
   }
 
   .floating-chat-trigger:hover {
-    background: var(--color-gold);
-    color: var(--color-dark-green);
+    background: var(--color-gold, #c8a04a);
+    color: #0e1c14;
     transform: translateY(-2px);
-    box-shadow: 0 10px 28px rgba(200, 160, 74, 0.35);
+    box-shadow: 0 12px 35px rgba(200, 160, 74, 0.4);
   }
 
   .trigger-icon {
+    position: relative;
     display: flex;
     align-items: center;
+    justify-content: center;
+  }
+
+  .trigger-pulse {
+    position: absolute;
+    top: -2px;
+    right: -2px;
+    width: 8px;
+    height: 8px;
+    background: #4ade80;
+    border-radius: 50%;
+    border: 1.5px solid #14281e;
+    box-shadow: 0 0 6px #4ade80;
   }
 
   .trigger-label {
     font-size: 0.85rem;
-    font-weight: 600;
+    font-weight: 700;
     letter-spacing: 0.02em;
   }
 
+  /* Mobile Responsiveness */
   @media (max-width: 768px) {
     .assistant-panel {
       bottom: 75px;
       right: 12px;
       left: 12px;
       width: auto;
-      height: 80vh;
+      max-width: none;
+      height: calc(100vh - 120px);
+      max-height: 580px;
+    }
+
+    .form-row-2 {
+      grid-template-columns: 1fr;
+      gap: 0.85rem;
+    }
+
+    .category-pills {
+      grid-template-columns: repeat(2, 1fr);
     }
 
     .floating-chat-trigger {
-      display: none; /* Mobile uses bottom sticky bar */
+      bottom: 18px;
+      right: 18px;
+      padding: 0.6rem 1rem;
+      font-size: 0.8rem;
+    }
+
+    .trigger-label {
+      font-size: 0.8rem;
     }
   }
 </style>
