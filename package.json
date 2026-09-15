@@ -7,11 +7,12 @@
   },
   "scripts": {
     "dev": "astro dev",
-    "build": "astro build && node -e \"import('fs').then(fs => fs.cpSync('functions', 'dist/functions', {recursive: true}))\"",
+    "build": "astro build && node build-cloudflare.mjs",
     "preview": "astro preview",
     "astro": "astro"
   },
   "dependencies": {
+    "@astrojs/cloudflare": "^14.3.1",
     "astro": "^7.3.2"
   },
   "allowScripts": {
