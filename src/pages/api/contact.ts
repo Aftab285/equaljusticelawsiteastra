@@ -1,4 +1,4 @@
-﻿import type { APIRoute } from 'astro';
+import type { APIRoute } from 'astro';
 import { env as cfEnv } from 'cloudflare:workers';
 
 export const prerender = false;
@@ -15,13 +15,11 @@ export const POST: APIRoute = async ({ request, locals }) => {
 
     // Cloudflare environment variables & secrets
     const lEnv = (locals as any)?.env || {};
-    const rEnv = (locals as any)?.runtime?.env || {};
-    const pEnv = typeof process !== 'undefined' ? (process.env || {}) : {};
     const wEnv = (cfEnv as any) || {};
+    const pEnv = typeof process !== 'undefined' ? (process.env || {}) : {};
 
     const apiKey = 
       lEnv.RESEND_API_KEY ||
-      rEnv.RESEND_API_KEY ||
       wEnv.RESEND_API_KEY ||
       pEnv.RESEND_API_KEY ||
       lEnv.RESEND_KEY ||
