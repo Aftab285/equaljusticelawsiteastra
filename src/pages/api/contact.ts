@@ -1,9 +1,9 @@
 ﻿import type { APIRoute } from 'astro';
-import { env } from 'cloudflare:workers';
+import { env as cfEnv } from 'cloudflare:workers';
 
 export const prerender = false;
 
-export const POST: APIRoute = async ({ request }) => {
+export const POST: APIRoute = async ({ request, locals }) => {
   const corsHeaders = {
     'Access-Control-Allow-Origin': '*',
     'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
@@ -13,16 +13,42 @@ export const POST: APIRoute = async ({ request }) => {
   try {
     const data = await request.json() as Record<string, any>;
 
-    // Cloudflare environment variables
-    const apiKey = (env as any)?.RESEND_API_KEY || (typeof process !== 'undefined' ? process.env?.RESEND_API_KEY : undefined);
-    const fromEmail = (env as any)?.RESEND_FROM_EMAIL || (typeof process !== 'undefined' ? process.env?.RESEND_FROM_EMAIL : undefined) || 'Equal Justice Lawyers <onboarding@resend.dev>';
+    // Cloudflare environment variables & secrets
+    const lEnv = (locals as any)?.env || {};
+    const rEnv = (locals as any)?.runtime?.env || {};
+    const pEnv = typeof process !== 'undefined' ? (process.env || {}) : {};
+    const wEnv = (cfEnv as any) || {};
+
+    const apiKey = 
+      lEnv.RESEND_API_KEY ||
+      rEnv.RESEND_API_KEY ||
+      wEnv.RESEND_API_KEY ||
+      pEnv.RESEND_API_KEY ||
+      lEnv.RESEND_KEY ||
+      wEnv.RESEND_KEY ||
+      pEnv.RESEND_KEY ||
+      lEnv.resend_api_key ||
+      wEnv.resend_api_key;
+
+    const fromEmail = 
+      lEnv.RESEND_FROM_EMAIL ||
+      wEnv.RESEND_FROM_EMAIL ||
+      pEnv.RESEND_FROM_EMAIL ||
+      'Equal Justice Lawyers <onboarding@resend.dev>';
+
     const recipient = 'aftabnew77@gmail.com';
 
     if (!apiKey) {
-      console.warn('RESEND_API_KEY environment secret is not set.');
+      console.warn('RESEND_API_KEY environment secret is not found.');
+      const detectedKeys = Array.from(new Set([
+        ...Object.keys(lEnv),
+        ...Object.keys(wEnv),
+        ...Object.keys(pEnv).filter(k => k.toLowerCase().includes('resend'))
+      ]));
       return new Response(JSON.stringify({
         success: false,
-        error: 'Email service configuration missing. Please set RESEND_API_KEY in Cloudflare Pages environment variables.'
+        error: 'Email service configuration missing. Please set RESEND_API_KEY in Cloudflare Pages environment variables.',
+        detectedKeys: detectedKeys
       }), {
         status: 500,
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },
