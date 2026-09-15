@@ -1,17 +1,60 @@
+export async function onRequest(context) {
+  const method = context.request.method;
+  if (method === 'OPTIONS') {
+    return onRequestOptions(context);
+  }
+  if (method === 'POST') {
+    return onRequestPost(context);
+  }
+  return new Response(JSON.stringify({ 
+    status: 'online', 
+    service: 'Equal Justice Lawyers Intake API',
+    method: method
+  }), {
+    status: 200,
+    headers: {
+      'Access-Control-Allow-Origin': '*',
+      'Content-Type': 'application/json'
+    }
+  });
+}
+
+export async function onRequestOptions() {
+  return new Response(null, {
+    status: 204,
+    headers: {
+      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
+      'Access-Control-Allow-Headers': 'Content-Type',
+    },
+  });
+}
+
 export async function onRequestPost(context) {
   const corsHeaders = {
     'Access-Control-Allow-Origin': '*',
-    'Access-Control-Allow-Methods': 'POST, OPTIONS',
+    'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
     'Access-Control-Allow-Headers': 'Content-Type',
   };
 
   try {
     const data = await context.request.json();
     
-    // Secure Cloudflare Worker/Pages Secret
+    // Secure Cloudflare Pages Secret / Environment Variable
     const apiKey = context.env.RESEND_API_KEY;
     const recipient = 'aftabnew77@gmail.com';
     const fromEmail = context.env.RESEND_FROM_EMAIL || 'Equal Justice Lawyers <onboarding@resend.dev>';
+
+    if (!apiKey) {
+      console.warn('RESEND_API_KEY environment secret is not set.');
+      return new Response(JSON.stringify({
+        success: false,
+        error: 'Email service configuration missing. Please set RESEND_API_KEY in Cloudflare Pages environment variables.'
+      }), {
+        status: 500,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
+    }
 
     const source = data.source || 'Website Contact / Evaluation Form';
     const fullName = data.full_name || data.name || data.contactName || 'Anonymous / Not Provided';
@@ -99,17 +142,6 @@ export async function onRequestPost(context) {
       </html>
     `;
 
-    if (!apiKey) {
-      console.warn('RESEND_API_KEY environment secret is not set in Cloudflare.');
-      return new Response(JSON.stringify({ 
-        success: false, 
-        error: 'Email service configuration missing. Please set RESEND_API_KEY in Cloudflare Pages environment variables.' 
-      }), {
-        status: 500,
-        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-      });
-    }
-
     const resendRes = await fetch('https://api.resend.com/emails', {
       method: 'POST',
       headers: {
@@ -145,15 +177,4 @@ export async function onRequestPost(context) {
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
     });
   }
-}
-
-export async function onRequestOptions() {
-  return new Response(null, {
-    status: 204,
-    headers: {
-      'Access-Control-Allow-Origin': '*',
-      'Access-Control-Allow-Methods': 'POST, OPTIONS',
-      'Access-Control-Allow-Headers': 'Content-Type',
-    },
-  });
 }
