@@ -1,0 +1,608 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Navbar from '../../components/Navbar.astro';
+import Footer from '../../components/global/Footer.astro';
+import PageHero from '../../components/global/PageHero.astro';
+import CaseEvaluation from '../../components/sections/CaseEvaluation.astro';
+import StickyCTA from '../../components/global/StickyCTA.astro';
+import CaseAssistant from '../../components/chat/CaseAssistant.astro';
+
+export function getStaticPaths() {
+  const guides = [
+    {
+      slug: 'california-statutes-of-limitations',
+      title: 'California Statutes of Limitations: Critical Filing Deadlines for Injury & Employment',
+      kicker: 'STATUTORY FILING TIMELINES',
+      lead: 'A comprehensive, attorney-reviewed breakdown of California filing deadlines for personal injury, wrongful death, workplace retaliation, and government claims.',
+      directAnswer: 'In California, missing your statute of limitations permanently extinguishes your legal right to compensation. The general personal injury deadline is 2 years (CCP § 335.1), but claims against California government entities must be filed within 6 months (Gov Code § 911.2).',
+      author: 'Senior California Litigation Partner',
+      reviewer: 'California Appellate & Civil Practice Group',
+      lastReviewed: 'September 2026',
+      toc: [
+        { title: 'The Core 2-Year Personal Injury Rule (CCP § 335.1)', id: 'injury-rule' },
+        { title: 'The Strict 6-Month Government Claim Trap (Gov Code § 911.2)', id: 'gov-claims' },
+        { title: 'California Employment Claims & FEHA Deadlines', id: 'employment-deadlines' },
+        { title: 'Medical Malpractice Discovery Deadlines (CCP § 340.5)', id: 'med-mal' },
+        { title: 'Tolling Exceptions Under California Law', id: 'tolling' }
+      ],
+      sections: [
+        {
+          id: 'injury-rule',
+          heading: 'The Core 2-Year Personal Injury Rule (CCP § 335.1)',
+          content: 'Under California Code of Civil Procedure Section 335.1, an action for assault, battery, or injury to, or for the death of, an individual caused by the wrongful act or neglect of another must be commenced within two years of the incident. This two-year statutory clock begins ticking on the exact calendar day the harm occurs. If a formal lawsuit is not filed in the appropriate California Superior Court before the two-year anniversary, the court lacks jurisdiction and will dismiss the complaint with prejudice.'
+        },
+        {
+          id: 'gov-claims',
+          heading: 'The Strict 6-Month Government Claim Trap (Gov Code § 911.2)',
+          content: 'The single most dangerous pitfall in California tort law involves injuries connected to public entities. Under the California Government Claims Act (California Government Code § 911.2), before you can file a lawsuit against any California city, county, school district, public hospital, or transit authority (such as Metro, Muni, or Caltrans), you must present a formal written administrative claim within six months of the accrual of the cause of action. Failing to file this claim within 6 months almost always forecloses the claim unless very narrow relief from forfeiture applies.'
+        },
+        {
+          id: 'employment-deadlines',
+          heading: 'California Employment Claims & FEHA Deadlines',
+          content: 'For California workplace claims governed by the Fair Employment and Housing Act (FEHA)—including discrimination, sexual harassment, and hostile work environment retaliation—employees have up to three years from the date of the unlawful practice to file a verified administrative complaint with the California Civil Rights Department (CRD). Once the CRD issues an immediate Right-to-Sue Notice, the worker has one calendar year from the date of the notice to file a civil complaint in California Superior Court.'
+        },
+        {
+          id: 'med-mal',
+          heading: 'Medical Malpractice Discovery Deadlines (CCP § 340.5)',
+          content: 'Under California Code of Civil Procedure § 340.5, an action for medical malpractice must be commenced within three years after the date of injury, or one year after the plaintiff discovers, or through the use of reasonable diligence should have discovered, the injury, whichever occurs first. Additionally, California Code of Civil Procedure § 364 mandates that plaintiffs serve healthcare providers with formal written Notice of Intention to Sue at least 90 days prior to filing suit.'
+        },
+        {
+          id: 'tolling',
+          heading: 'Tolling Exceptions Under California Law',
+          content: 'California law recognizes limited circumstances where the statutory clock pauses ("tolls"). The most common tolling grounds include the plaintiff being a minor (under age 18) at the time of injury (CCP § 352), temporary mental incapacity, or when the defendant has fled the State of California (CCP § 351). However, tolling rules are narrowly construed by California appellate courts and should never be relied upon without attorney confirmation.'
+        }
+      ],
+      citations: [
+        'Cal. Code Civ. Proc. § 335.1 (Two-Year Personal Injury Period)',
+        'Cal. Gov. Code § 911.2 (Six-Month Presentation Period for Government Claims)',
+        'Cal. Gov. Code § 12960 (Three-Year FEHA Administrative Filing Period)',
+        'Cal. Code Civ. Proc. § 340.5 (Medical Malpractice Limitations & Discovery Rule)'
+      ]
+    },
+    {
+      slug: 'california-wrongful-termination-laws',
+      title: 'Wrongful Termination in California: Exceptions to At-Will Employment',
+      kicker: 'EMPLOYMENT RIGHTS ANALYSIS',
+      lead: 'An in-depth explanation of California at-will employment exceptions, whistleblower rights under Labor Code § 1102.5, and public policy remedies.',
+      directAnswer: 'While California Labor Code § 2922 presumes employment is "at-will," employers cannot terminate an employee for illegal reasons, such as retaliation for whistleblowing, asserting workplace safety complaints, or discriminating based on protected traits under FEHA.',
+      author: 'Employment Litigation Practice Group',
+      reviewer: 'Senior Partner, California Labor Counsel',
+      lastReviewed: 'August 2026',
+      toc: [
+        { title: 'California At-Will Doctrine vs. Unlawful Pretext', id: 'at-will' },
+        { title: 'Tameny Public Policy Exceptions', id: 'tameny' },
+        { title: 'Whistleblower Protections: Labor Code § 1102.5', id: 'whistleblower' },
+        { title: 'Retaliation for Protected Leave (CFRA/PDL)', id: 'cfra-leave' },
+        { title: 'Remedies & Punitive Damages in California', id: 'remedies' }
+      ],
+      sections: [
+        {
+          id: 'at-will',
+          heading: 'California At-Will Doctrine vs. Unlawful Pretext',
+          content: 'Under California Labor Code § 2922, employment having no specified term may be terminated at the will of either party. However, "at-will" is not a blank check for illegal conduct. When an employer fires a worker due to a protected status (race, gender, disability, pregnancy) or because the worker exercised a legal right, the firing constitutes wrongful termination. Employers frequently disguise unlawful firings behind fabricated "performance issues" or sudden "restructuring."'
+        },
+        {
+          id: 'tameny',
+          heading: 'Tameny Public Policy Exceptions',
+          content: 'In Tameny v. Atlantic Richfield Co. (1980), the California Supreme Court ruled that an employer cannot terminate an employee for reasons that contravene fundamental California public policies delineated in constitutional or statutory provisions. Examples include firing an employee for refusing to commit perjury, refusing to falsify pollution records, or serving on jury duty.'
+        },
+        {
+          id: 'whistleblower',
+          heading: 'Whistleblower Protections: Labor Code § 1102.5',
+          content: 'California Labor Code § 1102.5 protects employees who disclose information to a supervisor, compliance officer, or government agency where the employee has reasonable cause to believe the information discloses a violation of state or federal law. California Senate Bill 497 (effective 2024) creates a rebuttable presumption of retaliation if an adverse employment action occurs within 90 days of protected activity.'
+        },
+        {
+          id: 'cfra-leave',
+          heading: 'Retaliation for Protected Leave (CFRA/PDL)',
+          content: 'Under the California Family Rights Act (CFRA) and Pregnancy Disability Leave (PDL), eligible employees have the absolute right to take protected medical and bonding leave without fear of termination. Terminating, replacing, or demoting an employee while on or shortly after returning from CFRA leave violates Government Code § 12945.2.'
+        },
+        {
+          id: 'remedies',
+          heading: 'Remedies & Punitive Damages in California',
+          content: 'Wrongfully terminated California employees may recover past and future lost earnings, compensation for severe emotional distress and reputational harm, civil penalties of up to $10,000 per violation under Labor Code § 1102.5, and punitive damages under Civil Code § 3294 upon clear and convincing proof of malice, oppression, or fraud by corporate managing agents.'
+        }
+      ],
+      citations: [
+        'Cal. Labor Code § 2922 (At-Will Employment)',
+        'Cal. Labor Code § 1102.5 (Whistleblower Retaliation & SB 497 Presumption)',
+        'Cal. Gov. Code § 12940 (FEHA Prohibited Employment Practices)',
+        'Tameny v. Atlantic Richfield Co., 27 Cal. 3d 167 (1980)'
+      ]
+    },
+    {
+      slug: 'what-to-do-after-accident',
+      title: 'What to Do After a California Car Accident: Critical Steps to Protect Your Claim',
+      kicker: 'CRITICAL ACCIDENT TOOLKIT',
+      lead: 'Practical step-by-step guidance for protecting your physical health and preserving essential evidence following a motor vehicle collision in California.',
+      directAnswer: 'Immediately following a collision in California: verify safety and call 911, document the scene with photos and video before vehicles are moved, exchange California insurance info, seek prompt medical evaluation, and decline recorded statements to insurance adjusters until consulting counsel.',
+      author: 'Motor Vehicle Trial Practice Team',
+      reviewer: 'Managing Litigation Partner',
+      lastReviewed: 'September 2026',
+      toc: [
+        { title: 'Step 1: Secure the Scene & Call 911', id: 'step-1' },
+        { title: 'Step 2: Collect Comprehensive Evidence at the Scene', id: 'step-2' },
+        { title: 'Step 3: Seek Immediate Emergency Medical Evaluation', id: 'step-3' },
+        { title: 'Step 4: File California DMV Form SR-1', id: 'step-4' },
+        { title: 'Step 5: Beware Recorded Statements to Insurance Adjusters', id: 'step-5' }
+      ],
+      sections: [
+        {
+          id: 'step-1',
+          heading: 'Step 1: Secure the Scene & Call 911',
+          content: 'Ensure vehicles are in a safe position if drivable. Call 911 immediately to dispatch police or the California Highway Patrol (CHP) and emergency medical personnel. An official Police Traffic Collision Report is the foundational document for establishing liability, documenting witness statements, and noting vehicle resting positions.'
+        },
+        {
+          id: 'step-2',
+          heading: 'Step 2: Collect Comprehensive Evidence at the Scene',
+          content: 'Use your smartphone to photograph: all vehicle damage, tire skid marks, debris fields, traffic signs, weather and road conditions, license plates, and driver insurance cards. Politely ask witnesses for their full names and phone numbers before they depart.'
+        },
+        {
+          id: 'step-3',
+          heading: 'Step 3: Seek Immediate Emergency Medical Evaluation',
+          content: 'Adrenaline often masks symptoms of severe spinal, soft tissue, and traumatic brain injuries for hours or days. Seeking immediate examination at an emergency department or urgent care facility establishes a contemporaneous medical link between the collision and your injuries, preventing insurance adjusters from claiming the trauma occurred elsewhere.'
+        },
+        {
+          id: 'step-4',
+          heading: 'Step 4: File California DMV Form SR-1',
+          content: 'Under California Vehicle Code § 16000, you must report any collision to the California DMV within 10 days on Form SR-1 if anyone was injured or killed, or if property damage exceeded $1,000. Failure to submit Form SR-1 can result in license suspension regardless of who was at fault.'
+        },
+        {
+          id: 'step-5',
+          heading: 'Step 5: Beware Recorded Statements to Insurance Adjusters',
+          content: 'The other driver’s insurance adjuster is a trained negotiator tasked with minimizing payouts. They will request a recorded phone statement. You are not legally required to provide a recorded statement to the opposing insurer. Consult qualified counsel before signing medical authorizations or giving recorded interviews.'
+        }
+      ],
+      citations: [
+        'Cal. Veh. Code § 16000 (DMV Accident Reporting - Form SR-1)',
+        'Cal. Civ. Code § 1714 (Duty of Ordinary Care)',
+        'Li v. Yellow Cab Co., 13 Cal. 3d 804 (California Pure Comparative Fault)'
+      ]
+    },
+    {
+      slug: 'unruh-civil-rights-act-disability',
+      title: 'The California Unruh Civil Rights Act: Enforcing Equal Access & Statutory Damages',
+      kicker: 'CALIFORNIA CIVIL RIGHTS LAW',
+      lead: 'An educational review of California Civil Code § 51, minimum statutory penalties, and equal accessibility enforcement for disabled persons.',
+      directAnswer: 'The California Unruh Civil Rights Act (Civil Code § 51) guarantees full and equal accommodations in all business establishments. Any violation of the federal ADA constitutes an automatic violation of California law, subjecting violators to minimum statutory damages of $4,000 per violation plus attorney fees.',
+      author: 'Civil Rights Practice Group',
+      reviewer: 'Senior Civil Rights Trial Counsel',
+      lastReviewed: 'July 2026',
+      toc: [
+        { title: 'The Landmark California Unruh Civil Rights Act', id: 'unruh-intro' },
+        { title: 'Automatic ADA Cross-Enforcement Under § 51(f)', id: 'ada-link' },
+        { title: 'Statutory Damages of $4,000 per Violation (Civ. Code § 52)', id: 'damages' },
+        { title: 'Service Animal Rights & Accommodation Mandates', id: 'service-animals' }
+      ],
+      sections: [
+        {
+          id: 'unruh-intro',
+          heading: 'The Landmark California Unruh Civil Rights Act',
+          content: 'California Civil Code § 51, known as the Unruh Civil Rights Act, provides that all persons within the jurisdiction of California are free and equal, and no matter what their disability, sex, race, color, religion, ancestry, national origin, or medical condition, are entitled to full and equal accommodations, advantages, facilities, privileges, or services in all business establishments of every kind whatsoever.'
+        },
+        {
+          id: 'ada-link',
+          heading: 'Automatic ADA Cross-Enforcement Under § 51(f)',
+          content: 'In 1992, California amended the Unruh Act to include Civil Code § 51(f), which provides: "A violation of the right of any individual under the federal Americans with Disabilities Act of 1990 shall also constitute a violation of this section." This vital linkage allows plaintiffs in California state court to enforce federal accessibility standards with California statutory damage remedies.'
+        },
+        {
+          id: 'damages',
+          heading: 'Statutory Damages of $4,000 per Violation (Civ. Code § 52)',
+          content: 'Unlike federal Title III ADA actions where plaintiffs can only obtain injunctive relief and attorney fees, California Civil Code § 52 authorizes actual damages, and for each violation, an amount that may be determined by a jury up to a maximum of three times the amount of actual damages but in no case less than four thousand dollars ($4,000), along with attorney fees.'
+        },
+        {
+          id: 'service-animals',
+          heading: 'Service Animal Rights & Accommodation Mandates',
+          content: 'Businesses open to the public in California must permit individuals with disabilities accompanied by trained service animals in all areas where members of the public are allowed. Denying entry to a service dog or demanding medical certification constitutes an actionable civil rights violation.'
+        }
+      ],
+      citations: [
+        'Cal. Civ. Code § 51 (The Unruh Civil Rights Act)',
+        'Cal. Civ. Code § 52 (Statutory Remedies, $4,000 Minimum & Attorney Fees)',
+        'Cal. Civ. Code § 54.1 (California Disabled Persons Act)'
+      ]
+    }
+  ];
+
+  return guides.map(g => ({
+    params: { slug: g.slug },
+    props: { guide: g }
+  }));
+}
+
+const { guide } = Astro.props;
+
+const breadcrumbs = [
+  { label: 'Home', href: '/' },
+  { label: 'Resources', href: '/resources' },
+  { label: guide.title }
+];
+---
+
+<Layout 
+  title={`${guide.title} | Equal Justice Lawyers`}
+  description={guide.lead}
+>
+  <Navbar transparent={false} />
+
+  <main id="main-content">
+    <PageHero 
+      kicker={guide.kicker}
+      title={guide.title}
+      lead={guide.lead}
+      breadcrumb={breadcrumbs}
+    />
+
+    <!-- Article Body -->
+    <article class="section-light guide-detail-article">
+      <div class="section-container guide-layout-grid">
+        <!-- Main Article Column -->
+        <div class="guide-main-col">
+          <!-- Direct Answer Callout / AEO Block -->
+          <div class="aeo-answer-card">
+            <div class="aeo-header">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#c8a04a" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"></circle>
+                <line x1="12" y1="16" x2="12" y2="12"></line>
+                <line x1="12" y1="8" x2="12.01" y2="8"></line>
+              </svg>
+              <span>The Direct Answer: Key California Rule</span>
+            </div>
+            <p class="aeo-text">{guide.directAnswer}</p>
+          </div>
+
+          <!-- Metadata Byline -->
+          <div class="guide-meta-byline">
+            <div class="byline-item">
+              <span class="meta-title">Author:</span>
+              <span class="meta-name">{guide.author}</span>
+            </div>
+            <div class="byline-item">
+              <span class="meta-title">Reviewer:</span>
+              <span class="meta-name">{guide.reviewer}</span>
+            </div>
+            <div class="byline-item">
+              <span class="meta-title">Last Legal Review:</span>
+              <span class="meta-name">{guide.lastReviewed}</span>
+            </div>
+          </div>
+
+          <!-- Table of Contents -->
+          <nav class="guide-toc-box" aria-label="Table of Contents">
+            <h3 class="toc-heading">Table of Contents</h3>
+            <ol class="toc-list">
+              {guide.toc.map(item => (
+                <li>
+                  <a href={`#${item.id}`} class="toc-link">{item.title}</a>
+                </li>
+              ))}
+            </ol>
+          </nav>
+
+          <!-- Guide Sections -->
+          <div class="guide-body-sections">
+            {guide.sections.map(s => (
+              <section class="guide-content-section" id={s.id}>
+                <h2 class="section-subheading">{s.heading}</h2>
+                <p class="section-p">{s.content}</p>
+              </section>
+            ))}
+          </div>
+
+          <!-- Statutory Citations & Sources -->
+          <div class="citations-box">
+            <h3 class="citations-heading">Statutory Authority & Primary Sources</h3>
+            <ul class="citations-list">
+              {guide.citations.map(c => (
+                <li>
+                  <span class="cite-bullet">§</span>
+                  <span class="cite-text">{c}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+
+        <!-- Sidebar -->
+        <aside class="detail-sidebar">
+          <div class="sidebar-sticky-box">
+            <div class="sidebar-card eval-card">
+              <h3 class="sidebar-title">Confidential Legal Guidance</h3>
+              <p class="sidebar-desc">
+                Need specific guidance on your situation? Speak with our California intake team at no cost.
+              </p>
+              <a href="#case-evaluation" class="btn-gold sidebar-cta">
+                <span>Start Free Evaluation</span>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M5 12h14M12 5l7 7-7 7"></path>
+                </svg>
+              </a>
+              <div class="sidebar-phone">
+                <span>Direct Legal Hotline:</span>
+                <a href="tel:8005555878">(800) 555-JUSTICE</a>
+              </div>
+            </div>
+
+            <div class="sidebar-card nav-card">
+              <h4 class="sidebar-nav-heading">Other Legal Guides</h4>
+              <ul class="sidebar-links">
+                <li><a href="/resources/california-statutes-of-limitations">California Statutes of Limitations</a></li>
+                <li><a href="/resources/california-wrongful-termination-laws">Wrongful Termination Laws</a></li>
+                <li><a href="/resources/what-to-do-after-accident">What to Do After an Accident</a></li>
+                <li><a href="/resources/unruh-civil-rights-act-disability">Unruh Civil Rights Act</a></li>
+                <li><a href="/resources">All Guides & FAQs</a></li>
+              </ul>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </article>
+
+    <CaseEvaluation />
+  </main>
+
+  <Footer />
+  <StickyCTA />
+  <CaseAssistant />
+</Layout>
+
+<style>
+  .guide-detail-article {
+    padding: 4.5rem 0;
+    border-bottom: 1px solid rgba(200, 160, 74, 0.2);
+  }
+
+  .guide-layout-grid {
+    display: grid;
+    grid-template-columns: 1fr 340px;
+    gap: 4rem;
+  }
+
+  .guide-main-col {
+    display: flex;
+    flex-direction: column;
+    gap: 2.2rem;
+  }
+
+  /* AEO Callout */
+  .aeo-answer-card {
+    background: var(--color-white);
+    border: 1.5px solid var(--color-gold);
+    border-radius: var(--radius-md);
+    padding: 1.8rem;
+    box-shadow: var(--shadow-card);
+  }
+
+  .aeo-header {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.78rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--color-gold-dark);
+    margin-bottom: 0.75rem;
+  }
+
+  .aeo-text {
+    font-size: 1.05rem;
+    line-height: 1.65;
+    color: var(--color-dark-green);
+    font-weight: 500;
+  }
+
+  /* Byline */
+  .guide-meta-byline {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 2rem;
+    padding: 1rem 1.4rem;
+    background: var(--color-bg-cream);
+    border: 1px solid rgba(200, 160, 74, 0.25);
+    border-radius: var(--radius-sm);
+    font-size: 0.8rem;
+  }
+
+  .meta-title {
+    font-weight: 700;
+    color: var(--color-dark-green);
+    margin-right: 0.35rem;
+  }
+
+  .meta-name {
+    color: var(--color-text-dark-muted);
+  }
+
+  /* TOC */
+  .guide-toc-box {
+    background: var(--color-white);
+    border: 1px solid rgba(200, 160, 74, 0.25);
+    border-radius: var(--radius-sm);
+    padding: 1.6rem 2rem;
+  }
+
+  .toc-heading {
+    font-family: var(--font-serif);
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--color-dark-green);
+    margin-bottom: 1rem;
+    padding-bottom: 0.4rem;
+    border-bottom: 1px solid rgba(200, 160, 74, 0.2);
+  }
+
+  .toc-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    padding-left: 1.2rem;
+  }
+
+  .toc-link {
+    font-size: 0.88rem;
+    color: var(--color-gold-dark);
+    font-weight: 500;
+    transition: color 0.2s;
+  }
+
+  .toc-link:hover {
+    color: var(--color-dark-green);
+    text-decoration: underline;
+  }
+
+  /* Guide Body Sections */
+  .guide-body-sections {
+    display: flex;
+    flex-direction: column;
+    gap: 2.2rem;
+  }
+
+  .guide-content-section {
+    padding-top: 1rem;
+  }
+
+  .section-subheading {
+    font-family: var(--font-serif);
+    font-size: 1.55rem;
+    font-weight: 700;
+    color: var(--color-dark-green);
+    margin-bottom: 0.8rem;
+    line-height: 1.3;
+  }
+
+  .section-p {
+    font-size: 0.95rem;
+    line-height: 1.75;
+    color: var(--color-text-dark-muted);
+  }
+
+  /* Citations Box */
+  .citations-box {
+    background: rgba(200, 160, 74, 0.08);
+    border: 1px solid rgba(200, 160, 74, 0.25);
+    border-radius: var(--radius-sm);
+    padding: 1.6rem;
+    margin-top: 1.5rem;
+  }
+
+  .citations-heading {
+    font-family: var(--font-serif);
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--color-dark-green);
+    margin-bottom: 0.8rem;
+  }
+
+  .citations-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .citations-list li {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.85rem;
+    color: var(--color-text-dark-muted);
+  }
+
+  .cite-bullet {
+    color: var(--color-gold-dark);
+    font-weight: 700;
+  }
+
+  /* Sidebar */
+  .sidebar-sticky-box {
+    position: sticky;
+    top: 90px;
+    display: flex;
+    flex-direction: column;
+    gap: 1.75rem;
+  }
+
+  .sidebar-card {
+    background: var(--color-white);
+    border: 1px solid rgba(200, 160, 74, 0.25);
+    border-radius: var(--radius-md);
+    padding: 1.8rem;
+    box-shadow: var(--shadow-card);
+  }
+
+  .sidebar-title {
+    font-family: var(--font-serif);
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--color-dark-green);
+    margin-bottom: 0.6rem;
+  }
+
+  .sidebar-desc {
+    font-size: 0.84rem;
+    color: var(--color-text-dark-muted);
+    line-height: 1.55;
+    margin-bottom: 1.5rem;
+  }
+
+  .sidebar-cta {
+    width: 100%;
+    justify-content: center;
+    margin-bottom: 1.2rem;
+  }
+
+  .sidebar-phone {
+    text-align: center;
+    font-size: 0.78rem;
+    color: var(--color-text-dark-muted);
+    border-top: 1px solid rgba(200, 160, 74, 0.2);
+    padding-top: 0.8rem;
+  }
+
+  .sidebar-phone a {
+    display: block;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--color-dark-green);
+    margin-top: 0.2rem;
+  }
+
+  .sidebar-phone a:hover {
+    color: var(--color-gold);
+  }
+
+  .sidebar-nav-heading {
+    font-family: var(--font-serif);
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--color-dark-green);
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid rgba(200, 160, 74, 0.2);
+  }
+
+  .sidebar-links {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .sidebar-links a {
+    font-size: 0.84rem;
+    color: var(--color-text-dark-muted);
+    transition: color 0.2s, transform 0.2s;
+    display: inline-block;
+  }
+
+  .sidebar-links a:hover {
+    color: var(--color-gold-dark);
+    transform: translateX(3px);
+  }
+
+  @media (max-width: 980px) {
+    .guide-layout-grid {
+      grid-template-columns: 1fr;
+      gap: 3rem;
+    }
+  }
+</style>

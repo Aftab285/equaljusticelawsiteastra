@@ -1,0 +1,591 @@
+---
+interface Props {
+  lang?: string;
+}
+
+const { lang = 'en' } = Astro.props;
+const isSpanish = lang === 'es';
+---
+
+<div class="case-assistant-wrapper" id="case-assistant-modal" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="assistant-title">
+  <div class="assistant-backdrop" id="assistant-backdrop"></div>
+  
+  <div class="assistant-panel">
+    <!-- Header -->
+    <div class="assistant-header">
+      <div class="assistant-avatar">
+        <svg width="24" height="24" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="22" cy="22" r="20" stroke="#c8a04a" stroke-width="2.5" fill="none"/>
+          <path d="M22 8 L22 14 M16 12 L22 14 L28 12 M14 14 L14 18 M30 14 L30 18 M12 18 L16 18 M28 18 L32 18" stroke="#c8a04a" stroke-width="2" stroke-linecap="round"/>
+          <path d="M22 14 L22 28" stroke="#c8a04a" stroke-width="2.5" stroke-linecap="round"/>
+          <path d="M16 28 L28 28 L26 34 L18 34 Z" fill="#c8a04a" opacity="0.4" stroke="#c8a04a" stroke-width="1.5"/>
+        </svg>
+      </div>
+      <div class="assistant-title-box">
+        <h3 id="assistant-title" class="assistant-name">
+          {isSpanish ? 'Asistente de Casos Equal Justice' : 'Equal Justice Case Assistant'}
+        </h3>
+        <span class="assistant-status">
+          <span class="status-indicator"></span>
+          {isSpanish ? 'En línea • Confidencial' : 'Online • Confidential Intake'}
+        </span>
+      </div>
+      <button class="assistant-close-btn" id="assistant-close-btn" aria-label="Close Assistant">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
+    </div>
+
+    <!-- Ethics Notice Bar -->
+    <div class="assistant-disclaimer-bar">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#c8a04a" stroke-width="2">
+        <circle cx="12" cy="12" r="10"></circle>
+        <line x1="12" y1="8" x2="12" y2="12"></line>
+        <line x1="12" y1="16" x2="12.01" y2="16"></line>
+      </svg>
+      <span>
+        {isSpanish 
+          ? 'Herramienta informativa automatizada. No proporciona asesoría legal ni crea relación abogado-cliente.' 
+          : 'Automated intake tool. Does not provide legal advice or create an attorney-client relationship.'}
+      </span>
+    </div>
+
+    <!-- Chat Messages Container -->
+    <div class="assistant-messages" id="assistant-messages" role="log" aria-live="polite">
+      <!-- Initial Bot Welcome Message -->
+      <div class="chat-bubble bot-bubble">
+        <p>
+          {isSpanish
+            ? 'Hola. Soy el Asistente de Casos de Equal Justice. Puedo ayudarle a recopilar información básica sobre su asunto legal para una evaluación del caso. No soy abogado y esta conversación no crea una relación abogado-cliente.'
+            : "Hello! I'm the Equal Justice Case Assistant. I can help collect basic information about your legal issue for a case evaluation. I am not a lawyer, and this chat does not create an attorney-client relationship."}
+        </p>
+        <p class="chat-sub">
+          {isSpanish
+            ? '¿Qué tipo de problema legal le ha afectado en California?'
+            : 'To start, what type of legal issue are you facing in California?'}
+        </p>
+      </div>
+
+      <!-- Quick Action Buttons for Step 1 -->
+      <div class="chat-options" id="chat-options-step1">
+        <button type="button" class="chat-option-btn" data-type="Personal Injury / Accident">
+          {isSpanish ? 'Accidente / Lesiones Personales' : 'Personal Injury / Accident'}
+        </button>
+        <button type="button" class="chat-option-btn" data-type="Employment / Workplace Law">
+          {isSpanish ? 'Trabajo / Despido / Salarios' : 'Employment / Workplace Law'}
+        </button>
+        <button type="button" class="chat-option-btn" data-type="Disability Rights">
+          {isSpanish ? 'Derechos de Discapacidad' : 'Disability Rights'}
+        </button>
+        <button type="button" class="chat-option-btn" data-type="Medical Malpractice">
+          {isSpanish ? 'Negligencia Médica' : 'Medical Malpractice'}
+        </button>
+        <button type="button" class="chat-option-btn" data-type="Consumer Protection">
+          {isSpanish ? 'Protección al Consumidor' : 'Consumer Protection'}
+        </button>
+        <button type="button" class="chat-option-btn" data-type="Other Legal Problem">
+          {isSpanish ? 'Otro Asunto Legal' : 'Other Legal Problem'}
+        </button>
+      </div>
+    </div>
+
+    <!-- Input Form -->
+    <div class="assistant-input-area" id="assistant-input-area">
+      <form id="assistant-chat-form" class="assistant-form">
+        <input 
+          type="text" 
+          id="assistant-user-input" 
+          class="assistant-text-input" 
+          placeholder={isSpanish ? "Escriba su respuesta o detalles..." : "Type your answer or details..."}
+          aria-label="Your response"
+          autocomplete="off"
+        />
+        <button type="submit" class="assistant-send-btn" aria-label="Send message">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="22" y1="2" x2="11" y2="13"></line>
+            <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+          </svg>
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Floating Launcher Bubble -->
+  <button type="button" class="floating-chat-trigger" id="floating-chat-trigger" aria-label="Open Equal Justice Legal Intake Assistant">
+    <div class="trigger-icon">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+      </svg>
+    </div>
+    <span class="trigger-label">{isSpanish ? 'Chat Confidencial' : 'Chat With Us'}</span>
+  </button>
+</div>
+
+<script>
+  // Case Assistant interactive lightweight logic
+  const modal = document.getElementById('case-assistant-modal');
+  const backdrop = document.getElementById('assistant-backdrop');
+  const closeBtn = document.getElementById('assistant-close-btn');
+  const floatingTrigger = document.getElementById('floating-chat-trigger');
+  const messagesBox = document.getElementById('assistant-messages');
+  const chatForm = document.getElementById('assistant-chat-form');
+  const chatInput = document.getElementById('assistant-user-input') as HTMLInputElement;
+  const optionsStep1 = document.getElementById('chat-options-step1');
+
+  let currentStep = 1;
+  const collectedData: Record<string, string> = {
+    caseType: '',
+    county: '',
+    timeframe: '',
+    hasAttorney: '',
+    contactName: '',
+    contactPhone: ''
+  };
+
+  const isEs = document.documentElement.lang === 'es';
+
+  function openChat() {
+    if (modal) {
+      modal.classList.add('is-active');
+      modal.setAttribute('aria-hidden', 'false');
+      setTimeout(() => {
+        chatInput?.focus();
+        if (messagesBox) {
+          messagesBox.scrollTop = messagesBox.scrollHeight;
+        }
+      }, 50);
+    }
+  }
+
+  function closeChat() {
+    if (modal) {
+      modal.classList.remove('is-active');
+      modal.setAttribute('aria-hidden', 'true');
+    }
+  }
+
+  // Expose globally
+  (window as any).openLegalChat = openChat;
+  (window as any).closeLegalChat = closeChat;
+
+  floatingTrigger?.addEventListener('click', openChat);
+  closeBtn?.addEventListener('click', closeChat);
+  backdrop?.addEventListener('click', closeChat);
+
+  // Close on Escape key
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && modal?.classList.contains('is-active')) {
+      closeChat();
+    }
+  });
+
+  // Attach to all explicit chat triggers across the site safely
+  const chatSelector = 'a[href="#chat"], [data-trigger-chat], #trigger-chat-btn, .chat-trigger-btn, .open-chat-btn';
+  document.querySelectorAll(chatSelector).forEach(el => {
+    el.addEventListener('click', (e) => {
+      e.preventDefault();
+      openChat();
+    });
+  });
+
+  // Fallback text check for any button or link containing 'chat'
+  document.querySelectorAll('a, button').forEach(el => {
+    const href = el.getAttribute('href');
+    const text = (el.textContent || '').trim().toLowerCase();
+    if (href === '#chat' || text === 'chat' || text.includes('chat with us') || text.includes('chat en vivo') || text.includes('chat confidencial')) {
+      el.addEventListener('click', (e) => {
+        e.preventDefault();
+        openChat();
+      });
+    }
+  });
+
+  function appendMessage(text: string, isUser = false) {
+    if (!messagesBox) return;
+    const bubble = document.createElement('div');
+    bubble.className = `chat-bubble ${isUser ? 'user-bubble' : 'bot-bubble'}`;
+    const p = document.createElement('p');
+    p.textContent = text;
+    bubble.appendChild(p);
+    messagesBox.appendChild(bubble);
+    messagesBox.scrollTop = messagesBox.scrollHeight;
+  }
+
+  function advanceStep(userInput: string) {
+    if (currentStep === 1) {
+      collectedData.caseType = userInput;
+      appendMessage(userInput, true);
+      optionsStep1?.remove();
+      
+      setTimeout(() => {
+        appendMessage(
+          isEs
+            ? `Gracias. Entendido: asunto de ${userInput}. ¿En qué condado o ciudad de California ocurrió esto (ej. Los Ángeles, Orange County, San Diego, San Francisco, Sacramento)?`
+            : `Thank you. Understood regarding your ${userInput} matter. What California county or city did this occur in (e.g. Los Angeles, Orange County, San Diego, San Francisco, Sacramento)?`
+        );
+        currentStep = 2;
+        chatInput?.focus();
+      }, 400);
+    } else if (currentStep === 2) {
+      collectedData.county = userInput;
+      appendMessage(userInput, true);
+
+      setTimeout(() => {
+        appendMessage(
+          isEs
+            ? 'Aproximadamente, ¿cuándo ocurrió o cuándo fue despedido/lesionado? (Esto ayuda a verificar los plazos de prescripción de California)'
+            : 'Approximately when did this incident or dispute occur? (This helps check California statutory deadlines)'
+        );
+        currentStep = 3;
+        chatInput?.focus();
+      }, 400);
+    } else if (currentStep === 3) {
+      collectedData.timeframe = userInput;
+      appendMessage(userInput, true);
+
+      setTimeout(() => {
+        appendMessage(
+          isEs
+            ? '¿Tiene actualmente un abogado representándole para este asunto? (Sí / No)'
+            : 'Do you currently have an attorney representing you for this legal matter? (Yes / No)'
+        );
+        currentStep = 4;
+        chatInput?.focus();
+      }, 400);
+    } else if (currentStep === 4) {
+      collectedData.hasAttorney = userInput;
+      appendMessage(userInput, true);
+
+      setTimeout(() => {
+        appendMessage(
+          isEs
+            ? 'Por favor, comparta su Nombre Completo y Número de Teléfono para que nuestro equipo legal pueda revisar sus datos y comunicarse de manera confidencial.'
+            : 'Please provide your Full Name and best Callback Phone Number so our California legal intake team can review your facts confidentially.'
+        );
+        currentStep = 5;
+        chatInput?.focus();
+      }, 400);
+    } else if (currentStep === 5) {
+      collectedData.contactName = userInput;
+      appendMessage(userInput, true);
+
+      setTimeout(() => {
+        appendMessage(
+          isEs
+            ? '✅ Información recibida de forma segura. Un miembro de nuestro equipo de admisión revisará sus datos confidencialmente. Recuerde que esta comunicación preliminar no constituye representación formal.'
+            : '✅ Intake information securely received. A member of our California intake team will review your situation confidentially. Note: submitting this intake does not constitute formal legal representation.'
+        );
+        if (chatInput) {
+          chatInput.disabled = true;
+          chatInput.placeholder = isEs ? 'Revisión solicitada con éxito' : 'Intake submitted successfully';
+        }
+      }, 500);
+    }
+  }
+
+  // Handle option click
+  optionsStep1?.querySelectorAll('.chat-option-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const type = (btn as HTMLElement).dataset.type || btn.textContent || '';
+      advanceStep(type.trim());
+    });
+  });
+
+  // Handle text input submission
+  chatForm?.addEventListener('submit', (e) => {
+    e.preventDefault();
+    if (!chatInput) return;
+    const val = chatInput.value.trim();
+    if (!val) return;
+    chatInput.value = '';
+    advanceStep(val);
+  });
+</script>
+
+<style>
+  /* Assistant Wrapper & Backdrop */
+  .case-assistant-wrapper {
+    position: relative;
+    z-index: 9999;
+  }
+
+  .assistant-backdrop {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(10, 20, 15, 0.6);
+    backdrop-filter: blur(4px);
+  }
+
+  .case-assistant-wrapper.is-active .assistant-backdrop {
+    display: block;
+  }
+
+  /* Assistant Drawer / Modal Panel */
+  .assistant-panel {
+    position: fixed;
+    bottom: 90px;
+    right: 25px;
+    width: 380px;
+    max-width: calc(100vw - 40px);
+    height: 560px;
+    max-height: calc(100vh - 120px);
+    background: var(--color-dark-green-deep);
+    border: 1px solid rgba(200, 160, 74, 0.35);
+    border-radius: var(--radius-md);
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.45);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    transform: translateY(20px) scale(0.95);
+    opacity: 0;
+    pointer-events: none;
+    transition: all 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .case-assistant-wrapper.is-active .assistant-panel {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  /* Header */
+  .assistant-header {
+    background: var(--color-dark-green);
+    padding: 0.9rem 1.1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    border-bottom: 1px solid rgba(200, 160, 74, 0.2);
+  }
+
+  .assistant-avatar {
+    flex-shrink: 0;
+  }
+
+  .assistant-title-box {
+    flex: 1;
+  }
+
+  .assistant-name {
+    font-family: var(--font-serif);
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--color-white);
+    line-height: 1.2;
+  }
+
+  .assistant-status {
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+    font-size: 0.72rem;
+    color: var(--color-gold);
+    font-weight: 500;
+  }
+
+  .status-indicator {
+    width: 6px;
+    height: 6px;
+    background: #4ade80;
+    border-radius: 50%;
+    display: inline-block;
+  }
+
+  .assistant-close-btn {
+    color: var(--color-text-muted);
+    padding: 4px;
+    border-radius: 4px;
+    transition: color 0.2s;
+  }
+
+  .assistant-close-btn:hover {
+    color: var(--color-white);
+  }
+
+  /* Disclaimer Bar */
+  .assistant-disclaimer-bar {
+    background: rgba(200, 160, 74, 0.08);
+    border-bottom: 1px solid rgba(200, 160, 74, 0.15);
+    padding: 0.4rem 0.8rem;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.68rem;
+    color: var(--color-text-light);
+    line-height: 1.35;
+  }
+
+  .assistant-disclaimer-bar svg {
+    flex-shrink: 0;
+  }
+
+  /* Messages Area */
+  .assistant-messages {
+    flex: 1;
+    padding: 1rem;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+    background: radial-gradient(circle at top right, rgba(26, 51, 40, 0.4), transparent 70%);
+  }
+
+  .chat-bubble {
+    max-width: 85%;
+    padding: 0.75rem 0.95rem;
+    border-radius: 12px;
+    font-size: 0.84rem;
+    line-height: 1.5;
+  }
+
+  .bot-bubble {
+    align-self: flex-start;
+    background: rgba(26, 51, 40, 0.75);
+    border: 1px solid rgba(200, 160, 74, 0.25);
+    color: var(--color-text-light);
+    border-bottom-left-radius: 3px;
+  }
+
+  .chat-sub {
+    margin-top: 0.45rem;
+    font-weight: 600;
+    color: var(--color-gold);
+  }
+
+  .user-bubble {
+    align-self: flex-end;
+    background: var(--color-gold);
+    color: var(--color-dark-green);
+    font-weight: 600;
+    border-bottom-right-radius: 3px;
+  }
+
+  .chat-options {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    margin-top: 0.2rem;
+  }
+
+  .chat-option-btn {
+    text-align: left;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(200, 160, 74, 0.35);
+    color: var(--color-white);
+    padding: 0.55rem 0.85rem;
+    border-radius: var(--radius-sm);
+    font-size: 0.8rem;
+    font-weight: 500;
+    transition: all 0.2s ease;
+  }
+
+  .chat-option-btn:hover {
+    background: var(--color-gold);
+    color: var(--color-dark-green);
+    border-color: var(--color-gold);
+    transform: translateX(3px);
+  }
+
+  /* Input Area */
+  .assistant-input-area {
+    padding: 0.75rem;
+    background: var(--color-dark-green);
+    border-top: 1px solid rgba(200, 160, 74, 0.2);
+  }
+
+  .assistant-form {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .assistant-text-input {
+    flex: 1;
+    background: rgba(18, 32, 25, 0.9);
+    border: 1px solid rgba(200, 160, 74, 0.35);
+    border-radius: var(--radius-pill);
+    padding: 0.55rem 1rem;
+    color: var(--color-white);
+    font-size: 0.84rem;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+
+  .assistant-text-input:focus {
+    border-color: var(--color-gold);
+  }
+
+  .assistant-send-btn {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: var(--color-gold);
+    color: var(--color-dark-green);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+    flex-shrink: 0;
+  }
+
+  .assistant-send-btn:hover {
+    background: var(--color-gold-light);
+    transform: scale(1.05);
+  }
+
+  /* Floating Trigger Launcher */
+  .floating-chat-trigger {
+    position: fixed;
+    bottom: 25px;
+    right: 25px;
+    background: var(--color-dark-green);
+    border: 1.5px solid var(--color-gold);
+    border-radius: var(--radius-pill);
+    padding: 0.65rem 1.25rem;
+    color: var(--color-white);
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+    transition: all 0.25s ease;
+    z-index: 995;
+  }
+
+  .floating-chat-trigger:hover {
+    background: var(--color-gold);
+    color: var(--color-dark-green);
+    transform: translateY(-2px);
+    box-shadow: 0 10px 28px rgba(200, 160, 74, 0.35);
+  }
+
+  .trigger-icon {
+    display: flex;
+    align-items: center;
+  }
+
+  .trigger-label {
+    font-size: 0.85rem;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+  }
+
+  @media (max-width: 768px) {
+    .assistant-panel {
+      bottom: 75px;
+      right: 12px;
+      left: 12px;
+      width: auto;
+      height: 80vh;
+    }
+
+    .floating-chat-trigger {
+      display: none; /* Mobile uses bottom sticky bar */
+    }
+  }
+</style>

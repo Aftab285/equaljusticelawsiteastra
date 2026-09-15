@@ -1,0 +1,208 @@
+---
+interface Props {
+  lang?: string;
+}
+
+const { lang = 'en' } = Astro.props;
+const isSpanish = lang === 'es';
+
+const pillars = isSpanish
+  ? [
+      {
+        title: 'Preparación Exhaustiva para Juicio',
+        lead: 'Tratamos cada caso como si fuera a llegar al jurado.',
+        desc: 'Las compañías de seguros evalúan el riesgo según la disposición real del abogado para ir a juicio. Desarrollamos evidencia documental, peritajes forenses y reconstrucción de hechos desde el primer día.'
+      },
+      {
+        title: 'Litigio Civil y Laboral Complejo',
+        lead: 'Experiencia frente a los bufetes corporativos más grandes de California.',
+        desc: 'Nuestros abogados han litigado disputas con múltiples partes demandadas, corporaciones transnacionales y entidades públicas en cortes estatales y de distrito federal en California.'
+      },
+      {
+        title: 'Red de Peritos Médicos y Financieros',
+        lead: 'Colaboración con especialistas acreditados en California.',
+        desc: 'Respaldamos cada reclamo con análisis de neurólogos, cirujanos ortopédicos, economistas forenses y planificadores de cuidados de vida para calcular el impacto real de las lesiones o pérdidas salariales.'
+      },
+      {
+        title: 'Negociación Firme Respaldada por Datos',
+        lead: 'Demandas fundamentadas que obligan a evaluar el riesgo real.',
+        desc: 'No aceptamos acuerdos apresurados que dejen a nuestros clientes desprotegidos. Negociamos con base en la jurisprudencia más reciente y la ley aplicable en California.'
+      }
+    ]
+  : [
+      {
+        title: 'Meticulous Trial Preparation',
+        lead: 'We prepare every matter as if it will proceed before a California jury.',
+        desc: 'Insurance defense teams calibrate settlement offers based on counsel’s trial readiness. From formal written discovery to depositions, we build comprehensive evidentiary records from day one.'
+      },
+      {
+        title: 'Complex Multi-Party Litigation',
+        lead: 'Tenacious advocacy against large corporate defense firms.',
+        desc: 'Our attorneys navigate intricate liability disputes involving public entities, commercial transit fleets, general contractors, and corporate employers across state and federal courtrooms.'
+      },
+      {
+        title: 'Independent Medical & Economic Experts',
+        lead: 'Collaboration with California board-certified specialists.',
+        desc: 'We substantiate damages through forensic economists, life-care planners, vocational rehabilitation experts, and medical authorities who can clearly articulate the human impact of your loss.'
+      },
+      {
+        title: 'Principled, Data-Driven Negotiation',
+        lead: 'Leverage built on California precedent and factual evidence.',
+        desc: 'We reject premature, undervalued settlement proposals that shift long-term costs onto families. We negotiate aggressively from a position of verified evidentiary strength.'
+      }
+    ];
+---
+
+<section class="section-light representative-experience-section" id="experience">
+  <div class="section-container">
+    <div class="section-header-center">
+      <span class="section-kicker">{isSpanish ? 'TRAYECTORIA Y ENFOQUE' : 'LITIGATION RIGOR'}</span>
+      <h2 class="section-title">{isSpanish ? 'Por Qué la Experiencia Importa' : 'Why Experience Matters'}</h2>
+      <div class="gold-divider"></div>
+      <p class="section-subtitle">
+        {isSpanish
+          ? 'En litigios civiles y laborales en California, la profundidad en la preparación procesal y la capacidad de llevar un caso a juicio marcan la diferencia fundamental.'
+          : 'In California civil injury and employment disputes, rigorous preparation, courtroom credibility, and deep command of local procedure define the quality of your representation.'}
+      </p>
+    </div>
+
+    <!-- Experience Matrix Grid -->
+    <div class="experience-grid">
+      {pillars.map((item, idx) => (
+        <div class="exp-card">
+          <div class="exp-badge">
+            <span class="exp-number">0{idx + 1}</span>
+            <span class="exp-rule"></span>
+          </div>
+          <h3 class="exp-title">{item.title}</h3>
+          <p class="exp-lead">{item.lead}</p>
+          <p class="exp-desc">{item.desc}</p>
+        </div>
+      ))}
+    </div>
+
+    <!-- California State Bar Mandatory Past Results Disclaimer -->
+    <div class="past-results-disclaimer">
+      <div class="disclaimer-inner">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#c8a04a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+          <line x1="12" y1="8" x2="12" y2="12"></line>
+          <line x1="12" y1="16" x2="12.01" y2="16"></line>
+        </svg>
+        <p>
+          <strong>State Bar of California Rule 7.1 / 7.2 Disclaimer:</strong>
+          {isSpanish
+            ? 'Cualquier referencia a experiencia representativa, litigios previos o estándares de preparación procesal no constituye una garantía, promesa o predicción respecto del resultado de ningún asunto legal específico. Cada caso se fundamenta en hechos individuales y en la aplicación de la ley de California.'
+            : 'Any descriptions of representative litigation experience, procedural preparation standards, or prior legal matters do not constitute a guarantee, warranty, or prediction regarding the outcome of your individual legal matter. Each case turns on its own unique facts and applicable California law.'}
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .representative-experience-section {
+    border-bottom: 1px solid rgba(200, 160, 74, 0.2);
+  }
+
+  .experience-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+  }
+
+  .exp-card {
+    background: var(--color-white);
+    border: 1px solid rgba(200, 160, 74, 0.25);
+    border-radius: var(--radius-md);
+    padding: 2.5rem 2rem;
+    box-shadow: var(--shadow-card);
+    transition: all 0.25s ease;
+  }
+
+  .exp-card:hover {
+    transform: translateY(-3px);
+    border-color: var(--color-gold);
+    box-shadow: var(--shadow-card-hover);
+  }
+
+  .exp-badge {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .exp-number {
+    font-family: var(--font-serif);
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--color-gold);
+  }
+
+  .exp-rule {
+    flex: 1;
+    height: 1px;
+    background: rgba(200, 160, 74, 0.25);
+  }
+
+  .exp-title {
+    font-family: var(--font-serif);
+    font-size: 1.35rem;
+    font-weight: 700;
+    color: var(--color-dark-green);
+    line-height: 1.25;
+    margin-bottom: 0.5rem;
+  }
+
+  .exp-lead {
+    font-size: 0.92rem;
+    font-weight: 600;
+    color: var(--color-gold-dark);
+    margin-bottom: 0.75rem;
+    line-height: 1.45;
+  }
+
+  .exp-desc {
+    font-size: 0.85rem;
+    color: var(--color-text-dark-muted);
+    line-height: 1.65;
+  }
+
+  .past-results-disclaimer {
+    margin-top: 3.5rem;
+    background: rgba(200, 160, 74, 0.08);
+    border: 1px solid rgba(200, 160, 74, 0.3);
+    border-radius: var(--radius-sm);
+    padding: 1.25rem 1.5rem;
+  }
+
+  .disclaimer-inner {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.85rem;
+  }
+
+  .disclaimer-inner svg {
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  .disclaimer-inner p {
+    font-size: 0.76rem;
+    line-height: 1.55;
+    color: var(--color-text-dark-muted);
+  }
+
+  .disclaimer-inner strong {
+    color: var(--color-dark-green);
+    display: block;
+    margin-bottom: 0.2rem;
+  }
+
+  @media (max-width: 840px) {
+    .experience-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

@@ -1,0 +1,258 @@
+---
+interface Props {
+  lang?: string;
+}
+
+const { lang = 'en' } = Astro.props;
+const isSpanish = lang === 'es';
+
+const articles = isSpanish
+  ? [
+      {
+        slug: 'california-statutes-of-limitations',
+        category: 'Plazos Legales de California',
+        title: 'Guía Completa de Plazos de Prescripción en California: Lesiones y Empleo',
+        desc: 'Conozca las fechas límite estrictas bajo el Código de Procedimiento Civil § 335.1 y los plazos especiales de 6 meses para reclamos contra entidades públicas.',
+        updated: 'Septiembre 2026',
+        author: 'Revisado por Equipo Legal de CA'
+      },
+      {
+        slug: 'california-wrongful-termination-laws',
+        category: 'Derecho Laboral Explicado',
+        title: 'Despido Injustificado en California: Cuándo un Despido Viola la Ley',
+        desc: 'Explicación clara de las excepciones a la doctrina de empleo a voluntad, represalias protegidas bajo FEHA y derechos de denunciantes.',
+        updated: 'Agosto 2026',
+        author: 'Revisado por Abogado Laboral'
+      },
+      {
+        slug: 'what-to-do-after-accident',
+        category: 'Guía Práctica Paso a Paso',
+        title: 'Qué Hacer Inmediatamente Después de un Accidente de Auto en California',
+        desc: 'Los 7 pasos cruciales para proteger su salud física y salvaguardar la evidencia indispensable para su reclamo de compensación ante las aseguradoras.',
+        updated: 'Septiembre 2026',
+        author: 'Revisado por Equipo de Litigio'
+      },
+      {
+        slug: 'unruh-civil-rights-act-disability',
+        category: 'Derechos Civiles y Discapacidad',
+        title: 'La Ley de Derechos Civiles Unruh: Protección Contra la Discriminación por Discapacidad',
+        desc: 'Cómo la ley de California otorga indemnizaciones legales mínimas por cada acto de denegación de adaptaciones o barrera de accesibilidad.',
+        updated: 'Julio 2026',
+        author: 'Revisado por Asesor en Derechos Civiles'
+      }
+    ]
+  : [
+      {
+        slug: 'california-statutes-of-limitations',
+        category: 'California Legal Deadlines',
+        title: 'California Statutes of Limitations: Critical Filing Deadlines for Injury & Employment',
+        desc: 'Comprehensive breakdown of California Code of Civil Procedure § 335.1, the strict 6-month government claim deadline (Gov Code § 911.2), and FEHA filing timelines.',
+        updated: 'September 2026',
+        author: 'Reviewed by Senior California Counsel'
+      },
+      {
+        slug: 'california-wrongful-termination-laws',
+        category: 'California Law Explained',
+        title: 'Wrongful Termination in California: Exceptions to At-Will Employment',
+        desc: 'Understanding public policy exceptions, whistleblower protection (Labor Code § 1102.5), and FEHA retaliation rights for terminated employees.',
+        updated: 'August 2026',
+        author: 'Reviewed by Employment Practice Group'
+      },
+      {
+        slug: 'what-to-do-after-accident',
+        category: 'Personal Injury Guide',
+        title: 'What to Do After a California Car Accident: Critical Steps to Protect Your Claim',
+        desc: 'Evidence preservation, police collision report requests, medical evaluation protocols, and avoiding recorded insurance adjusters’ statements.',
+        updated: 'September 2026',
+        author: 'Reviewed by Trial Litigation Team'
+      },
+      {
+        slug: 'unruh-civil-rights-act-disability',
+        category: 'Disability Rights & ADA',
+        title: 'The California Unruh Civil Rights Act: Enforcing Equal Access & Statutory Damages',
+        desc: 'How California law provides substantial statutory protection and damages for individuals denied full and equal accommodations in business establishments.',
+        updated: 'July 2026',
+        author: 'Reviewed by Civil Rights Counsel'
+      }
+    ];
+---
+
+<section class="section-cream legal-resources-section" id="resources">
+  <div class="section-container">
+    <div class="section-header-center">
+      <span class="section-kicker">{isSpanish ? 'EDUCACIÓN Y GUÍAS' : 'LEGAL KNOWLEDGE BASE'}</span>
+      <h2 class="section-title">{isSpanish ? 'Recursos Legales de California' : 'California Legal Resources'}</h2>
+      <div class="gold-divider"></div>
+      <p class="section-subtitle">
+        {isSpanish
+          ? 'Artículos y guías legales prácticas redactadas para personas y familias en California, diseñadas para explicar sus derechos con claridad y exactitud jurídica.'
+          : 'In-depth California statutory guides and practical toolkits written by experienced attorneys to help you understand your legal protections and procedural rights.'}
+      </p>
+    </div>
+
+    <!-- Article Cards Grid -->
+    <div class="resources-grid">
+      {articles.map((art) => (
+        <article class="resource-card">
+          <div class="resource-card-top">
+            <span class="resource-category-badge">{art.category}</span>
+            <span class="resource-date">{art.updated}</span>
+          </div>
+
+          <h3 class="resource-card-title">
+            <a href={`/resources/${art.slug}`}>{art.title}</a>
+          </h3>
+
+          <p class="resource-card-desc">{art.desc}</p>
+
+          <div class="resource-card-footer">
+            <span class="resource-reviewer">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#c8a04a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                <polyline points="22 4 12 14.01 9 11.01"></polyline>
+              </svg>
+              <span>{art.author}</span>
+            </span>
+
+            <a href={`/resources/${art.slug}`} class="read-guide-link">
+              <span>{isSpanish ? 'Leer Guía' : 'Read Guide'}</span>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M5 12h14M12 5l7 7-7 7"></path>
+              </svg>
+            </a>
+          </div>
+        </article>
+      ))}
+    </div>
+
+    <div class="resources-view-all">
+      <a href="/resources" class="btn-dark">
+        <span>{isSpanish ? 'Ver Todas las Guías Legales de California' : 'Explore All California Legal Guides'}</span>
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M5 12h14M12 5l7 7-7 7"></path>
+        </svg>
+      </a>
+    </div>
+  </div>
+</section>
+
+<style>
+  .legal-resources-section {
+    border-bottom: 1px solid rgba(200, 160, 74, 0.2);
+  }
+
+  .resources-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+  }
+
+  .resource-card {
+    background: var(--color-white);
+    border: 1px solid rgba(200, 160, 74, 0.25);
+    border-radius: var(--radius-md);
+    padding: 2.2rem;
+    display: flex;
+    flex-direction: column;
+    box-shadow: var(--shadow-card);
+    transition: all 0.25s ease;
+  }
+
+  .resource-card:hover {
+    transform: translateY(-3px);
+    border-color: var(--color-gold);
+    box-shadow: var(--shadow-card-hover);
+  }
+
+  .resource-card-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+  }
+
+  .resource-category-badge {
+    font-size: 0.72rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--color-gold-dark);
+    background: rgba(200, 160, 74, 0.12);
+    padding: 3px 10px;
+    border-radius: var(--radius-pill);
+    border: 1px solid rgba(200, 160, 74, 0.25);
+  }
+
+  .resource-date {
+    font-size: 0.74rem;
+    color: var(--color-text-dark-muted);
+  }
+
+  .resource-card-title {
+    font-family: var(--font-serif);
+    font-size: 1.35rem;
+    font-weight: 700;
+    color: var(--color-dark-green);
+    line-height: 1.3;
+    margin-bottom: 0.8rem;
+  }
+
+  .resource-card-title a {
+    transition: color 0.2s ease;
+  }
+
+  .resource-card-title a:hover {
+    color: var(--color-gold-dark);
+  }
+
+  .resource-card-desc {
+    font-size: 0.86rem;
+    color: var(--color-text-dark-muted);
+    line-height: 1.6;
+    margin-bottom: 1.75rem;
+  }
+
+  .resource-card-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: auto;
+    padding-top: 1.1rem;
+    border-top: 1px solid rgba(200, 160, 74, 0.2);
+  }
+
+  .resource-reviewer {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.76rem;
+    color: var(--color-dark-green);
+    font-weight: 500;
+  }
+
+  .read-guide-link {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: var(--color-gold-dark);
+    transition: all 0.2s ease;
+  }
+
+  .read-guide-link:hover {
+    color: var(--color-dark-green);
+    transform: translateX(3px);
+  }
+
+  .resources-view-all {
+    text-align: center;
+    margin-top: 3rem;
+  }
+
+  @media (max-width: 860px) {
+    .resources-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

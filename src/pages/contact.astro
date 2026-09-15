@@ -1,0 +1,155 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Navbar from '../components/Navbar.astro';
+import Footer from '../components/global/Footer.astro';
+import PageHero from '../components/global/PageHero.astro';
+import CaseEvaluation from '../components/sections/CaseEvaluation.astro';
+import StickyCTA from '../components/global/StickyCTA.astro';
+import CaseAssistant from '../components/chat/CaseAssistant.astro';
+
+const breadcrumbs = [
+  { label: 'Home', href: '/' },
+  { label: 'Contact Us' }
+];
+---
+
+<Layout 
+  title="Contact Equal Justice Lawyers | California Confidential Legal Intake"
+  description="Contact Equal Justice Lawyers for a free, confidential case evaluation. Toll-free 24/7 phone (800) 555-JUSTICE, online intake form, and live chat assistant."
+>
+  <Navbar transparent={false} />
+
+  <main id="main-content">
+    <PageHero 
+      kicker="24/7 CONFIDENTIAL INTAKE"
+      title="Contact Equal Justice Lawyers"
+      lead="Speak with our California intake team today. We review your preliminary facts with zero obligation and zero upfront fees."
+      breadcrumb={breadcrumbs}
+    />
+
+    <section class="section-light contact-info-strip">
+      <div class="section-container">
+        <div class="contact-channels-grid">
+          <div class="channel-card">
+            <div class="channel-icon">
+              <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#c8a04a" stroke-width="2">
+                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+              </svg>
+            </div>
+            <h3 class="channel-title">Phone (Toll-Free 24/7)</h3>
+            <p class="channel-desc">Immediate telephone intake with English and Spanish bilingual staff.</p>
+            <a href="tel:8005555878" class="channel-link">(800) 555-JUSTICE</a>
+          </div>
+
+          <div class="channel-card">
+            <div class="channel-icon">
+              <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#c8a04a" stroke-width="2">
+                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                <polyline points="22,6 12,13 2,6"></polyline>
+              </svg>
+            </div>
+            <h3 class="channel-title">Confidential Email</h3>
+            <p class="channel-desc">Send documentation, collision reports, or inquiries securely.</p>
+            <a href="mailto:legal@equaljusticelawyers.com" class="channel-link">legal@equaljusticelawyers.com</a>
+          </div>
+
+          <div class="channel-card">
+            <div class="channel-icon">
+              <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#c8a04a" stroke-width="2">
+                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                <circle cx="12" cy="10" r="3"></circle>
+              </svg>
+            </div>
+            <h3 class="channel-title">Statewide California Reach</h3>
+            <p class="channel-desc">Consultations by appointment across all major California court hubs.</p>
+            <span class="channel-link">Virtual & In-Person by Appt.</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Multi-step Evaluation Form -->
+    <CaseEvaluation />
+  </main>
+
+  <Footer />
+  <StickyCTA />
+  <CaseAssistant />
+</Layout>
+
+<style>
+  .contact-info-strip {
+    padding: 4rem 0 2rem;
+    border-bottom: 1px solid rgba(200, 160, 74, 0.2);
+  }
+
+  .contact-channels-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+  }
+
+  .channel-card {
+    background: var(--color-white);
+    border: 1px solid rgba(200, 160, 74, 0.25);
+    border-radius: var(--radius-md);
+    padding: 2.2rem 1.8rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    box-shadow: var(--shadow-card);
+    transition: all 0.25s ease;
+  }
+
+  .channel-card:hover {
+    transform: translateY(-3px);
+    border-color: var(--color-gold);
+    box-shadow: var(--shadow-card-hover);
+  }
+
+  .channel-icon {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background: rgba(200, 160, 74, 0.12);
+    border: 1px solid rgba(200, 160, 74, 0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1.25rem;
+  }
+
+  .channel-title {
+    font-family: var(--font-serif);
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--color-dark-green);
+    margin-bottom: 0.5rem;
+  }
+
+  .channel-desc {
+    font-size: 0.85rem;
+    color: var(--color-text-dark-muted);
+    line-height: 1.55;
+    margin-bottom: 1.2rem;
+    flex: 1;
+  }
+
+  .channel-link {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--color-gold-dark);
+    transition: color 0.2s;
+  }
+
+  .channel-link:hover {
+    color: var(--color-dark-green);
+  }
+
+  @media (max-width: 900px) {
+    .contact-channels-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

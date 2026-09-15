@@ -1,0 +1,916 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Navbar from '../../components/Navbar.astro';
+import Footer from '../../components/global/Footer.astro';
+import PageHero from '../../components/global/PageHero.astro';
+import CaseEvaluation from '../../components/sections/CaseEvaluation.astro';
+import StickyCTA from '../../components/global/StickyCTA.astro';
+import CaseAssistant from '../../components/chat/CaseAssistant.astro';
+
+export function getStaticPaths() {
+  const practices = [
+    {
+      slug: 'personal-injury',
+      title: 'California Personal Injury Lawyers',
+      kicker: 'CIVIL TORT ADVOCACY',
+      lead: 'Holding negligent individuals, commercial drivers, and corporations accountable under California Civil Code § 1714.',
+      directAnswer: 'Under California law, victims harmed by another party’s negligence have the legal right to recover compensatory damages for medical bills, future rehabilitative care, lost wages, diminished earning potential, and physical pain and emotional suffering.',
+      statutes: 'California Civil Code § 1714 (General Duty of Care); California Code of Civil Procedure § 335.1 (Two-Year Statute of Limitations for Injury).',
+      deadline: '2 Years from the date of injury against private parties (CCP § 335.1). Strictly 6 Months if a California government agency or public transit vehicle was involved (Gov. Code § 911.2).',
+      whoApplies: 'Individuals injured in traffic collisions, falls on dangerous commercial property, defective equipment failures, or attacks caused by reckless acts.',
+      commonSituations: [
+        'Multi-vehicle collisions and commercial freight tractor-trailer crashes',
+        'Pedestrians or bicyclists struck by distracted drivers in intersections',
+        'Dangerous property conditions, inadequate lighting, or slippery surfaces in commercial retail stores',
+        'Severe dog bites and animal attacks under California strict liability statutes (Civ. Code § 3342)'
+      ],
+      evidence: [
+        'Official California Highway Patrol (CHP) or municipal police traffic collision reports',
+        'Comprehensive medical triage charts, diagnostic MRIs, and physician progress notes',
+        'Eyewitness witness statements and contact details',
+        'Traffic surveillance cameras, dashcam footage, or business security video recordings'
+      ],
+      remedies: [
+        'Past and future medical treatment, physical therapy, and surgery costs',
+        'Past lost earnings and future impairment of earning capacity',
+        'Pain, mental anguish, physical impairment, and loss of life enjoyment'
+      ],
+      mistakes: [
+        'Giving a recorded statement to the other driver’s insurance adjuster before consulting counsel',
+        'Delaying immediate medical evaluation, giving insurers grounds to claim injuries were pre-existing',
+        'Posting about the accident or physical activities on social media while healing'
+      ],
+      reviewer: 'Reviewed by Senior California Personal Injury Trial Counsel'
+    },
+    {
+      slug: 'car-accidents',
+      title: 'California Car & Motor Vehicle Accident Lawyers',
+      kicker: 'TRAFFIC COLLISION LITIGATION',
+      lead: 'Relentless representation for motorists, passengers, and families injured on California freeways and arterial roadways.',
+      directAnswer: 'California operates under a pure comparative fault doctrine (Li v. Yellow Cab Co.). Even if you were partially at fault for a motor vehicle collision, you are still entitled to recover damages reduced proportionately by your share of fault.',
+      statutes: 'California Vehicle Code § 23152 (DUI); CVC § 22350 (Basic Speed Law); California Civil Code § 1714; Civil Code § 3333.4 (Proposition 213 limitations).',
+      deadline: '2 Years for bodily injury under CCP § 335.1. 3 Years for property damage under CCP § 338. 6 Months if public entity involved.',
+      whoApplies: 'Drivers, rideshare passengers, motorcyclists, and pedestrians harmed by negligent, distracted, speeding, or intoxicated drivers in California.',
+      commonSituations: [
+        'High-speed freeway pileups on I-5, I-10, I-405, US-101, and SR-99',
+        'Rear-end collisions caused by texting or distracted smartphone use',
+        'Left-turn collisions at signal-controlled intersections',
+        'DUI / drunk driving collisions resulting in severe trauma or fatalities'
+      ],
+      evidence: [
+        'Vehicle event data recorder ("black box") telemetry',
+        'Scene photographs documenting skid marks, debris fields, and vehicle crumple zones',
+        'Cell phone records indicating distracted driving at the moment of impact',
+        'Emergency room medical records and paramedic transport logs'
+      ],
+      remedies: [
+        'Emergency hospital bills, surgeries, and ongoing outpatient therapy',
+        'Total vehicle replacement or comprehensive repair value',
+        'Lost wages during recovery and ongoing disability compensation'
+      ],
+      mistakes: [
+        'Accepting a quick "check in the mail" settlement before the full medical prognosis is established',
+        'Failing to call 911 or get an official police report at the scene'
+      ],
+      reviewer: 'Reviewed by Motor Vehicle Accident Practice Group'
+    },
+    {
+      slug: 'wrongful-termination',
+      title: 'California Wrongful Termination Lawyers',
+      kicker: 'WORKER RIGHTS & WRONGFUL DISCHARGE',
+      lead: 'Enforcing worker rights against unlawful firing, retaliation, and public policy violations under California labor law.',
+      directAnswer: 'While California is an "at-will" employment state, employers cannot terminate an employee for reasons that violate statutory public policy, discriminate against protected categories, or retaliate for asserting lawful rights.',
+      statutes: 'California Labor Code § 1102.5 (Whistleblower Protection); Gov. Code § 12940 (FEHA); Tameny v. Atlantic Richfield Co. (Public Policy Termination).',
+      deadline: '3 Years to file a complaint with the California Civil Rights Department (CRD) under FEHA. 2 Years for common law public policy claims (CCP § 335.1).',
+      whoApplies: 'Employees fired after reporting safety violations, complaining about wage theft, requesting medical leave, or reporting discrimination.',
+      commonSituations: [
+        'Termination shortly after reporting illegal activity, fraud, or OSHA violations',
+        'Firing an employee after they request family leave under CFRA or pregnancy disability leave (PDL)',
+        'Pretextual terminations disguised as "layoffs" or "poor performance" following complaints',
+        'Discharge for filing a workers’ compensation claim (Labor Code § 132a)'
+      ],
+      evidence: [
+        'Emails, text messages, and written notices from managers or HR',
+        'Prior positive performance reviews and merit pay increases',
+        'Timeline demonstrating close proximity between protected complaint and termination',
+        'Witness statements from coworkers or former employees'
+      ],
+      remedies: [
+        'Back pay (lost wages from termination to trial) and front pay',
+        'Compensatory damages for emotional distress and professional humiliation',
+        'Punitive damages where employer acted with malice, oppression, or fraud (Civ. Code § 3294)'
+      ],
+      mistakes: [
+        'Signing a severance agreement releasing all claims without having an attorney review it',
+        'Deleting work emails or texts that document the retaliation',
+        'Waiting until administrative filing deadlines expire'
+      ],
+      reviewer: 'Reviewed by Senior California Employment Litigation Partner'
+    },
+    {
+      slug: 'employment-law',
+      title: 'California Employment & Workplace Law',
+      kicker: 'EMPLOYMENT DISPUTE RESOLUTION',
+      lead: 'Defending workers across California under FEHA, the California Labor Code, and Industrial Welfare Commission Wage Orders.',
+      directAnswer: 'California employment law provides the most expansive workplace protections in the United States, guarding workers against discrimination, sexual harassment, wage theft, and retaliation.',
+      statutes: 'California Fair Employment and Housing Act (FEHA); Cal. Labor Code §§ 200–1198; IWC Wage Orders 1–17.',
+      deadline: 'Up to 3 years for FEHA claims with the Civil Rights Department (CRD). 3 to 4 years for wage and hour violations under Labor Code and UCL § 17200.',
+      whoApplies: 'California hourly employees, salaried workers, independent contractors misclassified under AB 5, and job applicants.',
+      commonSituations: [
+        'Denial of mandatory 30-minute uninterrupted meal breaks and 10-minute rest periods',
+        'Off-the-clock work and unpaid overtime at 1.5x and 2x standard pay rates',
+        'Independent contractor misclassification denying statutory benefits under the ABC test',
+        'Pervasive sexual harassment or hostile work environments ignored by management'
+      ],
+      evidence: [
+        'Itemized wage statements (paystubs) and timecard punch records',
+        'Employee handbooks and formal arbitration agreements',
+        'Written complaints submitted to Human Resources or supervisors',
+        'Witness testimony from fellow affected employees'
+      ],
+      remedies: [
+        'One hour of premium pay per day for missed meal or rest periods (Labor Code § 226.7)',
+        'Waiting time penalties of up to 30 days’ wages (Labor Code § 203)',
+        'Statutory interest, civil penalties under PAGA, and attorney’s fees'
+      ],
+      mistakes: [
+        'Failing to save copies of your paystubs before leaving the company',
+        'Assuming salaried exempt status automatically strips away overtime rights'
+      ],
+      reviewer: 'Reviewed by Employment Law Practice Group'
+    },
+    {
+      slug: 'workplace-discrimination',
+      title: 'California Workplace Discrimination Lawyers',
+      kicker: 'CIVIL RIGHTS & EQUAL OPPORTUNITY',
+      lead: 'Protecting employees from adverse employment actions based on protected traits under California Gov. Code § 12940.',
+      directAnswer: 'The California Fair Employment and Housing Act (FEHA) prohibits employers with 5 or more employees from discriminating based on race, religious creed, color, national origin, ancestry, physical or mental disability, medical condition, genetic information, marital status, sex, gender, gender identity, gender expression, age (40+), or sexual orientation.',
+      statutes: 'California Government Code § 12940(a); 2 CCR § 11008; California Constitution Article I, Section 8.',
+      deadline: '3 Years from the date of the unlawful discriminatory act to file an administrative complaint with the Civil Rights Department (CRD).',
+      whoApplies: 'Workers passed over for promotion, demoted, terminated, or subjected to disparate treatment due to protected traits.',
+      commonSituations: [
+        'Firing older workers to replace them with younger, lower-paid staff',
+        'Refusing to provide reasonable accommodations for a physical disability or cancer treatment',
+        'Demoting a female employee upon returning from pregnancy disability leave',
+        'Racial harassment, derogatory language, or unequal job assignment patterns'
+      ],
+      evidence: [
+        'Comparative evidence showing differently treated coworkers outside the protected class',
+        'Discriminatory remarks or derogatory emails from supervisors',
+        'Medical notes requesting accommodation and employer responses'
+      ],
+      remedies: [
+        'Lost compensation, promotion reinstatement, emotional distress damages, and statutory attorney fees'
+      ],
+      mistakes: [
+        'Failing to report discrimination in writing to establish management knowledge',
+        'Quitting abruptly before consulting legal counsel about constructive discharge'
+      ],
+      reviewer: 'Reviewed by Civil Rights Practice Group'
+    },
+    {
+      slug: 'sexual-harassment',
+      title: 'California Sexual Harassment Lawyers',
+      kicker: 'WORKPLACE DIGNITY & SAFETY',
+      lead: 'Combating quid pro quo sexual harassment and hostile work environments in California workplaces under FEHA.',
+      directAnswer: 'Under California law, employers are strictly liable for sexual harassment committed by supervisors. Furthermore, employers have an affirmative duty under Gov. Code § 12940(k) to take all reasonable steps to prevent harassment from occurring.',
+      statutes: 'California Government Code § 12940(j) (Hostile Environment); Gov. Code § 12940(k) (Failure to Prevent); Silenced No More Act (SB 331).',
+      deadline: '3 Years to file a complaint with the California Civil Rights Department (CRD).',
+      whoApplies: 'Employees who experienced unwelcome sexual advances, requests for sexual favors, inappropriate touch, offensive jokes, or intimidation.',
+      commonSituations: [
+        'Quid pro quo harassment: conditioned job perks, promotions, or continued employment on romantic favors',
+        'Pervasive hostile environment: repeated graphic comments, unwelcome physical contact, or explicit text messages',
+        'Retaliation after rejecting supervisor advances, such as schedule cuts or sudden reprimands'
+      ],
+      evidence: [
+        'Screenshots of text messages, DMs, emails, and voicemail recordings',
+        'Diary or log documenting specific dates, times, witnesses, and statements',
+        'Formal complaint emails sent to HR or senior leadership'
+      ],
+      remedies: [
+        'Full emotional distress damages, lost wages, punitive damages, and mandatory employer policy reforms'
+      ],
+      mistakes: [
+        'Suffering in silence without documenting specific instances',
+        'Signing confidentiality waivers without independent attorney advice'
+      ],
+      reviewer: 'Reviewed by Employment Civil Rights Counsel'
+    },
+    {
+      slug: 'wage-and-hour',
+      title: 'California Wage and Hour & Overtime Lawyers',
+      kicker: 'WORKER COMPENSATION LITIGATION',
+      lead: 'Recovering unpaid wages, denied meal breaks, and statutory penalties under California Labor Code regulations.',
+      directAnswer: 'California requires non-exempt employees to receive 1.5x their regular rate for work exceeding 8 hours in a day or 40 hours in a week, and 2x pay after 12 hours. Employers must also provide a 30-minute uninterrupted meal break before the 5th hour of work.',
+      statutes: 'California Labor Code §§ 510, 512, 226, 226.7, 201–203; California Private Attorneys General Act (PAGA, Labor Code § 2698 et seq.).',
+      deadline: '3 Years under Labor Code § 338; 4 Years under California Business & Professions Code § 17200 (Unfair Competition Law).',
+      whoApplies: 'Hourly and salaried workers denied overtime, misclassified as independent contractors, or forced to work through breaks.',
+      commonSituations: [
+        'Requiring employees to perform pre-shift or post-shift tasks "off-the-clock"',
+        'Misclassifying workers as "exempt managers" or "1099 independent contractors" to avoid overtime',
+        'Failing to pay one hour of premium pay for missed, delayed, or interrupted meal and rest breaks'
+      ],
+      evidence: [
+        'Itemized wage statements showing hours worked and gross/net pay',
+        'Schedules, email timestamps, or GPS vehicle tracking records proving work performed',
+        'Employer policies regarding break scheduling'
+      ],
+      remedies: [
+        'All unpaid overtime, minimum wage differentials, meal/rest break penalty pay, and waiting time penalties'
+      ],
+      mistakes: [
+        'Assuming your employer’s pay classification is legally correct without an independent legal audit'
+      ],
+      reviewer: 'Reviewed by Wage & Hour Practice Team'
+    },
+    {
+      slug: 'disability-rights',
+      title: 'California Disability Rights & Unruh Act Lawyers',
+      kicker: 'EQUAL ACCESSIBILITY LITIGATION',
+      lead: 'Enforcing the California Unruh Civil Rights Act, Disabled Persons Act, and Title III of the Americans with Disabilities Act.',
+      directAnswer: 'California Civil Code § 51 (The Unruh Act) provides that a violation of the federal ADA constitutes a per se violation of California law, providing minimum statutory damages of $4,000 per violation plus attorney fees for individuals denied equal access.',
+      statutes: 'California Civil Code §§ 51, 52, 54.1; 42 U.S.C. § 12181 et seq. (ADA Title III).',
+      deadline: '2 Years for Unruh Act personal injury claims under California Code of Civil Procedure § 335.1.',
+      whoApplies: 'Individuals with mobility, visual, hearing, or cognitive impairments denied equal access to physical businesses or services.',
+      commonSituations: [
+        'Physical architectural barriers: inaccessible entrances, missing ramps, or non-compliant restrooms',
+        'Denial of service animals in restaurants, hotels, or rental properties',
+        'Failure of employers or landlords to engage in a timely, good-faith interactive process'
+      ],
+      evidence: [
+        'Photographs and architectural measurements of physical barriers',
+        'Dates and locations of attempted access',
+        'Written requests for accommodation and formal denial responses'
+      ],
+      remedies: [
+        'Injunctive relief requiring barrier removal, statutory damages ($4,000 minimum per offense), and attorney fees'
+      ],
+      mistakes: [
+        'Failing to record the specific date and nature of the barrier encounter'
+      ],
+      reviewer: 'Reviewed by Disability Rights Counsel'
+    },
+    {
+      slug: 'medical-malpractice',
+      title: 'California Medical Malpractice Lawyers',
+      kicker: 'HEALTHCARE NEGLIGENCE & MICRA',
+      lead: 'Advocating for victims of surgical negligence, hospital errors, and diagnostic failures under California’s modernized MICRA law.',
+      directAnswer: 'Under California law, medical malpractice occurs when a doctor, surgeon, nurse, or hospital breaches the recognized professional standard of care, directly causing severe injury or death. Under Assembly Bill 35, California non-economic damage caps have increased significantly.',
+      statutes: 'California Code of Civil Procedure § 340.5; Civil Code §§ 3333.1, 3333.2 (AB 35 MICRA Reforms).',
+      deadline: '1 Year from the date of discovery or 3 years from the date of injury, whichever occurs first (CCP § 340.5). Mandatory 90-day intent-to-sue notice required (CCP § 364).',
+      whoApplies: 'Patients who suffered catastrophic trauma, worsening conditions, or loss of family members due to medical errors.',
+      commonSituations: [
+        'Surgical blunders, wrong-site surgery, or foreign objects left inside a patient',
+        'Failure to diagnose or misdiagnosis of cancer, stroke, or cardiac events',
+        'Labor and delivery mismanagement resulting in newborn hypoxic brain damage or cerebral palsy',
+        'Medication administration errors and dangerous drug interaction oversights'
+      ],
+      evidence: [
+        'Complete electronic health records, surgical logs, and pathology reports',
+        'Expert physician declarations certifying that the standard of care was breached',
+        'Diagnostic imaging scans (CT, MRI, X-rays)'
+      ],
+      remedies: [
+        'Unlimited compensation for past and future medical costs and lost wages; non-economic damages under modernized AB 35 limits'
+      ],
+      mistakes: [
+        'Missing the strict 1-year discovery deadline under CCP § 340.5',
+        'Failing to serve a formal Notice of Intent to Sue under CCP § 364'
+      ],
+      reviewer: 'Reviewed by Medical Malpractice Practice Group'
+    },
+    {
+      slug: 'consumer-protection',
+      title: 'California Consumer Protection & UCL Lawyers',
+      kicker: 'CONSUMER JUSTICE & FAIR TRADE',
+      lead: 'Challenging deceptive trade practices, false advertising, and financial fraud under California Business & Professions Code § 17200.',
+      directAnswer: 'California’s Unfair Competition Law (UCL) provides broad protections against any unlawful, unfair, or fraudulent business act or practice and unfair, deceptive, untrue, or misleading advertising.',
+      statutes: 'California Business & Professions Code §§ 17200 (UCL), 17500 (FAL); California Civil Code § 1750 (CLRA).',
+      deadline: '4 Years under Business & Professions Code § 17208. 3 Years under the Consumers Legal Remedies Act (Civil Code § 1783).',
+      whoApplies: 'Consumers deceived by hidden fee schemes, predatory loan products, false product claims, or unconscionable contract terms.',
+      commonSituations: [
+        'Bait-and-switch advertising and unauthorized monthly auto-renewals',
+        'Deceptive sales practices and fraudulent vehicle warranties',
+        'Predatory lending terms and illegal collection fee assessments'
+      ],
+      evidence: [
+        'Marketing materials, contracts, receipts, and bank statements',
+        'Written customer service disputes and complaint logs'
+      ],
+      remedies: [
+        'Restitution of money taken, injunctive orders prohibiting deceptive conduct, and statutory CLRA damages'
+      ],
+      mistakes: [
+        'Failing to retain original receipts, disclosures, and purchase agreements'
+      ],
+      reviewer: 'Reviewed by Consumer Protection Practice Group'
+    },
+    {
+      slug: 'truck-accidents',
+      title: 'California Truck & 18-Wheeler Accident Lawyers',
+      kicker: 'COMMERCIAL VEHICLE LITIGATION',
+      lead: 'Holding interstate trucking companies and freight carriers accountable under FMCSA regulations and California law.',
+      directAnswer: 'Commercial truck collisions involve federal regulations (49 CFR), complex multi-tiered insurance policies, and corporate logistics carriers. Immediate spoliation letters must be served to preserve driver logbooks and electronic black box data.',
+      statutes: 'Federal Motor Carrier Safety Regulations (49 CFR); California Vehicle Code § 34500.',
+      deadline: '2 Years under CCP § 335.1.',
+      whoApplies: 'Motorists and passengers injured in collisions with semi-trucks, tractor-trailers, and delivery vans.',
+      commonSituations: ['Driver fatigue violating Hours of Service rules', 'Improperly loaded or unsecured freight cargo shifts', 'Brake failures and skipped pre-trip safety inspections'],
+      evidence: ['Electronic Logging Device (ELD) records', 'Driver qualification files and drug test logs', 'Truck inspection reports'],
+      remedies: ['Full medical and catastrophic care recovery, lost earnings, and wrongful death damages'],
+      mistakes: ['Allowing trucking companies to repair or scrap the truck before mechanical inspection'],
+      reviewer: 'Reviewed by Commercial Transit Litigation Group'
+    },
+    {
+      slug: 'motorcycle-accidents',
+      title: 'California Motorcycle Accident Lawyers',
+      kicker: 'TWO-WHEELED RIDER ADVOCACY',
+      lead: 'Fighting against insurance bias to secure full compensation for California motorcyclists.',
+      directAnswer: 'Under California law, lane splitting is legal (CVC § 21658.1). Insurance companies often display unfair anti-rider bias—our attorneys dismantle these defenses with accident reconstruction experts.',
+      statutes: 'California Vehicle Code § 21658.1 (Lane Splitting); Civ. Code § 1714.',
+      deadline: '2 Years under CCP § 335.1.',
+      whoApplies: 'Motorcycle operators and passengers struck by inattentive drivers.',
+      commonSituations: ['Drivers making unsafe left turns across oncoming motorcycle lanes', 'Unsafe lane changes without blind-spot checks', 'Road hazard debris'],
+      evidence: ['Helmet camera footage', 'Physical road yaw marks and gouges', 'Emergency trauma hospital records'],
+      remedies: ['Comprehensive surgical, grafting, and rehabilitation expenses, plus pain and suffering'],
+      mistakes: ['Admitting fault or apologizing to other motorists before investigating traffic camera footage'],
+      reviewer: 'Reviewed by Motorcycle Injury Litigation Group'
+    },
+    {
+      slug: 'pedestrian-accidents',
+      title: 'California Pedestrian Accident Lawyers',
+      kicker: 'PEDESTRIAN SAFETY ADVOCACY',
+      lead: 'Protecting vulnerable pedestrians struck by negligent drivers under California Vehicle Code crosswalk protections.',
+      directAnswer: 'California Vehicle Code § 21950 requires motorists to yield the right-of-way to a pedestrian crossing the roadway within any marked or unmarked crosswalk at an intersection.',
+      statutes: 'California Vehicle Code §§ 21950, 21954; Civ. Code § 1714.',
+      deadline: '2 Years under CCP § 335.1.',
+      whoApplies: 'Pedestrians struck while walking, jogging, or crossing California streets and sidewalks.',
+      commonSituations: ['Vehicles turning right on red without checking pedestrian crosswalks', 'Speeding through residential zones and school crossings', 'Distracted texting drivers'],
+      evidence: ['Intersection surveillance video', 'Witness statements', 'Vehicle impact damage'],
+      remedies: ['Emergency trauma recovery, ongoing physical therapy, and lost wage compensation'],
+      mistakes: ['Assuming you cannot recover if you were outside a painted crosswalk (California pure comparative negligence applies)'],
+      reviewer: 'Reviewed by Pedestrian Injury Counsel'
+    },
+    {
+      slug: 'rideshare-accidents',
+      title: 'California Uber & Lyft Rideshare Accident Lawyers',
+      kicker: 'RIDESHARE TRANSIT LITIGATION',
+      lead: 'Navigating commercial insurance policy limits up to $1,000,000 under California Public Utilities Code § 5433.',
+      directAnswer: 'California law requires Transportation Network Companies (TNCs) like Uber and Lyft to maintain commercial insurance coverage up to $1,000,000 for death, personal injury, and property damage when a driver is carrying a passenger or en route to a match.',
+      statutes: 'California Public Utilities Code § 5433; CPUC Decision 13-09-045.',
+      deadline: '2 Years under CCP § 335.1.',
+      whoApplies: 'Rideshare passengers, other motorists struck by rideshare drivers, or pedestrians.',
+      commonSituations: ['Accidents while riding as a paying passenger in an active Uber or Lyft trip', 'Collisions with app drivers distracted by trip requests', 'Uninsured driver collisions'],
+      evidence: ['Rideshare app GPS and ride status records', 'TNC insurance policy declarations', 'Police collision reports'],
+      remedies: ['Comprehensive recovery under the commercial $1,000,000 primary policy tier'],
+      mistakes: ['Filing only through the driver’s personal auto policy rather than activating TNC commercial coverage'],
+      reviewer: 'Reviewed by Rideshare Litigation Team'
+    },
+    {
+      slug: 'slip-and-fall',
+      title: 'California Slip and Fall & Premises Liability',
+      kicker: 'PREMISES SAFETY LITIGATION',
+      lead: 'Holding commercial property owners and retail managers accountable for hazardous property conditions.',
+      directAnswer: 'Under California premises liability law (Ortega v. Kmart Corp.), property owners and business possessors owe a duty of reasonable care to inspect, maintain, and repair dangerous conditions or warn visitors.',
+      statutes: 'California Civil Code § 1714; CACI Jury Instruction No. 1000 et seq.',
+      deadline: '2 Years under CCP § 335.1.',
+      whoApplies: 'Customers and guests injured by spills, uneven flooring, poor lighting, or falling merchandise.',
+      commonSituations: ['Liquid spills left uncleaned in grocery aisles', 'Broken stair treads and missing handrails', 'Cracked exterior walkways and potholes'],
+      evidence: ['Store sweep sheets and maintenance logs', 'Surveillance camera footage showing how long the hazard existed', 'Incident incident report copies'],
+      remedies: ['Medical care, fracture repair, physical therapy, and wage replacement'],
+      mistakes: ['Leaving the store without making an official written manager incident report'],
+      reviewer: 'Reviewed by Premises Liability Group'
+    },
+    {
+      slug: 'dog-bites',
+      title: 'California Dog Bite & Animal Attack Lawyers',
+      kicker: 'STRICT LIABILITY ADVOCACY',
+      lead: 'Enforcing California’s strict dog bite liability statute under California Civil Code § 3342.',
+      directAnswer: 'California is a strict liability dog bite state. Under California Civil Code § 3342, the owner of a dog is liable for damages suffered by any person bitten while in a public place or lawfully on private property, regardless of prior viciousness or lack of knowledge.',
+      statutes: 'California Civil Code § 3342 (Strict Liability for Dog Bites).',
+      deadline: '2 Years under CCP § 335.1.',
+      whoApplies: 'Children, delivery workers, mail carriers, and pedestrians attacked or bitten by dogs.',
+      commonSituations: ['Attacks in public parks, sidewalks, or neighborhood streets', 'Bites on residential walkways during lawful delivery or visits', 'Severe facial lacerations'],
+      evidence: ['Photographs of wounds and scar progression', 'Animal control incident investigation reports', 'Homeowner insurance policy details'],
+      remedies: ['Reconstructive plastic surgery costs, infection treatment, counseling for PTSD, and pain and suffering'],
+      mistakes: ['Failing to report the attack to local county animal control or public health officials'],
+      reviewer: 'Reviewed by Animal Attack Practice Team'
+    },
+    {
+      slug: 'brain-injuries',
+      title: 'California Traumatic Brain Injury (TBI) Lawyers',
+      kicker: 'CATASTROPHIC HARM ADVOCACY',
+      lead: 'Advocating for victims of traumatic brain injuries, concussions, and neurocognitive harm.',
+      directAnswer: 'Traumatic brain injuries require advanced neuro-imaging (DTI, fMRI) and neuropsychological testing to prove invisible cognitive deficits, memory loss, and personality changes to California juries.',
+      statutes: 'California Civil Code § 1714; Civil Code § 3333.',
+      deadline: '2 Years under CCP § 335.1.',
+      whoApplies: 'Individuals suffering head trauma in vehicular collisions, falls, or industrial accidents.',
+      commonSituations: ['High-impact vehicle crashes with head strikes on steering wheels or windows', 'Severe concussions with prolonged post-concussion syndrome', 'Hypoxic brain injuries'],
+      evidence: ['Diffusion Tensor Imaging (DTI) scans', 'Neuropsychological evaluation batteries', 'Day-in-the-life video documentation'],
+      remedies: ['Lifetime care plans, vocational rehabilitation, in-home care, and non-economic damages'],
+      mistakes: ['Dismissing mild symptoms like brain fog or headaches without seeing a neurologist'],
+      reviewer: 'Reviewed by Catastrophic Injury Litigation Team'
+    },
+    {
+      slug: 'spinal-cord-injuries',
+      title: 'California Spinal Cord Injury & Paralysis Lawyers',
+      kicker: 'COMPLEX MEDICAL ADVOCACY',
+      lead: 'Securing lifetime care resources for paraplegia, quadriplegia, and severe spinal trauma.',
+      directAnswer: 'Spinal cord injury claims require forensic life-care planners and economists to forecast decades of medical equipment, home accessibility renovations, attendant nursing care, and lost lifetime earnings.',
+      statutes: 'California Civil Code § 3333; CACI 3903A et seq.',
+      deadline: '2 Years under CCP § 335.1.',
+      whoApplies: 'Victims of permanent neurological spinal damage resulting in mobility loss or paralysis.',
+      commonSituations: ['Rollover vehicular crashes', 'Falls from scaffolding or elevated platforms', 'Crush injuries on industrial job sites'],
+      evidence: ['Surgical reports, vertebral MRI imaging, and certified Life Care Plans'],
+      remedies: ['Multi-million dollar lifetime care annuities, specialized transport vans, and home modifications'],
+      mistakes: ['Settling before full permanent impairment rating and lifetime economic analysis is completed'],
+      reviewer: 'Reviewed by Catastrophic Injury Counsel'
+    },
+    {
+      slug: 'wrongful-death',
+      title: 'California Wrongful Death Attorneys',
+      kicker: 'COMPASSIONATE FAMILY ADVOCACY',
+      lead: 'Standing with surviving family members under California Code of Civil Procedure § 377.60.',
+      directAnswer: 'Under California Code of Civil Procedure § 377.60, surviving spouses, domestic partners, and children can recover compensation for the financial support the deceased would have provided, funeral costs, and the loss of love, companionship, comfort, and guidance.',
+      statutes: 'California Code of Civil Procedure §§ 377.60, 377.61 (Survival Actions vs. Wrongful Death).',
+      deadline: '2 Years from the date of death (CCP § 335.1). 6 Months if public entity is involved.',
+      whoApplies: 'Spouses, domestic partners, children, and legal dependents of individuals fatally injured through negligence.',
+      commonSituations: ['Fatal freeway collisions and truck crashes', 'Catastrophic workplace fatalities', 'Fatal medical malpractice'],
+      evidence: ['Coroner autopsy reports, accident reconstruction reports, and economic earning models'],
+      remedies: ['Financial support value, funeral/burial costs, loss of household services, and loss of companionship'],
+      mistakes: ['Delaying legal action while grieving and risking expiration of the 6-month government claim deadline'],
+      reviewer: 'Reviewed by Senior Wrongful Death Trial Counsel'
+    },
+    {
+      slug: 'workplace-retaliation',
+      title: 'California Workplace Retaliation Lawyers',
+      kicker: 'WHISTLEBLOWER & RETALIATION DEFENSE',
+      lead: 'Holding employers accountable for retaliating against workers who assert California statutory rights.',
+      directAnswer: 'California law strictly prohibits employers from punishing workers who file harassment complaints, report safety violations, request disability accommodations, or demand correct wage payments.',
+      statutes: 'California Labor Code § 1102.5; Gov. Code § 12940(h).',
+      deadline: '3 Years under FEHA (Gov Code § 12960).',
+      whoApplies: 'Workers who faced demotions, pay cuts, unfair write-ups, or hostile treatment after asserting rights.',
+      commonSituations: ['Sudden disciplinary action following an HR complaint', 'Hostile shift assignments after requesting family leave', 'Blacklisting'],
+      evidence: ['Written complaints, timeline of retaliatory events, and personnel records'],
+      remedies: ['Lost wages, statutory penalties up to $10,000 per violation under Labor Code § 1102.5, and attorney fees'],
+      mistakes: ['Failing to maintain a personal written chronology of retaliatory actions'],
+      reviewer: 'Reviewed by Employment Practice Group'
+    },
+    {
+      slug: 'whistleblower-retaliation',
+      title: 'California Whistleblower Protection Lawyers',
+      kicker: 'LABOR CODE § 1102.5 ADVOCACY',
+      lead: 'Defending courageous employees who report legal violations, safety hazards, and corporate fraud.',
+      directAnswer: 'California Labor Code § 1102.5 is one of the most powerful whistleblower shields in the country, protecting employees who disclose information to a government agency or supervisor regarding violations of state or federal statutes.',
+      statutes: 'California Labor Code § 1102.5; California False Claims Act (Gov. Code § 12650 et seq.).',
+      deadline: '3 Years from the retaliatory action.',
+      whoApplies: 'Workers terminated, demoted, or harassed for refusing to participate in illegal conduct or reporting fraud.',
+      commonSituations: ['Reporting environmental or safety violations', 'Refusing to falsify billing or accounting documents', 'Reporting patient safety concerns in healthcare'],
+      evidence: ['Internal memos, compliance hotline reports, and termination records'],
+      remedies: ['Full reinstatement or front pay, statutory civil penalties, and emotional distress damages'],
+      mistakes: ['Taking proprietary employer files without attorney guidance on protected whistleblowing protocols'],
+      reviewer: 'Reviewed by Whistleblower Litigation Team'
+    }
+  ];
+
+  return practices.map(p => ({
+    params: { slug: p.slug },
+    props: { practice: p }
+  }));
+}
+
+const { practice } = Astro.props;
+
+const breadcrumbs = [
+  { label: 'Home', href: '/' },
+  { label: 'Practice Areas', href: '/practice-areas' },
+  { label: practice.title }
+];
+---
+
+<Layout 
+  title={`${practice.title} | Equal Justice Lawyers`}
+  description={`Comprehensive California legal guide on ${practice.title}. Learn your statutory rights, deadlines, and how our trial attorneys fight for you.`}
+>
+  <Navbar transparent={false} />
+
+  <main id="main-content">
+    <PageHero 
+      kicker={practice.kicker}
+      title={practice.title}
+      lead={practice.lead}
+      breadcrumb={breadcrumbs}
+    />
+
+    <!-- Main Content Body -->
+    <section class="section-light practice-detail-content">
+      <div class="section-container detail-layout-grid">
+        <!-- Left Main Content -->
+        <div class="detail-main-column">
+          <!-- The Short Answer / AEO Direct Answer -->
+          <div class="aeo-answer-card">
+            <div class="aeo-header">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#c8a04a" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"></circle>
+                <line x1="12" y1="16" x2="12" y2="12"></line>
+                <line x1="12" y1="8" x2="12.01" y2="8"></line>
+              </svg>
+              <span>The Direct Answer: California Legal Overview</span>
+            </div>
+            <p class="aeo-text">{practice.directAnswer}</p>
+          </div>
+
+          <!-- Section: Governing California Statutes -->
+          <div class="content-block">
+            <h2 class="content-heading">Governing California Statutes & Precedents</h2>
+            <div class="statutes-highlight-box">
+              <p><strong>Applicable Law:</strong> {practice.statutes}</p>
+            </div>
+          </div>
+
+          <!-- Section: Strict California Deadlines -->
+          <div class="content-block">
+            <h2 class="content-heading">Statute of Limitations & Strict Deadlines</h2>
+            <p class="deadline-warning-text">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#c8a04a" stroke-width="2">
+                <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path>
+                <line x1="12" y1="9" x2="12" y2="13"></line>
+                <line x1="12" y1="17" x2="12.01" y2="17"></line>
+              </svg>
+              <span>{practice.deadline}</span>
+            </p>
+          </div>
+
+          <!-- Section: Who This Applies To -->
+          <div class="content-block">
+            <h2 class="content-heading">Who This Applies To in California</h2>
+            <p class="body-text">{practice.whoApplies}</p>
+          </div>
+
+          <!-- Section: Common Scenarios -->
+          <div class="content-block">
+            <h2 class="content-heading">Common Scenarios & Violations</h2>
+            <ul class="bullet-list">
+              {practice.commonSituations.map(s => (
+                <li>
+                  <span class="bullet-icon">✓</span>
+                  <span>{s}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <!-- Section: Evidence That Matters -->
+          <div class="content-block">
+            <h2 class="content-heading">Critical Evidence in California Courts</h2>
+            <ul class="bullet-list">
+              {practice.evidence.map(e => (
+                <li>
+                  <span class="bullet-icon">✓</span>
+                  <span>{e}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <!-- Section: Potential Remedies -->
+          <div class="content-block">
+            <h2 class="content-heading">Potential Legal Remedies & Financial Recovery</h2>
+            <ul class="bullet-list">
+              {practice.remedies.map(r => (
+                <li>
+                  <span class="bullet-icon">✓</span>
+                  <span>{r}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <!-- Section: Mistakes to Avoid -->
+          <div class="content-block">
+            <h2 class="content-heading">Common Mistakes That Harm California Claims</h2>
+            <ul class="bullet-list mistakes-list">
+              {practice.mistakes.map(m => (
+                <li>
+                  <span class="bullet-icon alert">✕</span>
+                  <span>{m}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <!-- Reviewer Box -->
+          <div class="author-reviewer-box">
+            <div class="reviewer-badge">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#c8a04a" stroke-width="2">
+                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                <polyline points="22 4 12 14.01 9 11.01"></polyline>
+              </svg>
+              <span>{practice.reviewer}</span>
+            </div>
+            <p class="reviewer-note">
+              This guide provides general California legal educational information under State Bar ethics rules. It is not individualized legal advice. To evaluate your specific claim, request a confidential intake below.
+            </p>
+          </div>
+        </div>
+
+        <!-- Right Sidebar -->
+        <aside class="detail-sidebar">
+          <div class="sidebar-sticky-box">
+            <div class="sidebar-card eval-card">
+              <h3 class="sidebar-title">Have Questions About Your Situation?</h3>
+              <p class="sidebar-desc">
+                Speak with our California intake team. 100% confidential, free of charge, and no obligation.
+              </p>
+              <a href="#case-evaluation" class="btn-gold sidebar-cta">
+                <span>Start Free Evaluation</span>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M5 12h14M12 5l7 7-7 7"></path>
+                </svg>
+              </a>
+              <div class="sidebar-phone">
+                <span>Or Call Toll-Free 24/7:</span>
+                <a href="tel:8005555878">(800) 555-JUSTICE</a>
+              </div>
+            </div>
+
+            <div class="sidebar-card nav-card">
+              <h4 class="sidebar-nav-heading">Other Practice Areas</h4>
+              <ul class="sidebar-links">
+                <li><a href="/practice-areas/personal-injury">Personal Injury</a></li>
+                <li><a href="/practice-areas/car-accidents">Car Accidents</a></li>
+                <li><a href="/practice-areas/employment-law">Employment Law</a></li>
+                <li><a href="/practice-areas/wrongful-termination">Wrongful Termination</a></li>
+                <li><a href="/practice-areas/wage-and-hour">Wage & Hour Law</a></li>
+                <li><a href="/practice-areas/disability-rights">Disability Rights & ADA</a></li>
+                <li><a href="/practice-areas/medical-malpractice">Medical Malpractice</a></li>
+                <li><a href="/practice-areas/consumer-protection">Consumer Protection</a></li>
+              </ul>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <!-- Case Evaluation Form -->
+    <CaseEvaluation />
+  </main>
+
+  <Footer />
+  <StickyCTA />
+  <CaseAssistant />
+</Layout>
+
+<style>
+  .practice-detail-content {
+    padding: 4.5rem 0;
+    border-bottom: 1px solid rgba(200, 160, 74, 0.2);
+  }
+
+  .detail-layout-grid {
+    display: grid;
+    grid-template-columns: 1fr 340px;
+    gap: 4rem;
+  }
+
+  .detail-main-column {
+    display: flex;
+    flex-direction: column;
+    gap: 2.5rem;
+  }
+
+  /* AEO Direct Answer Card */
+  .aeo-answer-card {
+    background: var(--color-white);
+    border: 1.5px solid var(--color-gold);
+    border-radius: var(--radius-md);
+    padding: 2rem;
+    box-shadow: var(--shadow-card);
+  }
+
+  .aeo-header {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--color-gold-dark);
+    margin-bottom: 0.8rem;
+  }
+
+  .aeo-text {
+    font-size: 1.05rem;
+    line-height: 1.65;
+    color: var(--color-dark-green);
+    font-weight: 500;
+  }
+
+  .content-heading {
+    font-family: var(--font-serif);
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: var(--color-dark-green);
+    margin-bottom: 1rem;
+    position: relative;
+    padding-bottom: 0.4rem;
+  }
+
+  .content-heading::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 36px;
+    height: 2px;
+    background: var(--color-gold);
+  }
+
+  .body-text {
+    font-size: 0.95rem;
+    line-height: 1.7;
+    color: var(--color-text-dark-muted);
+  }
+
+  .statutes-highlight-box {
+    background: var(--color-bg-cream);
+    border-left: 3px solid var(--color-gold);
+    padding: 1rem 1.4rem;
+    border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+    font-size: 0.9rem;
+    line-height: 1.6;
+    color: var(--color-dark-green);
+  }
+
+  .deadline-warning-text {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.65rem;
+    background: rgba(200, 160, 74, 0.1);
+    border: 1px solid rgba(200, 160, 74, 0.3);
+    padding: 1rem 1.25rem;
+    border-radius: var(--radius-sm);
+    font-size: 0.9rem;
+    color: var(--color-dark-green);
+    line-height: 1.5;
+  }
+
+  .deadline-warning-text svg {
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  .bullet-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .bullet-list li {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    font-size: 0.92rem;
+    color: var(--color-text-dark-muted);
+    line-height: 1.55;
+  }
+
+  .bullet-icon {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: rgba(200, 160, 74, 0.15);
+    color: var(--color-gold-dark);
+    font-size: 0.75rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  .bullet-icon.alert {
+    background: rgba(220, 38, 38, 0.12);
+    color: #dc2626;
+  }
+
+  /* Author Reviewer Box */
+  .author-reviewer-box {
+    background: var(--color-white);
+    border: 1px solid rgba(200, 160, 74, 0.25);
+    border-radius: var(--radius-sm);
+    padding: 1.4rem 1.6rem;
+    margin-top: 1rem;
+  }
+
+  .reviewer-badge {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--color-dark-green);
+    margin-bottom: 0.4rem;
+  }
+
+  .reviewer-note {
+    font-size: 0.78rem;
+    color: var(--color-text-dark-muted);
+    line-height: 1.5;
+  }
+
+  /* Sidebar */
+  .sidebar-sticky-box {
+    position: sticky;
+    top: 90px;
+    display: flex;
+    flex-direction: column;
+    gap: 1.75rem;
+  }
+
+  .sidebar-card {
+    background: var(--color-white);
+    border: 1px solid rgba(200, 160, 74, 0.25);
+    border-radius: var(--radius-md);
+    padding: 1.8rem;
+    box-shadow: var(--shadow-card);
+  }
+
+  .sidebar-title {
+    font-family: var(--font-serif);
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--color-dark-green);
+    margin-bottom: 0.6rem;
+  }
+
+  .sidebar-desc {
+    font-size: 0.84rem;
+    color: var(--color-text-dark-muted);
+    line-height: 1.55;
+    margin-bottom: 1.5rem;
+  }
+
+  .sidebar-cta {
+    width: 100%;
+    justify-content: center;
+    margin-bottom: 1.2rem;
+  }
+
+  .sidebar-phone {
+    text-align: center;
+    font-size: 0.78rem;
+    color: var(--color-text-dark-muted);
+    border-top: 1px solid rgba(200, 160, 74, 0.2);
+    padding-top: 0.8rem;
+  }
+
+  .sidebar-phone a {
+    display: block;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--color-dark-green);
+    margin-top: 0.2rem;
+    transition: color 0.2s;
+  }
+
+  .sidebar-phone a:hover {
+    color: var(--color-gold);
+  }
+
+  .sidebar-nav-heading {
+    font-family: var(--font-serif);
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--color-dark-green);
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid rgba(200, 160, 74, 0.2);
+  }
+
+  .sidebar-links {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .sidebar-links a {
+    font-size: 0.84rem;
+    color: var(--color-text-dark-muted);
+    transition: color 0.2s, transform 0.2s;
+    display: inline-block;
+  }
+
+  .sidebar-links a:hover {
+    color: var(--color-gold-dark);
+    transform: translateX(3px);
+  }
+
+  @media (max-width: 980px) {
+    .detail-layout-grid {
+      grid-template-columns: 1fr;
+      gap: 3rem;
+    }
+  }
+</style>

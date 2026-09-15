@@ -1,0 +1,39 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Navbar from '../../components/Navbar.astro';
+import Footer from '../../components/global/Footer.astro';
+import PageHero from '../../components/global/PageHero.astro';
+import LegalResourcesSection from '../../components/sections/LegalResources.astro';
+import CaseEvaluation from '../../components/sections/CaseEvaluation.astro';
+import StickyCTA from '../../components/global/StickyCTA.astro';
+import CaseAssistant from '../../components/chat/CaseAssistant.astro';
+
+const breadcrumbs = [
+  { label: 'Home', href: '/' },
+  { label: 'Legal Resources' }
+];
+---
+
+<Layout 
+  title="California Legal Resources & Guides | Equal Justice Lawyers"
+  description="Authoritative legal guides explaining California injury statutes of limitations, wrongful termination laws, accident toolkits, and Unruh Civil Rights Act protections."
+>
+  <Navbar transparent={false} />
+
+  <main id="main-content">
+    <PageHero 
+      kicker="CALIFORNIA STATUTORY GUIDANCE"
+      title="California Legal Resources"
+      lead="Practical, attorney-reviewed guides to help California residents understand their procedural rights, statutory filing deadlines, and legal remedies."
+      breadcrumb={breadcrumbs}
+    />
+
+    <LegalResourcesSection />
+
+    <CaseEvaluation />
+  </main>
+
+  <Footer />
+  <StickyCTA />
+  <CaseAssistant />
+</Layout>

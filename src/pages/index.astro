@@ -1,0 +1,124 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Navbar from '../components/Navbar.astro';
+import HeroSection from '../components/HeroSection.astro';
+import TrustStrip from '../components/sections/TrustStrip.astro';
+import CaseSelector from '../components/sections/CaseSelector.astro';
+import PracticeAreas from '../components/sections/PracticeAreas.astro';
+import WhyChooseUs from '../components/sections/WhyChooseUs.astro';
+import LegalTeam from '../components/sections/LegalTeam.astro';
+import CaliforniaFocus from '../components/sections/CaliforniaFocus.astro';
+import CaseEvaluation from '../components/sections/CaseEvaluation.astro';
+import Process from '../components/sections/Process.astro';
+import RepresentativeExperience from '../components/sections/RepresentativeExperience.astro';
+import LegalResources from '../components/sections/LegalResources.astro';
+import FAQSection from '../components/sections/FAQSection.astro';
+import SpanishSection from '../components/sections/SpanishSection.astro';
+import FinalCTA from '../components/sections/FinalCTA.astro';
+import Footer from '../components/global/Footer.astro';
+import StickyCTA from '../components/global/StickyCTA.astro';
+import CaseAssistant from '../components/chat/CaseAssistant.astro';
+
+const legalServiceSchema = {
+  "@context": "https://schema.org",
+  "@type": "LegalService",
+  "name": "Equal Justice Lawyers",
+  "image": "https://equaljusticelawyers.com/images/hero-bg.jpg",
+  "url": "https://equaljusticelawyers.com",
+  "telephone": "+1-800-555-5878",
+  "priceRange": "$$",
+  "address": {
+    "@type": "PostalAddress",
+    "addressRegion": "CA",
+    "addressCountry": "US"
+  },
+  "geo": {
+    "@type": "GeoCoordinates",
+    "latitude": 34.0522,
+    "longitude": -118.2437
+  },
+  "openingHoursSpecification": {
+    "@type": "OpeningHoursSpecification",
+    "dayOfWeek": [
+      "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"
+    ],
+    "opens": "00:00",
+    "closes": "23:59"
+  },
+  "areaServed": [
+    { "@type": "AdministrativeArea", "name": "California" },
+    { "@type": "City", "name": "Los Angeles" },
+    { "@type": "City", "name": "San Diego" },
+    { "@type": "City", "name": "San Francisco" },
+    { "@type": "City", "name": "San Jose" },
+    { "@type": "City", "name": "Sacramento" },
+    { "@type": "AdministrativeArea", "name": "Orange County" },
+    { "@type": "AdministrativeArea", "name": "Inland Empire" }
+  ],
+  "knowsLanguage": ["en", "es"],
+  "description": "California trial lawyers fighting for individuals and families wronged in personal injury, employment law, disability rights, medical malpractice, and consumer protection cases."
+};
+---
+
+<Layout 
+  title="Equal Justice Lawyers | California Trial Attorneys & Worker Advocates"
+  description="California trial lawyers fighting for people wronged in personal injury, employment law, disability rights, medical malpractice, and consumer protection. Free confidential case evaluation."
+  schemaJson={legalServiceSchema}
+>
+  <!-- Navigation Header (Transparent overlay over Hero) -->
+  <Navbar transparent={true} />
+
+  <!-- Approved Hero Section (Preserved As Master Reference) -->
+  <HeroSection />
+
+  <!-- Main Content Flow in Exact Specified Sequence -->
+  <main id="main-content">
+    <!-- 1. Trust / Credibility Strip -->
+    <TrustStrip />
+
+    <!-- 2. 'What Happened?' Case Selector -->
+    <CaseSelector />
+
+    <!-- 3. Core Practice Areas -->
+    <PracticeAreas />
+
+    <!-- 4. Why Clients Choose Equal Justice Lawyers -->
+    <WhyChooseUs />
+
+    <!-- 5. Attorney / Legal Team Section -->
+    <LegalTeam />
+
+    <!-- 6. California Focus & Regional Coverage -->
+    <CaliforniaFocus />
+
+    <!-- 7. High-Intent Case Evaluation Section (Interactive Multi-Step Intake) -->
+    <CaseEvaluation />
+
+    <!-- 8. How the Process Works -->
+    <Process />
+
+    <!-- 9. Case Results / Representative Experience (Ethical) -->
+    <RepresentativeExperience />
+
+    <!-- 10. California Legal Resources & Statutory Guides -->
+    <LegalResources />
+
+    <!-- 11. Answer Engine / FAQ Section -->
+    <FAQSection />
+
+    <!-- 12. Spanish Section (Bilingual Gateway) -->
+    <SpanishSection />
+
+    <!-- 13. Final Conversion CTA -->
+    <FinalCTA />
+  </main>
+
+  <!-- Full-Width Legal Footer -->
+  <Footer />
+
+  <!-- Mobile Sticky Conversion Bar -->
+  <StickyCTA />
+
+  <!-- Interactive Legal Intake Assistant (Chat With Us Modal & Launcher) -->
+  <CaseAssistant />
+</Layout>

@@ -1,0 +1,349 @@
+---
+interface Props {
+  lang?: string;
+}
+
+const { lang = 'en' } = Astro.props;
+const isSpanish = lang === 'es';
+
+const regions = [
+  {
+    name: 'Greater Los Angeles',
+    sub: 'Los Angeles County, Pasadena, Long Beach, San Fernando Valley',
+    type: isSpanish ? 'Centro Principal de Consultas' : 'Primary Consultation Hub',
+    status: isSpanish ? 'Presencial con Cita Previa & Virtual' : 'In-Person by Appt. & Virtual',
+    href: '/locations/los-angeles'
+  },
+  {
+    name: 'Orange County',
+    sub: 'Santa Ana, Irvine, Anaheim, Newport Beach',
+    type: isSpanish ? 'Área de Servicio Designada' : 'Designated Service Region',
+    status: isSpanish ? 'Servicios Virtuales & Consultas Locales' : 'Virtual & Local Meeting Coverage',
+    href: '/locations/orange-county'
+  },
+  {
+    name: 'San Diego County',
+    sub: 'Downtown San Diego, Chula Vista, Oceanside, Escondido',
+    type: isSpanish ? 'Área de Cobertura Regional' : 'Regional Service Area',
+    status: isSpanish ? 'Reuniones con Cita & Litigio Federal/Estatal' : 'Appointment-Based & Federal/State Filing',
+    href: '/locations/san-diego'
+  },
+  {
+    name: 'Inland Empire',
+    sub: 'Riverside, San Bernardino, Ontario, Corona',
+    type: isSpanish ? 'Área de Cobertura de Litigio' : 'Litigation Coverage Area',
+    status: isSpanish ? 'Servicio Virtual & Atención In Situ' : 'Virtual Service & On-Site Consultation',
+    href: '/locations/inland-empire'
+  },
+  {
+    name: 'San Francisco Bay Area',
+    sub: 'San Francisco, Oakland, Berkeley, Marin County',
+    type: isSpanish ? 'Área de Cobertura del Norte' : 'Northern California Service Area',
+    status: isSpanish ? 'Admisión Virtual & Cobertura de Cortes' : 'Virtual Intake & Court Appearance Coverage',
+    href: '/locations/san-francisco-bay-area'
+  },
+  {
+    name: 'Silicon Valley & San Jose',
+    sub: 'Santa Clara County, Sunnyvale, Mountain View',
+    type: isSpanish ? 'Área de Servicio Laboral y Civil' : 'Employment & Civil Service Area',
+    status: isSpanish ? 'Consultas Digitales & Litigio Estatal' : 'Digital Consultation & State Superior Court',
+    href: '/locations/san-jose-silicon-valley'
+  },
+  {
+    name: 'Sacramento & Capital Region',
+    sub: 'Sacramento County, Roseville, Elk Grove, Davis',
+    type: isSpanish ? 'Área de Litigio Regulatorio' : 'Regulatory & Appellate Reach',
+    status: isSpanish ? 'Consultas Virtuales & Juzgados del Capitolio' : 'Virtual Case Review & Regional Filing',
+    href: '/locations/sacramento'
+  },
+  {
+    name: 'Fresno & Central Valley',
+    sub: 'Fresno County, Bakersfield, Modesto, Stockton',
+    type: isSpanish ? 'Área de Servicio Agrícola y Laboral' : 'Agricultural & Regional Workforce Hub',
+    status: isSpanish ? 'Admisión Bilingüe y Reuniones Especiales' : 'Bilingual Intake & Virtual Litigation',
+    href: '/locations/fresno-central-valley'
+  }
+];
+---
+
+<section class="section-dark california-focus-section" id="california-coverage">
+  <div class="section-container">
+    <div class="section-header-center">
+      <span class="section-kicker">{isSpanish ? 'ALCANCE ESTATAL' : 'STATEWIDE REACH'}</span>
+      <h2 class="section-title">{isSpanish ? 'Representando a Clientes en Toda California' : 'Serving Clients Across California'}</h2>
+      <div class="gold-divider"></div>
+      <p class="section-subtitle">
+        {isSpanish
+          ? 'Nuestra práctica abarca los 58 condados de California. Combinamos capacidades virtuales de vanguardia con representación local en los tribunales superiores de cada condado.'
+          : 'Our litigation practice spans all 58 California counties. We combine state-of-the-art secure virtual consultations with direct local representation in Superior Courts throughout the Golden State.'}
+      </p>
+    </div>
+
+    <!-- Clear Ethical Transparency Notice -->
+    <div class="service-transparency-box">
+      <div class="transparency-pill">
+        <span class="badge-dot"></span>
+        <span>Transparent Practice Standards</span>
+      </div>
+      <p class="transparency-note">
+        {isSpanish
+          ? 'Distinción clara: Equal Justice Lawyers atiende a clientes en todo el estado mediante admisión digital protegida y consultas presenciales designadas por cita previa. No operamos oficinas físicas no verificadas.'
+          : 'Service Transparency: We provide statewide legal advocacy through secure encrypted video/phone intake and by-appointment meeting spaces across regional court jurisdictions. We do not advertise unstaffed physical storefronts.'}
+      </p>
+    </div>
+
+    <!-- Regions Grid -->
+    <div class="regions-grid">
+      {regions.map((reg) => (
+        <div class="region-card">
+          <div class="region-top">
+            <div class="region-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#c8a04a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                <circle cx="12" cy="10" r="3"></circle>
+              </svg>
+            </div>
+            <span class="region-type">{reg.type}</span>
+          </div>
+
+          <h3 class="region-name">{reg.name}</h3>
+          <p class="region-sub">{reg.sub}</p>
+          
+          <div class="region-status-row">
+            <span class="status-marker"></span>
+            <span class="status-text">{reg.status}</span>
+          </div>
+
+          <a href={reg.href} class="region-link">
+            <span>{isSpanish ? 'Información de Jurisdicción' : 'View Court & Service Details'}</span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M5 12h14M12 5l7 7-7 7"></path>
+            </svg>
+          </a>
+        </div>
+      ))}
+    </div>
+
+    <!-- Bottom Action -->
+    <div class="california-footer-cta">
+      <div class="cta-banner-inner">
+        <div class="banner-text">
+          <h4 class="banner-title">
+            {isSpanish ? '¿Su asunto legal ocurrió en otra ciudad o condado de California?' : 'Did your legal issue occur in another California community?'}
+          </h4>
+          <p class="banner-desc">
+            {isSpanish
+              ? 'Nuestras licencias del State Bar nos permiten litigar en cada corte de California, desde Redding hasta San Diego.'
+              : 'Our California State Bar licensure authorizes full representation in all California state courts and federal district courts statewide.'}
+          </p>
+        </div>
+        <a href="#case-evaluation" class="btn-gold banner-btn">
+          <span>{isSpanish ? 'Evaluar Caso Estatal' : 'Check Statewide Eligibility'}</span>
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M5 12h14M12 5l7 7-7 7"></path>
+          </svg>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .california-focus-section {
+    position: relative;
+    border-bottom: 1px solid rgba(200, 160, 74, 0.2);
+    background: radial-gradient(circle at center top, rgba(26, 51, 40, 0.8) 0%, var(--color-dark-green-deep) 70%);
+  }
+
+  .service-transparency-box {
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(200, 160, 74, 0.25);
+    border-radius: var(--radius-md);
+    padding: 1.25rem 1.75rem;
+    max-width: 900px;
+    margin: -1.5rem auto 3.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+  }
+
+  .transparency-pill {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    background: rgba(200, 160, 74, 0.15);
+    border: 1px solid rgba(200, 160, 74, 0.35);
+    border-radius: var(--radius-pill);
+    padding: 4px 12px;
+    font-size: 0.72rem;
+    font-weight: 700;
+    color: var(--color-gold);
+    white-space: nowrap;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .badge-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--color-gold);
+  }
+
+  .transparency-note {
+    font-size: 0.82rem;
+    color: var(--color-text-light);
+    line-height: 1.5;
+  }
+
+  .regions-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.5rem;
+  }
+
+  .region-card {
+    background: rgba(26, 51, 40, 0.65);
+    border: 1px solid rgba(200, 160, 74, 0.25);
+    backdrop-filter: blur(8px);
+    border-radius: var(--radius-md);
+    padding: 1.6rem 1.4rem;
+    display: flex;
+    flex-direction: column;
+    transition: all 0.25s ease;
+  }
+
+  .region-card:hover {
+    background: rgba(26, 51, 40, 0.9);
+    border-color: var(--color-gold);
+    transform: translateY(-3px);
+  }
+
+  .region-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+  }
+
+  .region-icon {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: rgba(200, 160, 74, 0.12);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .region-type {
+    font-size: 0.68rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--color-gold);
+  }
+
+  .region-name {
+    font-family: var(--font-serif);
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--color-white);
+    margin-bottom: 0.35rem;
+  }
+
+  .region-sub {
+    font-size: 0.78rem;
+    color: var(--color-text-muted);
+    line-height: 1.45;
+    margin-bottom: 1.1rem;
+  }
+
+  .region-status-row {
+    display: flex;
+    align-items: center;
+    gap: 0.45rem;
+    font-size: 0.74rem;
+    color: var(--color-text-light);
+    margin-bottom: 1.25rem;
+    margin-top: auto;
+    padding-top: 0.75rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  .status-marker {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--color-gold);
+    flex-shrink: 0;
+  }
+
+  .region-link {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: var(--color-gold);
+    transition: color 0.2s, transform 0.2s;
+  }
+
+  .region-link:hover {
+    color: var(--color-gold-light);
+    transform: translateX(3px);
+  }
+
+  /* Bottom CTA Banner */
+  .california-footer-cta {
+    margin-top: 3.5rem;
+    background: rgba(200, 160, 74, 0.08);
+    border: 1px solid rgba(200, 160, 74, 0.3);
+    border-radius: var(--radius-md);
+    padding: 2rem 2.5rem;
+  }
+
+  .cta-banner-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2rem;
+  }
+
+  .banner-title {
+    font-family: var(--font-serif);
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--color-white);
+    margin-bottom: 0.3rem;
+  }
+
+  .banner-desc {
+    font-size: 0.85rem;
+    color: var(--color-text-muted);
+  }
+
+  @media (max-width: 1100px) {
+    .regions-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 768px) {
+    .service-transparency-box {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0.8rem;
+    }
+
+    .regions-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .cta-banner-inner {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 1.25rem;
+    }
+  }
+</style>

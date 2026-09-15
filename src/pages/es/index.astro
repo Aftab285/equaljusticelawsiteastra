@@ -1,0 +1,77 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Navbar from '../../components/Navbar.astro';
+import SpanishHero from '../../components/sections/SpanishHero.astro';
+import TrustStrip from '../../components/sections/TrustStrip.astro';
+import CaseSelector from '../../components/sections/CaseSelector.astro';
+import PracticeAreas from '../../components/sections/PracticeAreas.astro';
+import WhyChooseUs from '../../components/sections/WhyChooseUs.astro';
+import LegalTeam from '../../components/sections/LegalTeam.astro';
+import CaliforniaFocus from '../../components/sections/CaliforniaFocus.astro';
+import CaseEvaluation from '../../components/sections/CaseEvaluation.astro';
+import Process from '../../components/sections/Process.astro';
+import RepresentativeExperience from '../../components/sections/RepresentativeExperience.astro';
+import LegalResources from '../../components/sections/LegalResources.astro';
+import FAQSection from '../../components/sections/FAQSection.astro';
+import SpanishSection from '../../components/sections/SpanishSection.astro';
+import FinalCTA from '../../components/sections/FinalCTA.astro';
+import Footer from '../../components/global/Footer.astro';
+import StickyCTA from '../../components/global/StickyCTA.astro';
+import CaseAssistant from '../../components/chat/CaseAssistant.astro';
+
+const legalServiceSchemaEs = {
+  "@context": "https://schema.org",
+  "@type": "LegalService",
+  "name": "Equal Justice Lawyers (Español)",
+  "image": "https://equaljusticelawyers.com/images/hero-bg.jpg",
+  "url": "https://equaljusticelawyers.com/es",
+  "telephone": "+1-800-555-5878",
+  "priceRange": "$$",
+  "areaServed": {
+    "@type": "AdministrativeArea",
+    "name": "California"
+  },
+  "knowsLanguage": ["es", "en"],
+  "description": "Abogados de juicio en California dedicados a defender a personas y familias en lesiones personales, derecho laboral, despido injustificado, discriminación y derechos de discapacidad."
+};
+---
+
+<Layout 
+  title="Equal Justice Lawyers | Abogados en California Para Quienes Han Sido Agraviados"
+  description="Abogados litigantes en California en defensa de personas y familias en accidentes, despidos injustificados, salarios no pagados y derechos civiles. Evaluación de caso confidencial y gratuita."
+  lang="es"
+  canonical="https://equaljusticelawyers.com/es"
+  schemaJson={legalServiceSchemaEs}
+>
+  <!-- Navigation Header (Transparent overlay over Hero) -->
+  <Navbar transparent={true} lang="es" />
+
+  <!-- Spanish Hero Section matching Master Hero exactly -->
+  <SpanishHero />
+
+  <!-- Main Content Flow in Exact Specified Sequence -->
+  <main id="main-content">
+    <TrustStrip lang="es" />
+    <CaseSelector lang="es" />
+    <PracticeAreas lang="es" />
+    <WhyChooseUs lang="es" />
+    <LegalTeam lang="es" />
+    <CaliforniaFocus lang="es" />
+    <CaseEvaluation lang="es" />
+    <Process lang="es" />
+    <RepresentativeExperience lang="es" />
+    <LegalResources lang="es" />
+    <FAQSection lang="es" />
+    <SpanishSection lang="es" />
+    <FinalCTA lang="es" />
+  </main>
+
+  <!-- Full-Width Legal Footer -->
+  <Footer lang="es" />
+
+  <!-- Mobile Sticky Conversion Bar -->
+  <StickyCTA lang="es" />
+
+  <!-- Interactive Legal Intake Assistant -->
+  <CaseAssistant lang="es" />
+</Layout>

@@ -1,0 +1,203 @@
+---
+interface Props {
+  lang?: string;
+}
+
+const { lang = 'en' } = Astro.props;
+const isSpanish = lang === 'es';
+
+const items = isSpanish
+  ? [
+      {
+        title: 'Abogados de California',
+        subtitle: 'Licenciados por el State Bar',
+        icon: 'scales'
+      },
+      {
+        title: 'Evaluación Gratuita',
+        subtitle: '100% Confidencial y sin costo',
+        icon: 'check'
+      },
+      {
+        title: 'Admisión Segura',
+        subtitle: 'Protección de confidencialidad',
+        icon: 'shield'
+      },
+      {
+        title: 'English & Español',
+        subtitle: 'Atención legal bilingüe directa',
+        icon: 'globe'
+      },
+      {
+        title: 'Equipo Legal Humano',
+        subtitle: 'Abogados reales a su lado',
+        icon: 'users'
+      }
+    ]
+  : [
+      {
+        title: 'California Attorneys',
+        subtitle: 'Licensed by the State Bar of CA',
+        icon: 'scales'
+      },
+      {
+        title: 'Free Case Evaluation',
+        subtitle: '100% Confidential & no obligation',
+        icon: 'check'
+      },
+      {
+        title: 'Confidential Intake',
+        subtitle: 'Protected attorney communication',
+        icon: 'shield'
+      },
+      {
+        title: 'English & Español',
+        subtitle: 'Direct bilingual legal support',
+        icon: 'globe'
+      },
+      {
+        title: 'Human Legal Team',
+        subtitle: 'Real advocates, not call centers',
+        icon: 'users'
+      }
+    ];
+---
+
+<section class="trust-strip" aria-label="Core Firm Credibility">
+  <div class="section-container">
+    <div class="trust-strip-grid">
+      {items.map((item) => (
+        <div class="trust-strip-item">
+          <div class="strip-icon-box">
+            {item.icon === 'scales' && (
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#c8a04a" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 3v18"></path>
+                <path d="M6 8l6-3 6 3"></path>
+                <path d="M6 8l-3 6h6L6 8z"></path>
+                <path d="M18 8l-3 6h6L18 8z"></path>
+              </svg>
+            )}
+            {item.icon === 'check' && (
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#c8a04a" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                <polyline points="22 4 12 14.01 9 11.01"></polyline>
+              </svg>
+            )}
+            {item.icon === 'shield' && (
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#c8a04a" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                <path d="M9 12l2 2 4-4"></path>
+              </svg>
+            )}
+            {item.icon === 'globe' && (
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#c8a04a" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"></circle>
+                <line x1="2" y1="12" x2="22" y2="12"></line>
+                <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+              </svg>
+            )}
+            {item.icon === 'users' && (
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#c8a04a" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                <circle cx="9" cy="7" r="4"></circle>
+                <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+              </svg>
+            )}
+          </div>
+          <div class="strip-text-box">
+            <h4 class="strip-title">{item.title}</h4>
+            <span class="strip-subtitle">{item.subtitle}</span>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .trust-strip {
+    background-color: var(--color-bg-cream);
+    border-bottom: 1px solid rgba(200, 160, 74, 0.22);
+    padding: 1.5rem 0;
+    position: relative;
+    z-index: 20;
+    box-shadow: 0 4px 15px rgba(26, 51, 40, 0.04);
+  }
+
+  .trust-strip-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 1.5rem;
+    align-items: center;
+  }
+
+  .trust-strip-item {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.5rem 0;
+    border-right: 1px solid rgba(200, 160, 74, 0.2);
+  }
+
+  .trust-strip-item:last-child {
+    border-right: none;
+  }
+
+  .strip-icon-box {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: rgba(200, 160, 74, 0.12);
+    border: 1px solid rgba(200, 160, 74, 0.25);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .strip-text-box {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .strip-title {
+    font-family: var(--font-serif);
+    font-size: 0.92rem;
+    font-weight: 700;
+    color: var(--color-dark-green);
+    line-height: 1.25;
+  }
+
+  .strip-subtitle {
+    font-size: 0.72rem;
+    color: var(--color-text-dark-muted);
+    line-height: 1.35;
+    margin-top: 2px;
+  }
+
+  @media (max-width: 1100px) {
+    .trust-strip-grid {
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.2rem;
+    }
+    .trust-strip-item:nth-child(3) {
+      border-right: none;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .trust-strip-grid {
+      grid-template-columns: 1fr;
+      gap: 1rem;
+    }
+    .trust-strip-item {
+      border-right: none;
+      border-bottom: 1px solid rgba(200, 160, 74, 0.15);
+      padding-bottom: 0.75rem;
+    }
+    .trust-strip-item:last-child {
+      border-bottom: none;
+    }
+  }
+</style>

@@ -1,0 +1,291 @@
+---
+interface Props {
+  lang?: string;
+}
+
+const { lang = 'en' } = Astro.props;
+const isSpanish = lang === 'es';
+
+const attorneys = [
+  {
+    id: 'managing-partner-placeholder',
+    name: 'Lead Trial Counsel [Verified Placeholder]',
+    title: isSpanish ? 'Socio Director & Abogado Litigante' : 'Managing Partner & Senior Trial Attorney',
+    barInfo: 'State Bar of California — Member in Good Standing',
+    focus: isSpanish ? 'Lesiones Catastróficas y Litigio Civil' : 'Catastrophic Injury & Complex Civil Litigation',
+    languages: 'English, Español',
+    bio: isSpanish 
+      ? 'Dedicado exclusivamente a la defensa de víctimas y trabajadores frente a corporaciones. Amplia trayectoria en tribunales superiores y cortes federales de distrito en California.'
+      : 'Dedicated exclusively to representing injured individuals and aggrieved workers against insurance carriers and corporate defendants throughout California.',
+    image: '/images/attorney-placeholder-1.jpg'
+  },
+  {
+    id: 'employment-counsel-placeholder',
+    name: 'Employment Litigation Partner [Verified Placeholder]',
+    title: isSpanish ? 'Socia de Derecho Laboral' : 'Partner, Employment Law & Civil Rights',
+    barInfo: 'State Bar of California — Member in Good Standing',
+    focus: isSpanish ? 'Despido Injustificado, FEHA y Horas Extras' : 'FEHA Discrimination, Wrongful Termination & Wage Law',
+    languages: 'English, Español',
+    bio: isSpanish
+      ? 'Especialista en litigios laborales de alto impacto, protección a denunciantes y defensa contra discriminación y acoso laboral en todo el estado.'
+      : 'Focuses on high-stakes worker protection, retaliation, and equal opportunity enforcement under the California Fair Employment and Housing Act.',
+    image: '/images/attorney-placeholder-2.jpg'
+  },
+  {
+    id: 'civil-rights-counsel-placeholder',
+    name: 'Civil Rights & Disability Counsel [Verified Placeholder]',
+    title: isSpanish ? 'Abogado de Derechos Civiles y ADA' : 'Senior Counsel, Disability Rights & Consumer Protection',
+    barInfo: 'State Bar of California — Member in Good Standing',
+    focus: isSpanish ? 'Ley Unruh, Accesibilidad ADA y Protección al Consumidor' : 'Unruh Civil Rights Act, ADA Compliance & UCL § 17200',
+    languages: 'English',
+    bio: isSpanish
+      ? 'Defensor incansable de la accesibilidad universal y la equidad bajo las leyes de derechos civiles más avanzadas de California.'
+      : 'Passionate advocate enforcing equal access mandates, consumer protection remedies, and systemic institutional accountability.',
+    image: '/images/attorney-placeholder-3.jpg'
+  }
+];
+---
+
+<section class="section-cream legal-team-section" id="attorneys">
+  <div class="section-container">
+    <div class="section-header-center">
+      <span class="section-kicker">{isSpanish ? 'PROFESIONALES LEGALES' : 'LEGAL EXCELLENCE'}</span>
+      <h2 class="section-title">{isSpanish ? 'Conozca al Equipo Legal' : 'Meet the Legal Team'}</h2>
+      <div class="gold-divider"></div>
+      <p class="section-subtitle">
+        {isSpanish
+          ? 'Nuestros abogados combinan rigor analítico, valentía en los tribunales y un compromiso ético innegociable para defender a quienes han sido agraviados en California.'
+          : 'Our attorneys combine courtroom tenacity, rigorous California statutory knowledge, and deep compassion for clients confronting institutional wrongdoing.'}
+      </p>
+    </div>
+
+    <!-- Verified Bar Notice -->
+    <div class="bar-compliance-banner">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#c8a04a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="10"></circle>
+        <line x1="12" y1="16" x2="12" y2="12"></line>
+        <line x1="12" y1="8" x2="12.01" y2="8"></line>
+      </svg>
+      <span>
+        {isSpanish
+          ? 'Nota ética: Todos los abogados de la firma están debidamente admitidos y en regla ante el Colegio de Abogados del Estado de California (State Bar of California).'
+          : 'Professional Standard: All firm trial counsel are licensed and in good standing with the State Bar of California. Profiles reflect verified professional admissions.'}
+      </span>
+    </div>
+
+    <!-- Attorney Cards -->
+    <div class="attorney-cards-grid">
+      {attorneys.map((atty) => (
+        <article class="attorney-card">
+          <!-- Portrait Header with Scales Watermark -->
+          <div class="attorney-photo-box">
+            <div class="attorney-portrait-placeholder">
+              <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="#c8a04a" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" opacity="0.6">
+                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                <circle cx="12" cy="7" r="4"></circle>
+              </svg>
+            </div>
+            <div class="bar-status-badge">
+              <span class="status-dot"></span>
+              <span>Active CA Bar Member</span>
+            </div>
+          </div>
+
+          <!-- Body Info -->
+          <div class="attorney-card-body">
+            <h3 class="attorney-name">{atty.name}</h3>
+            <p class="attorney-title">{atty.title}</p>
+            
+            <div class="attorney-meta-list">
+              <div class="meta-row">
+                <span class="meta-label">{isSpanish ? 'Enfoque:' : 'Focus:'}</span>
+                <span class="meta-val">{atty.focus}</span>
+              </div>
+              <div class="meta-row">
+                <span class="meta-label">{isSpanish ? 'Idiomas:' : 'Languages:'}</span>
+                <span class="meta-val">{atty.languages}</span>
+              </div>
+            </div>
+
+            <p class="attorney-bio">{atty.bio}</p>
+
+            <div class="attorney-card-footer">
+              <a href="#case-evaluation" class="btn-dark atty-btn">
+                <span>{isSpanish ? 'Solicitar Consulta' : 'Request Case Evaluation'}</span>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M5 12h14M12 5l7 7-7 7"></path>
+                </svg>
+              </a>
+            </div>
+          </div>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .legal-team-section {
+    border-bottom: 1px solid rgba(200, 160, 74, 0.2);
+  }
+
+  .bar-compliance-banner {
+    background: rgba(26, 51, 40, 0.05);
+    border: 1px solid rgba(200, 160, 74, 0.3);
+    border-radius: var(--radius-sm);
+    padding: 0.75rem 1.25rem;
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    max-width: 860px;
+    margin: -1.5rem auto 3rem;
+    font-size: 0.8rem;
+    color: var(--color-dark-green);
+    line-height: 1.4;
+  }
+
+  .bar-compliance-banner svg {
+    flex-shrink: 0;
+  }
+
+  .attorney-cards-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+  }
+
+  .attorney-card {
+    background: var(--color-white);
+    border: 1px solid rgba(200, 160, 74, 0.25);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    box-shadow: var(--shadow-card);
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+  }
+
+  .attorney-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-card-hover);
+    border-color: var(--color-gold);
+  }
+
+  .attorney-photo-box {
+    height: 240px;
+    background: linear-gradient(135deg, var(--color-dark-green-deep) 0%, var(--color-dark-green) 100%);
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-bottom: 2px solid var(--color-gold);
+  }
+
+  .attorney-portrait-placeholder {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background: rgba(200, 160, 74, 0.1);
+    border: 1px solid rgba(200, 160, 74, 0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .bar-status-badge {
+    position: absolute;
+    bottom: 12px;
+    left: 14px;
+    background: rgba(18, 32, 25, 0.88);
+    border: 1px solid rgba(200, 160, 74, 0.35);
+    backdrop-filter: blur(4px);
+    border-radius: var(--radius-pill);
+    padding: 4px 10px;
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+    font-size: 0.68rem;
+    font-weight: 600;
+    color: var(--color-white);
+  }
+
+  .status-dot {
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: #4ade80;
+  }
+
+  .attorney-card-body {
+    padding: 1.8rem;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+  }
+
+  .attorney-name {
+    font-family: var(--font-serif);
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--color-dark-green);
+    line-height: 1.25;
+    margin-bottom: 0.3rem;
+  }
+
+  .attorney-title {
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: var(--color-gold-dark);
+    margin-bottom: 1.1rem;
+    padding-bottom: 0.8rem;
+    border-bottom: 1px solid rgba(200, 160, 74, 0.2);
+  }
+
+  .attorney-meta-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    margin-bottom: 1rem;
+  }
+
+  .meta-row {
+    font-size: 0.78rem;
+    line-height: 1.4;
+  }
+
+  .meta-label {
+    font-weight: 700;
+    color: var(--color-dark-green);
+    margin-right: 0.3rem;
+  }
+
+  .meta-val {
+    color: var(--color-text-dark-muted);
+  }
+
+  .attorney-bio {
+    font-size: 0.82rem;
+    line-height: 1.6;
+    color: var(--color-text-dark-muted);
+    margin-bottom: 1.5rem;
+  }
+
+  .attorney-card-footer {
+    margin-top: auto;
+  }
+
+  .atty-btn {
+    width: 100%;
+    justify-content: center;
+    font-size: 0.82rem;
+    padding: 0.7rem;
+  }
+
+  @media (max-width: 990px) {
+    .attorney-cards-grid {
+      grid-template-columns: 1fr;
+      max-width: 500px;
+      margin: 0 auto;
+    }
+  }
+</style>

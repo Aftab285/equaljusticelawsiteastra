@@ -1,0 +1,142 @@
+---
+interface Props {
+  kicker: string;
+  title: string;
+  lead: string;
+  breadcrumb: Array<{ label: string; href?: string }>;
+}
+
+const { kicker, title, lead, breadcrumb } = Astro.props;
+---
+
+<section class="internal-page-hero">
+  <div class="page-hero-overlay"></div>
+
+  <div class="section-container page-hero-container">
+    <!-- Breadcrumb -->
+    <nav class="breadcrumb-nav" aria-label="Breadcrumb">
+      <ol class="breadcrumb-list">
+        {breadcrumb.map((crumb, idx) => (
+          <li class="breadcrumb-item">
+            {crumb.href ? (
+              <a href={crumb.href} class="crumb-link">{crumb.label}</a>
+            ) : (
+              <span class="crumb-current" aria-current="page">{crumb.label}</span>
+            )}
+            {idx < breadcrumb.length - 1 && <span class="crumb-sep">/</span>}
+          </li>
+        ))}
+      </ol>
+    </nav>
+
+    <!-- Header Content -->
+    <div class="page-hero-text">
+      <span class="page-hero-kicker">{kicker}</span>
+      <h1 class="page-hero-title">{title}</h1>
+      <div class="gold-divider-left"></div>
+      <p class="page-hero-lead">{lead}</p>
+    </div>
+  </div>
+</section>
+
+<style>
+  .internal-page-hero {
+    position: relative;
+    background: radial-gradient(circle at 75% 20%, rgba(26, 51, 40, 0.95) 0%, var(--color-dark-green-deep) 80%);
+    padding: 7.5rem 0 4.5rem;
+    border-bottom: 1px solid rgba(200, 160, 74, 0.25);
+    overflow: hidden;
+  }
+
+  .page-hero-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, rgba(18, 32, 25, 0.75) 0%, rgba(18, 32, 25, 0.4) 100%);
+    pointer-events: none;
+  }
+
+  .page-hero-container {
+    position: relative;
+    z-index: 2;
+  }
+
+  .breadcrumb-nav {
+    margin-bottom: 1.5rem;
+  }
+
+  .breadcrumb-list {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.78rem;
+  }
+
+  .breadcrumb-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .crumb-link {
+    color: var(--color-text-muted);
+    transition: color 0.2s;
+  }
+
+  .crumb-link:hover {
+    color: var(--color-gold);
+  }
+
+  .crumb-current {
+    color: var(--color-gold);
+    font-weight: 600;
+  }
+
+  .crumb-sep {
+    color: rgba(255, 255, 255, 0.3);
+  }
+
+  .page-hero-text {
+    max-width: 820px;
+  }
+
+  .page-hero-kicker {
+    font-size: 0.78rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+    color: var(--color-gold);
+    display: block;
+    margin-bottom: 0.6rem;
+  }
+
+  .page-hero-title {
+    font-family: var(--font-serif);
+    font-size: 2.75rem;
+    font-weight: 700;
+    color: var(--color-white);
+    line-height: 1.18;
+    margin-bottom: 0.5rem;
+  }
+
+  .page-hero-lead {
+    font-size: 1.05rem;
+    color: var(--color-text-light);
+    line-height: 1.65;
+    font-weight: 300;
+  }
+
+  @media (max-width: 768px) {
+    .internal-page-hero {
+      padding: 6rem 0 3.5rem;
+    }
+    .page-hero-title {
+      font-size: 2rem;
+    }
+    .page-hero-lead {
+      font-size: 0.95rem;
+    }
+  }
+</style>

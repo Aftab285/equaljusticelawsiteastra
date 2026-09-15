@@ -1,0 +1,378 @@
+---
+interface Props {
+  transparent?: boolean;
+  lang?: string;
+}
+
+const { transparent = true, lang = 'en' } = Astro.props;
+
+const isSpanish = lang === 'es';
+const links = isSpanish
+  ? [
+      { name: 'Inicio', href: '/es' },
+      { name: 'Áreas de Práctica', href: '/practice-areas' },
+      { name: 'Ubicaciones', href: '/locations' },
+      { name: 'Recursos', href: '/resources' },
+      { name: 'Nosotros', href: '/about' },
+      { name: 'Contacto', href: '/contact' },
+    ]
+  : [
+      { name: 'Home', href: '/' },
+      { name: 'Practice Areas', href: '/practice-areas' },
+      { name: 'Locations', href: '/locations' },
+      { name: 'Resources', href: '/resources' },
+      { name: 'About', href: '/about' },
+      { name: 'Contact', href: '/contact' },
+    ];
+---
+
+<header class={`navbar-wrapper ${transparent ? 'is-transparent' : 'is-solid'}`}>
+  <nav class="navbar" aria-label="Main Navigation">
+    <div class="navbar-inner">
+      <!-- Logo -->
+      <a href={isSpanish ? '/es' : '/'} class="logo" aria-label="Equal Justice Lawyers Home">
+        <img src="/images/logo-white.png" alt="Equal Justice Lawyers" class="logo-img" width="180" height="60" />
+      </a>
+
+      <!-- Navigation Links -->
+      <ul class="nav-links">
+        {links.map((link) => (
+          <li>
+            <a href={link.href} class="nav-link">{link.name}</a>
+          </li>
+        ))}
+      </ul>
+
+      <!-- Right Side -->
+      <div class="nav-right">
+        <!-- Language Selector (Single clean EN | ES option) -->
+        <div class="lang-selector">
+          <a href="/" class={`lang-text ${!isSpanish ? 'is-active' : ''}`}>EN</a>
+          <span class="lang-divider">|</span>
+          <a href="/es" class={`lang-text ${isSpanish ? 'is-active' : ''}`}>ES</a>
+        </div>
+
+        <!-- CTA Button -->
+        <a href="#case-evaluation" class="nav-cta">
+          {isSpanish ? 'Evaluación Gratuita' : 'Get a Free Case Evaluation'}
+        </a>
+
+        <!-- Mobile Hamburger Button -->
+        <button class="mobile-menu-btn" id="mobile-menu-toggle" aria-label="Toggle navigation menu" aria-expanded="false">
+          <span class="bar"></span>
+          <span class="bar"></span>
+          <span class="bar"></span>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Mobile Navigation Drawer -->
+  <div class="mobile-drawer" id="mobile-drawer">
+    <div class="mobile-drawer-inner">
+      <ul class="mobile-links">
+        {links.map((link) => (
+          <li>
+            <a href={link.href} class="mobile-link">{link.name}</a>
+          </li>
+        ))}
+      </ul>
+      <div class="mobile-drawer-footer">
+        <div class="mobile-lang-row">
+          <span>Language / Idioma:</span>
+          <a href="/" class={`lang-btn ${!isSpanish ? 'active' : ''}`}>English (EN)</a>
+          <a href="/es" class={`lang-btn ${isSpanish ? 'active' : ''}`}>Español (ES)</a>
+        </div>
+        <a href="#case-evaluation" class="btn-gold mobile-drawer-cta">
+          {isSpanish ? 'Iniciar Evaluación Confidencial' : 'Start Free Evaluation'}
+        </a>
+        <div class="mobile-contact-callout">
+          <span>Call Toll-Free 24/7</span>
+          <strong>(800) 555-JUSTICE</strong>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<script>
+  const toggleBtn = document.getElementById('mobile-menu-toggle');
+  const drawer = document.getElementById('mobile-drawer');
+
+  if (toggleBtn && drawer) {
+    toggleBtn.addEventListener('click', () => {
+      const expanded = toggleBtn.getAttribute('aria-expanded') === 'true';
+      toggleBtn.setAttribute('aria-expanded', (!expanded).toString());
+      drawer.classList.toggle('is-open');
+      document.body.classList.toggle('menu-locked');
+    });
+
+    drawer.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        drawer.classList.remove('is-open');
+        toggleBtn.setAttribute('aria-expanded', 'false');
+        document.body.classList.remove('menu-locked');
+      });
+    });
+  }
+</script>
+
+<style>
+  .navbar-wrapper {
+    width: 100%;
+    z-index: 1000;
+  }
+
+  .navbar-wrapper.is-transparent {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    background: transparent;
+  }
+
+  .navbar-wrapper.is-solid {
+    position: sticky;
+    top: 0;
+    background: var(--color-dark-green-deep);
+    border-bottom: 1px solid rgba(200, 160, 74, 0.2);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+  }
+
+  .navbar {
+    padding: 0 2rem;
+  }
+
+  .navbar-inner {
+    max-width: 1400px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.1rem 0;
+  }
+
+  /* Logo */
+  .logo {
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+  }
+
+  .logo-img {
+    height: 42px;
+    width: auto;
+    object-fit: contain;
+    display: block;
+  }
+
+  /* Nav Links */
+  .nav-links {
+    display: flex;
+    align-items: center;
+    gap: 1.6rem;
+  }
+
+  .nav-link {
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: var(--color-white);
+    transition: color 0.2s ease;
+    white-space: nowrap;
+    letter-spacing: 0.01em;
+    position: relative;
+    padding: 4px 0;
+  }
+
+  .nav-link:hover {
+    color: var(--color-gold);
+  }
+
+  /* Right Side */
+  .nav-right {
+    display: flex;
+    align-items: center;
+    gap: 1.1rem;
+    flex-shrink: 0;
+  }
+
+  .lang-selector {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.78rem;
+    color: var(--color-white);
+  }
+
+  .lang-text {
+    color: rgba(255, 255, 255, 0.75);
+    font-weight: 500;
+    transition: color 0.2s ease;
+  }
+
+  .lang-text:hover,
+  .lang-text.is-active {
+    color: var(--color-gold);
+    font-weight: 700;
+  }
+
+  .lang-divider {
+    opacity: 0.4;
+  }
+
+  .nav-cta {
+    background: var(--color-gold);
+    color: var(--color-dark-green);
+    padding: 0.65rem 1.35rem;
+    border-radius: var(--radius-pill);
+    font-size: 0.82rem;
+    font-weight: 600;
+    transition: all 0.25s ease;
+    white-space: nowrap;
+    box-shadow: 0 4px 14px rgba(200, 160, 74, 0.2);
+  }
+
+  .nav-cta:hover {
+    background: var(--color-gold-light);
+    transform: translateY(-1px);
+    box-shadow: 0 6px 18px rgba(200, 160, 74, 0.3);
+  }
+
+  /* Hamburger Menu Button */
+  .mobile-menu-btn {
+    display: none;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 28px;
+    height: 20px;
+    padding: 0;
+  }
+
+  .mobile-menu-btn .bar {
+    width: 100%;
+    height: 2px;
+    background-color: var(--color-white);
+    border-radius: 2px;
+    transition: all 0.3s ease;
+  }
+
+  /* Mobile Drawer */
+  .mobile-drawer {
+    display: none;
+    position: fixed;
+    top: 70px;
+    left: 0;
+    width: 100%;
+    height: calc(100vh - 70px);
+    background: var(--color-dark-green-deep);
+    border-top: 1px solid rgba(200, 160, 74, 0.25);
+    z-index: 999;
+    padding: 2rem 1.5rem;
+    transform: translateY(-100%);
+    opacity: 0;
+    pointer-events: none;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+    overflow-y: auto;
+  }
+
+  .mobile-drawer.is-open {
+    transform: translateY(0);
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .mobile-links {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    margin-bottom: 2rem;
+  }
+
+  .mobile-link {
+    font-family: var(--font-serif);
+    font-size: 1.35rem;
+    color: var(--color-white);
+    font-weight: 600;
+    display: block;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  .mobile-link:hover {
+    color: var(--color-gold);
+  }
+
+  .mobile-drawer-footer {
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+    padding-top: 1rem;
+  }
+
+  .mobile-lang-row {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    font-size: 0.85rem;
+    color: var(--color-text-muted);
+  }
+
+  .lang-btn {
+    padding: 4px 10px;
+    border-radius: var(--radius-sm);
+    border: 1px solid rgba(200, 160, 74, 0.3);
+    color: var(--color-white);
+    font-size: 0.8rem;
+  }
+
+  .lang-btn.active {
+    background: var(--color-gold);
+    color: var(--color-dark-green);
+    font-weight: 700;
+  }
+
+  .mobile-drawer-cta {
+    width: 100%;
+    justify-content: center;
+    padding: 0.9rem;
+    font-size: 0.95rem;
+  }
+
+  .mobile-contact-callout {
+    text-align: center;
+    color: var(--color-text-light);
+    font-size: 0.85rem;
+    margin-top: 0.5rem;
+  }
+
+  .mobile-contact-callout strong {
+    display: block;
+    font-size: 1.15rem;
+    color: var(--color-gold);
+    margin-top: 0.2rem;
+  }
+
+  @media (max-width: 1100px) {
+    .nav-links {
+      display: none;
+    }
+    .mobile-menu-btn {
+      display: flex;
+    }
+    .mobile-drawer {
+      display: block;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .navbar {
+      padding: 0 1rem;
+    }
+    .lang-selector {
+      display: none;
+    }
+    .nav-cta {
+      display: none;
+    }
+  }
+</style>

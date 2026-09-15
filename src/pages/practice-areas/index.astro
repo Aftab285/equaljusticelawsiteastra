@@ -1,0 +1,39 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Navbar from '../../components/Navbar.astro';
+import Footer from '../../components/global/Footer.astro';
+import PageHero from '../../components/global/PageHero.astro';
+import PracticeAreasSection from '../../components/sections/PracticeAreas.astro';
+import CaseEvaluation from '../../components/sections/CaseEvaluation.astro';
+import StickyCTA from '../../components/global/StickyCTA.astro';
+import CaseAssistant from '../../components/chat/CaseAssistant.astro';
+
+const breadcrumbs = [
+  { label: 'Home', href: '/' },
+  { label: 'Practice Areas' }
+];
+---
+
+<Layout 
+  title="California Practice Areas | Equal Justice Lawyers"
+  description="Explore our core California legal practice areas including Personal Injury, Employment Law, Disability Rights, Medical Malpractice, and Consumer Protection."
+>
+  <Navbar transparent={false} />
+
+  <main id="main-content">
+    <PageHero 
+      kicker="CALIFORNIA TRIAL LITIGATION"
+      title="Our Practice Areas"
+      lead="Comprehensive civil advocacy for individuals and families across California wronged by corporate negligence, hostile workplaces, and institutional misconduct."
+      breadcrumb={breadcrumbs}
+    />
+
+    <PracticeAreasSection />
+
+    <CaseEvaluation />
+  </main>
+
+  <Footer />
+  <StickyCTA />
+  <CaseAssistant />
+</Layout>

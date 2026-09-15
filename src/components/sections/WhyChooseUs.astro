@@ -1,0 +1,301 @@
+---
+interface Props {
+  lang?: string;
+}
+
+const { lang = 'en' } = Astro.props;
+const isSpanish = lang === 'es';
+
+const pillars = isSpanish
+  ? [
+      {
+        num: '01',
+        title: 'Enfocados en las Personas',
+        desc: 'Sus objetivos y recuperación física, emocional y financiera son la prioridad absoluta. Escuchamos su historia y diseñamos una estrategia legal a su medida.'
+      },
+      {
+        num: '02',
+        title: 'Conocimiento Legal de California',
+        desc: 'Dominio exhaustivo del Código Civil, Código Laboral, FEHA y precedentes en los tribunales superiores y federales de California.'
+      },
+      {
+        num: '03',
+        title: 'Comunicación Transparente y Continua',
+        desc: 'Le explicamos cada etapa del proceso en lenguaje claro y accesible, sin jerga confusa y manteniéndole informado en tiempo real.'
+      },
+      {
+        num: '04',
+        title: 'Servicio Bilingüe: English & Español',
+        desc: 'Atención directa en español por profesionales legales que comprenden la cultura y necesidades de nuestra comunidad en California.'
+      },
+      {
+        num: '05',
+        title: 'Evaluación de Casos Confidencial',
+        desc: 'Revisión preliminar protegida por el secreto profesional y sin ningún costo ni compromiso financiero para usted o su familia.'
+      },
+      {
+        num: '06',
+        title: 'Apoyo Humano y Cercano',
+        desc: 'Abogados y defensores reales que contestan sus llamadas y están con usted en los momentos más difíciles frente a grandes corporaciones.'
+      }
+    ]
+  : [
+      {
+        num: '01',
+        title: 'Focused on People',
+        desc: 'Your well-being, recovery, and long-term security come first. We listen without judgment and build a legal strategy centered around your real human needs.'
+      },
+      {
+        num: '02',
+        title: 'California Legal Knowledge',
+        desc: 'In-depth mastery of the California Civil Code, FEHA workplace regulations, Labor Code, and procedural rules in California state and federal courts.'
+      },
+      {
+        num: '03',
+        title: 'Clear, Honest Communication',
+        desc: 'We keep you informed at every milestone. No legal jargon, no hidden fees, and no unanswered questions when high-stakes decisions arise.'
+      },
+      {
+        num: '04',
+        title: 'English & Español Fluency',
+        desc: 'First-class bilingual representation from native Spanish-speaking attorneys and paralegals committed to serving all California communities.'
+      },
+      {
+        num: '05',
+        title: 'Confidential Case Evaluation',
+        desc: 'Every intake is reviewed confidentially under established legal privilege protocols, providing clarity on your rights at zero upfront cost.'
+      },
+      {
+        num: '06',
+        title: 'Direct Human Support',
+        desc: 'Real attorneys and dedicated case managers who treat you with dignity, dignity, and tenacity against powerful defense firms.'
+      }
+    ];
+---
+
+<section class="why-choose-section" id="why-choose-us">
+  <div class="why-split-container">
+    <!-- Left Column: Editorial Dark Forest Column -->
+    <div class="why-left-col">
+      <div class="why-left-content">
+        <span class="section-kicker kicker-gold">{isSpanish ? 'NUESTRO COMPROMISO' : 'OUR COMMITMENT'}</span>
+        <h2 class="why-hero-title">
+          {isSpanish ? 'Justicia Equitativa para una California Más Fuerte' : 'Equal Justice for a Stronger California'}
+        </h2>
+        <div class="gold-divider-left"></div>
+        <p class="why-hero-lead">
+          {isSpanish
+            ? 'Creemos que toda persona en California merece un trato justo, protección bajo la ley y una voz valiente frente al poder corporativo.'
+            : 'We believe everyone in California deserves fair treatment, protection under the law, and an uncompromising voice against corporate power.'}
+        </p>
+        <p class="why-hero-body">
+          {isSpanish
+            ? 'Nuestra misión es acompañar a personas y familias trabajadoras, ayudarlas a superar los desafíos legales más difíciles y lograr la justicia y compensación que merecen.'
+            : 'Our mission is to stand with individuals and families, help them navigate challenging legal systems, and pursue the justice they deserve with unmatched dedication.'}
+        </p>
+
+        <div class="why-left-action">
+          <a href="/about" class="btn-gold">
+            <span>{isSpanish ? 'Conozca Nuestra Firma' : 'About Our Firm'}</span>
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M5 12h14M12 5l7 7-7 7"></path>
+            </svg>
+          </a>
+        </div>
+
+        <!-- California Silhouette Background Element -->
+        <div class="california-silhouette-decor" aria-hidden="true">
+          <svg viewBox="0 0 100 200" fill="none" opacity="0.08">
+            <path d="M5 10 Q25 40 45 60 Q65 90 75 140 Q80 170 70 195 L30 195 Q15 150 10 100 Z" fill="#c8a04a"/>
+          </svg>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right Column: Editorial 01-06 Differentiators -->
+    <div class="why-right-col">
+      <div class="why-right-content">
+        <div class="why-right-header">
+          <span class="section-kicker">{isSpanish ? 'VALORES REALES' : 'GENUINE ADVANTAGE'}</span>
+          <h3 class="why-right-title">{isSpanish ? 'Por Qué Elegir Equal Justice Lawyers' : 'Why Choose Equal Justice Lawyers'}</h3>
+          <div class="gold-divider-left"></div>
+        </div>
+
+        <div class="pillars-grid">
+          {pillars.map((p) => (
+            <div class="pillar-card">
+              <div class="pillar-num">{p.num}</div>
+              <div class="pillar-content">
+                <h4 class="pillar-title">{p.title}</h4>
+                <p class="pillar-desc">{p.desc}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .why-choose-section {
+    position: relative;
+    border-bottom: 1px solid rgba(200, 160, 74, 0.2);
+    overflow: hidden;
+  }
+
+  .why-split-container {
+    display: grid;
+    grid-template-columns: 45% 55%;
+    min-height: 700px;
+  }
+
+  /* Left Dark Forest Emerald Column */
+  .why-left-col {
+    background-color: var(--color-dark-green-deep);
+    color: var(--color-white);
+    padding: 6rem 4rem 6rem 6rem;
+    position: relative;
+    display: flex;
+    align-items: center;
+    border-right: 1px solid rgba(200, 160, 74, 0.2);
+  }
+
+  .why-left-content {
+    max-width: 520px;
+    position: relative;
+    z-index: 2;
+  }
+
+  .kicker-gold {
+    color: var(--color-gold) !important;
+  }
+
+  .why-hero-title {
+    font-family: var(--font-serif);
+    font-size: 2.5rem;
+    font-weight: 700;
+    line-height: 1.18;
+    color: var(--color-white);
+    margin-bottom: 1.2rem;
+  }
+
+  .why-hero-lead {
+    font-size: 1.05rem;
+    font-weight: 500;
+    line-height: 1.6;
+    color: var(--color-text-light);
+    margin-bottom: 1rem;
+  }
+
+  .why-hero-body {
+    font-size: 0.92rem;
+    line-height: 1.7;
+    color: var(--color-text-muted);
+    margin-bottom: 2.5rem;
+  }
+
+  .california-silhouette-decor {
+    position: absolute;
+    bottom: -20px;
+    right: 10px;
+    width: 280px;
+    height: 400px;
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  /* Right Light Column */
+  .why-right-col {
+    background-color: var(--color-bg-light);
+    padding: 6rem 6rem 6rem 4rem;
+    display: flex;
+    align-items: center;
+  }
+
+  .why-right-content {
+    max-width: 660px;
+    width: 100%;
+  }
+
+  .why-right-title {
+    font-family: var(--font-serif);
+    font-size: 2.1rem;
+    font-weight: 700;
+    color: var(--color-dark-green);
+    line-height: 1.2;
+    margin-bottom: 0.5rem;
+  }
+
+  .pillars-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem 2.5rem;
+    margin-top: 2rem;
+  }
+
+  .pillar-card {
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+  }
+
+  .pillar-num {
+    font-family: var(--font-serif);
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: var(--color-gold);
+    line-height: 1;
+    padding-top: 2px;
+    border-bottom: 2px solid var(--color-gold);
+    padding-bottom: 2px;
+    flex-shrink: 0;
+  }
+
+  .pillar-content {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .pillar-title {
+    font-family: var(--font-serif);
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--color-dark-green);
+    margin-bottom: 0.35rem;
+    line-height: 1.3;
+  }
+
+  .pillar-desc {
+    font-size: 0.83rem;
+    color: var(--color-text-dark-muted);
+    line-height: 1.55;
+  }
+
+  @media (max-width: 1100px) {
+    .why-split-container {
+      grid-template-columns: 1fr;
+    }
+    .why-left-col {
+      padding: 4.5rem 2rem;
+      border-right: none;
+      border-bottom: 1px solid rgba(200, 160, 74, 0.2);
+    }
+    .why-right-col {
+      padding: 4.5rem 2rem;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .pillars-grid {
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+    }
+    .why-hero-title {
+      font-size: 2rem;
+    }
+    .why-right-title {
+      font-size: 1.75rem;
+    }
+  }
+</style>

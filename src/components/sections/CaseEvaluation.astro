@@ -1,0 +1,695 @@
+---
+interface Props {
+  lang?: string;
+}
+
+const { lang = 'en' } = Astro.props;
+const isSpanish = lang === 'es';
+---
+
+<section class="section-light case-evaluation-section" id="case-evaluation">
+  <div class="section-container">
+    <div class="section-header-center">
+      <span class="section-kicker">{isSpanish ? 'EVALUACIÓN CONFIDENCIAL' : 'CONFIDENTIAL INTAKE'}</span>
+      <h2 class="section-title">{isSpanish ? 'Cuéntenos Qué Sucedió' : 'Tell Us What Happened'}</h2>
+      <div class="gold-divider"></div>
+      <p class="section-subtitle">
+        {isSpanish
+          ? 'Complete este breve cuestionario confidencial para que nuestro equipo de admisión de California revise su situación sin costo ni compromiso alguno.'
+          : 'Complete this brief confidential questionnaire so our California legal intake team can review your facts at zero upfront cost and with no obligation.'}
+      </p>
+    </div>
+
+    <!-- Multi-Step Card Wizard -->
+    <div class="wizard-container">
+      <!-- Progress Bar -->
+      <div class="wizard-progress-bar">
+        <div class="progress-step is-active" data-step="1">
+          <span class="step-num">1</span>
+          <span class="step-label">{isSpanish ? 'Asunto' : 'Issue'}</span>
+        </div>
+        <div class="progress-line"></div>
+        <div class="progress-step" data-step="2">
+          <span class="step-num">2</span>
+          <span class="step-label">{isSpanish ? 'Lugar & Tiempo' : 'Location'}</span>
+        </div>
+        <div class="progress-line"></div>
+        <div class="progress-step" data-step="3">
+          <span class="step-num">3</span>
+          <span class="step-label">{isSpanish ? 'Detalles' : 'Details'}</span>
+        </div>
+        <div class="progress-line"></div>
+        <div class="progress-step" data-step="4">
+          <span class="step-num">4</span>
+          <span class="step-label">{isSpanish ? 'Contacto' : 'Contact'}</span>
+        </div>
+      </div>
+
+      <!-- Form Box -->
+      <div class="wizard-card">
+        <form id="ca-intake-form" novalidate>
+          <!-- STEP 1: What Happened? (Category Selection) -->
+          <div class="wizard-pane is-active" id="step-pane-1">
+            <h3 class="pane-title">
+              {isSpanish ? 'Paso 1: ¿Qué tipo de problema legal le ha afectado?' : 'Step 1: What type of legal matter are you facing?'}
+            </h3>
+            <p class="pane-desc">
+              {isSpanish ? 'Seleccione la categoría principal que mejor describa su caso en California:' : 'Select the primary category that best describes your situation in California:'}
+            </p>
+
+            <div class="options-grid">
+              <label class="option-pill">
+                <input type="radio" name="legal_issue" value="Personal Injury" checked />
+                <span class="pill-box">
+                  <span class="pill-dot"></span>
+                  <span class="pill-text">{isSpanish ? 'Lesiones Personales / Accidente' : 'Personal Injury / Accident'}</span>
+                </span>
+              </label>
+
+              <label class="option-pill">
+                <input type="radio" name="legal_issue" value="Car Accident" />
+                <span class="pill-box">
+                  <span class="pill-dot"></span>
+                  <span class="pill-text">{isSpanish ? 'Accidente de Tráfico / Vehicular' : 'Car & Motor Vehicle Accident'}</span>
+                </span>
+              </label>
+
+              <label class="option-pill">
+                <input type="radio" name="legal_issue" value="Wrongful Termination" />
+                <span class="pill-box">
+                  <span class="pill-dot"></span>
+                  <span class="pill-text">{isSpanish ? 'Despido Injustificado' : 'Wrongful Termination'}</span>
+                </span>
+              </label>
+
+              <label class="option-pill">
+                <input type="radio" name="legal_issue" value="Workplace Discrimination" />
+                <span class="pill-box">
+                  <span class="pill-dot"></span>
+                  <span class="pill-text">{isSpanish ? 'Discriminación o Acoso Laboral' : 'Workplace Discrimination / Harassment'}</span>
+                </span>
+              </label>
+
+              <label class="option-pill">
+                <input type="radio" name="legal_issue" value="Unpaid Wages" />
+                <span class="pill-box">
+                  <span class="pill-dot"></span>
+                  <span class="pill-text">{isSpanish ? 'Salarios No Pagados / Horas Extras' : 'Unpaid Wages & Overtime'}</span>
+                </span>
+              </label>
+
+              <label class="option-pill">
+                <input type="radio" name="legal_issue" value="Medical Malpractice" />
+                <span class="pill-box">
+                  <span class="pill-dot"></span>
+                  <span class="pill-text">{isSpanish ? 'Negligencia Médica / Hospitalaria' : 'Medical Negligence / Malpractice'}</span>
+                </span>
+              </label>
+
+              <label class="option-pill">
+                <input type="radio" name="legal_issue" value="Disability Rights" />
+                <span class="pill-box">
+                  <span class="pill-dot"></span>
+                  <span class="pill-text">{isSpanish ? 'Derechos de Discapacidad / Ley Unruh' : 'Disability Rights & ADA Access'}</span>
+                </span>
+              </label>
+
+              <label class="option-pill">
+                <input type="radio" name="legal_issue" value="Consumer Protection" />
+                <span class="pill-box">
+                  <span class="pill-dot"></span>
+                  <span class="pill-text">{isSpanish ? 'Protección al Consumidor' : 'Consumer Protection & Fraud'}</span>
+                </span>
+              </label>
+            </div>
+
+            <div class="pane-actions">
+              <div></div>
+              <button type="button" class="btn-gold next-step-btn" data-next="2">
+                <span>{isSpanish ? 'Siguiente: Lugar y Fecha' : 'Next: Location & Timeframe'}</span>
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M5 12h14M12 5l7 7-7 7"></path>
+                </svg>
+              </button>
+            </div>
+          </div>
+
+          <!-- STEP 2: Where and When? -->
+          <div class="wizard-pane" id="step-pane-2">
+            <h3 class="pane-title">
+              {isSpanish ? 'Paso 2: ¿Dónde y cuándo ocurrió?' : 'Step 2: Where and when did this occur?'}
+            </h3>
+            <p class="pane-desc">
+              {isSpanish ? 'Los plazos de prescripción de California dependen de la fecha y la ubicación de los hechos:' : 'California statutes of limitation depend strictly on the jurisdiction and timing of events:'}
+            </p>
+
+            <div class="form-row-2">
+              <div class="form-group">
+                <label for="intake-county" class="input-label">
+                  {isSpanish ? 'Condado o Ciudad en California *' : 'California County or City *'}
+                </label>
+                <input 
+                  type="text" 
+                  id="intake-county" 
+                  name="ca_location" 
+                  class="text-input" 
+                  placeholder={isSpanish ? "Ej: Los Ángeles, Orange County, San Diego..." : "e.g. Los Angeles, Orange County, San Diego..."} 
+                  required 
+                />
+              </div>
+
+              <div class="form-group">
+                <label for="intake-timeline" class="input-label">
+                  {isSpanish ? '¿Aproximadamente cuándo ocurrió? *' : 'Approximately when did this happen? *'}
+                </label>
+                <select id="intake-timeline" name="timeline" class="text-input select-input" required>
+                  <option value="Past 30 Days">{isSpanish ? 'En los últimos 30 días' : 'Within the past 30 days'}</option>
+                  <option value="1 to 6 Months Ago">{isSpanish ? 'Hace 1 a 6 meses' : '1 to 6 months ago'}</option>
+                  <option value="6 to 12 Months Ago">{isSpanish ? 'Hace 6 a 12 meses' : '6 to 12 months ago'}</option>
+                  <option value="1 to 2 Years Ago">{isSpanish ? 'Hace 1 a 2 años' : '1 to 2 years ago'}</option>
+                  <option value="Over 2 Years Ago">{isSpanish ? 'Más de 2 años' : 'Over 2 years ago'}</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="pane-actions">
+              <button type="button" class="btn-dark prev-step-btn" data-prev="1">
+                <span>{isSpanish ? '← Anterior' : '← Back'}</span>
+              </button>
+              <button type="button" class="btn-gold next-step-btn" data-next="3">
+                <span>{isSpanish ? 'Siguiente: Detalles' : 'Next: Brief Description'}</span>
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M5 12h14M12 5l7 7-7 7"></path>
+                </svg>
+              </button>
+            </div>
+          </div>
+
+          <!-- STEP 3: Description & Representation Check -->
+          <div class="wizard-pane" id="step-pane-3">
+            <h3 class="pane-title">
+              {isSpanish ? 'Paso 3: Breve descripción de lo sucedido' : 'Step 3: What happened in your own words?'}
+            </h3>
+            <p class="pane-desc">
+              {isSpanish ? 'Describa brevemente qué daños, lesiones o trato ilegal ha sufrido:' : 'Share a concise overview of what occurred and what damages or injuries resulted:'}
+            </p>
+
+            <div class="form-group">
+              <label for="intake-description" class="input-label">
+                {isSpanish ? 'Descripción de los Hechos (Confidencial) *' : 'Summary of Facts (Confidential) *'}
+              </label>
+              <textarea 
+                id="intake-description" 
+                name="description" 
+                rows="4" 
+                class="text-input textarea-input" 
+                placeholder={isSpanish ? "Describa brevemente qué ocurrió..." : "Briefly describe the key events, parties involved, or injuries..."}
+                required
+              ></textarea>
+            </div>
+
+            <div class="form-group check-group">
+              <span class="input-label">{isSpanish ? '¿Tiene actualmente un abogado representándole para este caso?' : 'Do you currently have an attorney representing you for this matter?'}</span>
+              <div class="radio-pair">
+                <label class="radio-label">
+                  <input type="radio" name="has_attorney" value="No" checked />
+                  <span>{isSpanish ? 'No' : 'No'}</span>
+                </label>
+                <label class="radio-label">
+                  <input type="radio" name="has_attorney" value="Yes" />
+                  <span>{isSpanish ? 'Sí' : 'Yes'}</span>
+                </label>
+              </div>
+            </div>
+
+            <div class="pane-actions">
+              <button type="button" class="btn-dark prev-step-btn" data-prev="2">
+                <span>{isSpanish ? '← Anterior' : '← Back'}</span>
+              </button>
+              <button type="button" class="btn-gold next-step-btn" data-next="4">
+                <span>{isSpanish ? 'Siguiente: Sus Datos' : 'Next: Your Contact Info'}</span>
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M5 12h14M12 5l7 7-7 7"></path>
+                </svg>
+              </button>
+            </div>
+          </div>
+
+          <!-- STEP 4: Contact & Submission -->
+          <div class="wizard-pane" id="step-pane-4">
+            <h3 class="pane-title">
+              {isSpanish ? 'Paso 4: Información confidencial de contacto' : 'Step 4: Confidential contact information'}
+            </h3>
+            <p class="pane-desc">
+              {isSpanish ? 'Indíquenos cómo comunicarnos con usted para darle nuestra respuesta:' : 'Tell us how our California legal team can reach you with an evaluation:'}
+            </p>
+
+            <div class="form-row-2">
+              <div class="form-group">
+                <label for="intake-name" class="input-label">
+                  {isSpanish ? 'Nombre Completo *' : 'Full Name *'}
+                </label>
+                <input type="text" id="intake-name" name="full_name" class="text-input" placeholder="e.g. Jane Doe" required />
+              </div>
+
+              <div class="form-group">
+                <label for="intake-phone" class="input-label">
+                  {isSpanish ? 'Teléfono Directo *' : 'Best Phone Number *'}
+                </label>
+                <input type="tel" id="intake-phone" name="phone" class="text-input" placeholder="(555) 000-0000" required />
+              </div>
+            </div>
+
+            <div class="form-row-2">
+              <div class="form-group">
+                <label for="intake-email" class="input-label">
+                  {isSpanish ? 'Correo Electrónico *' : 'Email Address *'}
+                </label>
+                <input type="email" id="intake-email" name="email" class="text-input" placeholder="name@domain.com" required />
+              </div>
+
+              <div class="form-group">
+                <label for="intake-lang-pref" class="input-label">
+                  {isSpanish ? 'Idioma de Preferencia' : 'Preferred Language'}
+                </label>
+                <select id="intake-lang-pref" name="preferred_language" class="text-input select-input">
+                  <option value="English">English</option>
+                  <option value="Spanish" selected={isSpanish}>Español</option>
+                  <option value="Both">Both / Ambos</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- Mandatory Ethics Disclaimer Box -->
+            <div class="mandatory-disclaimer-box">
+              <input type="checkbox" id="intake-ack" required />
+              <label for="intake-ack" class="ack-text">
+                {isSpanish
+                  ? 'Entiendo que el envío de esta información confidencial no establece una relación abogado-cliente. Un abogado de Equal Justice Lawyers revisará los antecedentes preliminares para verificar viabilidad y conflictos.'
+                  : 'I understand that submitting this confidential intake does not create an attorney-client relationship. Equal Justice Lawyers will review the preliminary facts to determine viability and conflict clearance.'}
+              </label>
+            </div>
+
+            <div class="pane-actions">
+              <button type="button" class="btn-dark prev-step-btn" data-prev="3">
+                <span>{isSpanish ? '← Anterior' : '← Back'}</span>
+              </button>
+              <button type="submit" class="btn-gold submit-btn" id="submit-intake-btn">
+                <span>{isSpanish ? 'Enviar Solicitud de Evaluación' : 'Submit Confidential Intake'}</span>
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="20 6 9 17 4 12"></polyline>
+                </svg>
+              </button>
+            </div>
+          </div>
+
+          <!-- SUCCESS STATE -->
+          <div class="wizard-pane" id="step-pane-success">
+            <div class="success-box">
+              <div class="success-icon">
+                <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#c8a04a" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                  <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                </svg>
+              </div>
+              <h3 class="success-title">
+                {isSpanish ? '¡Solicitud de Admisión Recibida!' : 'Intake Request Received'}
+              </h3>
+              <p class="success-message">
+                {isSpanish
+                  ? 'Gracias por comunicarse con Equal Justice Lawyers. Un miembro de nuestro equipo de admisión revisará sus datos confidencialmente y se pondrá en contacto a la brevedad.'
+                  : 'Thank you for reaching out to Equal Justice Lawyers. A member of our California intake team is reviewing your facts and will contact you promptly at the phone number provided.'}
+              </p>
+              <div class="success-callout">
+                <span>{isSpanish ? '¿Requiere atención urgente?' : 'Need immediate assistance?'}</span>
+                <strong>(800) 555-JUSTICE</strong>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  // Progressive Multi-Step Intake Logic
+  const steps = document.querySelectorAll('.wizard-pane');
+  const indicators = document.querySelectorAll('.wizard-progress-bar .progress-step');
+  const form = document.getElementById('ca-intake-form') as HTMLFormElement;
+
+  function goToStep(stepNum: number) {
+    steps.forEach(p => p.classList.remove('is-active'));
+    indicators.forEach(ind => {
+      const s = parseInt((ind as HTMLElement).dataset.step || '1', 10);
+      ind.classList.toggle('is-active', s <= stepNum);
+    });
+
+    const target = document.getElementById(`step-pane-${stepNum}`);
+    if (target) {
+      target.classList.add('is-active');
+      target.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+  }
+
+  document.querySelectorAll('.next-step-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const next = parseInt((btn as HTMLElement).dataset.next || '2', 10);
+      goToStep(next);
+    });
+  });
+
+  document.querySelectorAll('.prev-step-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const prev = parseInt((btn as HTMLElement).dataset.prev || '1', 10);
+      goToStep(prev);
+    });
+  });
+
+  form?.addEventListener('submit', (e) => {
+    e.preventDefault();
+    // Simulate safe local submission
+    steps.forEach(p => p.classList.remove('is-active'));
+    const successPane = document.getElementById('step-pane-success');
+    if (successPane) {
+      successPane.classList.add('is-active');
+    }
+  });
+</script>
+
+<style>
+  .case-evaluation-section {
+    border-bottom: 1px solid rgba(200, 160, 74, 0.2);
+  }
+
+  .wizard-container {
+    max-width: 860px;
+    margin: 0 auto;
+  }
+
+  /* Progress Bar */
+  .wizard-progress-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 2.5rem;
+    padding: 0 1rem;
+  }
+
+  .progress-step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.35rem;
+  }
+
+  .step-num {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: var(--color-bg-cream);
+    border: 2px solid rgba(200, 160, 74, 0.35);
+    color: var(--color-text-dark-muted);
+    font-weight: 700;
+    font-size: 0.88rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.25s ease;
+  }
+
+  .step-label {
+    font-size: 0.72rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--color-text-dark-muted);
+  }
+
+  .progress-step.is-active .step-num {
+    background: var(--color-gold);
+    border-color: var(--color-gold-dark);
+    color: var(--color-dark-green);
+    box-shadow: 0 2px 10px rgba(200, 160, 74, 0.35);
+  }
+
+  .progress-step.is-active .step-label {
+    color: var(--color-dark-green);
+    font-weight: 700;
+  }
+
+  .progress-line {
+    flex: 1;
+    height: 2px;
+    background: rgba(200, 160, 74, 0.25);
+    margin: 0 0.5rem;
+    margin-bottom: 1.2rem;
+  }
+
+  /* Wizard Card */
+  .wizard-card {
+    background: var(--color-white);
+    border: 1px solid rgba(200, 160, 74, 0.28);
+    border-radius: var(--radius-md);
+    padding: 3rem;
+    box-shadow: var(--shadow-card);
+  }
+
+  .wizard-pane {
+    display: none;
+    animation: fadeIn 0.3s ease forwards;
+  }
+
+  .wizard-pane.is-active {
+    display: block;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(6px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .pane-title {
+    font-family: var(--font-serif);
+    font-size: 1.45rem;
+    font-weight: 700;
+    color: var(--color-dark-green);
+    margin-bottom: 0.4rem;
+  }
+
+  .pane-desc {
+    font-size: 0.88rem;
+    color: var(--color-text-dark-muted);
+    margin-bottom: 1.8rem;
+  }
+
+  /* Options Grid for Step 1 */
+  .options-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.8rem;
+    margin-bottom: 2.2rem;
+  }
+
+  .option-pill {
+    cursor: pointer;
+    user-select: none;
+  }
+
+  .option-pill input {
+    position: absolute;
+    opacity: 0;
+  }
+
+  .pill-box {
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+    padding: 0.85rem 1.1rem;
+    border: 1.5px solid rgba(200, 160, 74, 0.25);
+    border-radius: var(--radius-sm);
+    background: var(--color-bg-light);
+    transition: all 0.2s ease;
+  }
+
+  .pill-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    border: 2px solid rgba(200, 160, 74, 0.5);
+    background: transparent;
+    transition: all 0.2s;
+  }
+
+  .pill-text {
+    font-size: 0.86rem;
+    font-weight: 600;
+    color: var(--color-dark-green);
+  }
+
+  .option-pill input:checked + .pill-box {
+    border-color: var(--color-gold-dark);
+    background: rgba(200, 160, 74, 0.12);
+  }
+
+  .option-pill input:checked + .pill-box .pill-dot {
+    background: var(--color-gold);
+    border-color: var(--color-gold-dark);
+  }
+
+  /* Form Controls */
+  .form-row-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+    margin-bottom: 1.2rem;
+  }
+
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 1.2rem;
+  }
+
+  .input-label {
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: var(--color-dark-green);
+    margin-bottom: 0.45rem;
+  }
+
+  .text-input {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border: 1.5px solid rgba(200, 160, 74, 0.35);
+    border-radius: var(--radius-sm);
+    font-family: inherit;
+    font-size: 0.9rem;
+    color: var(--color-text-dark);
+    background: var(--color-bg-light);
+    transition: border-color 0.2s;
+  }
+
+  .text-input:focus {
+    border-color: var(--color-gold);
+    outline: none;
+  }
+
+  .select-input {
+    cursor: pointer;
+  }
+
+  .textarea-input {
+    resize: vertical;
+  }
+
+  .check-group {
+    margin-bottom: 2rem;
+  }
+
+  .radio-pair {
+    display: flex;
+    gap: 1.5rem;
+    margin-top: 0.5rem;
+  }
+
+  .radio-label {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.88rem;
+    cursor: pointer;
+  }
+
+  /* Mandatory Disclaimer Box */
+  .mandatory-disclaimer-box {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    background: rgba(200, 160, 74, 0.08);
+    border: 1px solid rgba(200, 160, 74, 0.3);
+    padding: 1rem 1.2rem;
+    border-radius: var(--radius-sm);
+    margin-bottom: 2rem;
+  }
+
+  .mandatory-disclaimer-box input {
+    margin-top: 3px;
+    accent-color: var(--color-gold-dark);
+  }
+
+  .ack-text {
+    font-size: 0.76rem;
+    line-height: 1.45;
+    color: var(--color-text-dark-muted);
+  }
+
+  .pane-actions {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 1.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid rgba(200, 160, 74, 0.2);
+  }
+
+  /* Success Screen */
+  .success-box {
+    text-align: center;
+    padding: 2rem 1rem;
+  }
+
+  .success-icon {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    background: rgba(200, 160, 74, 0.12);
+    border: 2px solid var(--color-gold);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1.5rem;
+  }
+
+  .success-title {
+    font-family: var(--font-serif);
+    font-size: 1.8rem;
+    color: var(--color-dark-green);
+    margin-bottom: 0.8rem;
+  }
+
+  .success-message {
+    font-size: 0.95rem;
+    color: var(--color-text-dark-muted);
+    line-height: 1.6;
+    max-width: 580px;
+    margin: 0 auto 1.8rem;
+  }
+
+  .success-callout {
+    font-size: 0.88rem;
+    color: var(--color-dark-green);
+  }
+
+  .success-callout strong {
+    display: block;
+    font-size: 1.3rem;
+    color: var(--color-gold-dark);
+    margin-top: 0.2rem;
+  }
+
+  @media (max-width: 768px) {
+    .wizard-card {
+      padding: 1.75rem 1.25rem;
+    }
+
+    .options-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .form-row-2 {
+      grid-template-columns: 1fr;
+      gap: 0;
+    }
+  }
+</style>

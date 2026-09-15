@@ -1,0 +1,188 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Navbar from '../components/Navbar.astro';
+import Footer from '../components/global/Footer.astro';
+import PageHero from '../components/global/PageHero.astro';
+import WhyChooseUs from '../components/sections/WhyChooseUs.astro';
+import LegalTeam from '../components/sections/LegalTeam.astro';
+import Process from '../components/sections/Process.astro';
+import CaseEvaluation from '../components/sections/CaseEvaluation.astro';
+import StickyCTA from '../components/global/StickyCTA.astro';
+import CaseAssistant from '../components/chat/CaseAssistant.astro';
+
+const breadcrumbs = [
+  { label: 'Home', href: '/' },
+  { label: 'About Our Firm' }
+];
+---
+
+<Layout 
+  title="About Equal Justice Lawyers | California Civil Rights & Injury Advocates"
+  description="Learn about the mission, values, and courtroom standards of Equal Justice Lawyers. Standing with California individuals and families against powerful corporate defendants."
+>
+  <Navbar transparent={false} />
+
+  <main id="main-content">
+    <PageHero 
+      kicker="ABOUT EQUAL JUSTICE LAWYERS"
+      title="People • Rights • Stronger Together"
+      lead="Founded on the principle that everyday Californians deserve the same high-caliber legal firepower that corporate insurance companies and multinational employers command."
+      breadcrumb={breadcrumbs}
+    />
+
+    <section class="section-light about-story-section">
+      <div class="section-container">
+        <div class="about-grid">
+          <div class="about-text-col">
+            <h2 class="content-heading">Our Founding Mission</h2>
+            <p class="body-text">
+              Equal Justice Lawyers was established to bridge the immense power disparity in California civil litigation. When an individual suffers a catastrophic vehicle collision or is wrongfully terminated after reporting safety violations, they face massive defense institutions with unlimited budgets and aggressive legal teams.
+            </p>
+            <p class="body-text">
+              We stand as a protective shield and an unyielding spear for our clients. We do not represent insurance companies, healthcare conglomerates, or corporate employers. Our loyalty is undivided: we fight exclusively for the people.
+            </p>
+
+            <h3 class="content-subheading">Uncompromising Trial Readiness</h3>
+            <p class="body-text">
+              Insurance adjusters know which attorneys simply process paperwork for low-value settlements and which firms are prepared to select a jury and litigate through verdict. At Equal Justice Lawyers, every matter is prepared from day one with the thoroughness and evidentiary discipline required for trial in California Superior Courts.
+            </p>
+          </div>
+
+          <div class="about-highlight-col">
+            <div class="values-card">
+              <h3 class="values-title">Our Practice Pillars</h3>
+              <ul class="values-list">
+                <li>
+                  <span class="v-num">01</span>
+                  <div class="v-info">
+                    <strong>Zero Upfront Fees</strong>
+                    <p>Contingency fee representation in personal injury and statutory fee-shifting claims means you never pay out-of-pocket legal fees.</p>
+                  </div>
+                </li>
+                <li>
+                  <span class="v-num">02</span>
+                  <div class="v-info">
+                    <strong>Bilingual from the Ground Up</strong>
+                    <p>Native Spanish-speaking attorneys and case managers ensuring clear, unfiltered legal advocacy.</p>
+                  </div>
+                </li>
+                <li>
+                  <span class="v-num">03</span>
+                  <div class="v-info">
+                    <strong>Direct Attorney Access</strong>
+                    <p>You speak directly with the trial counsel handling your matter, not an overseas answering service.</p>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <WhyChooseUs />
+    <LegalTeam />
+    <Process />
+    <CaseEvaluation />
+  </main>
+
+  <Footer />
+  <StickyCTA />
+  <CaseAssistant />
+</Layout>
+
+<style>
+  .about-story-section {
+    padding: 5rem 0;
+    border-bottom: 1px solid rgba(200, 160, 74, 0.2);
+  }
+
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: 4rem;
+    align-items: center;
+  }
+
+  .content-heading {
+    font-family: var(--font-serif);
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--color-dark-green);
+    margin-bottom: 1.2rem;
+  }
+
+  .content-subheading {
+    font-family: var(--font-serif);
+    font-size: 1.45rem;
+    font-weight: 700;
+    color: var(--color-dark-green);
+    margin: 1.8rem 0 0.8rem;
+  }
+
+  .body-text {
+    font-size: 0.95rem;
+    line-height: 1.75;
+    color: var(--color-text-dark-muted);
+    margin-bottom: 1.2rem;
+  }
+
+  .values-card {
+    background: var(--color-white);
+    border: 1.5px solid var(--color-gold);
+    border-radius: var(--radius-md);
+    padding: 2.5rem;
+    box-shadow: var(--shadow-card);
+  }
+
+  .values-title {
+    font-family: var(--font-serif);
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--color-dark-green);
+    margin-bottom: 1.5rem;
+    padding-bottom: 0.6rem;
+    border-bottom: 1px solid rgba(200, 160, 74, 0.25);
+  }
+
+  .values-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .values-list li {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+
+  .v-num {
+    font-family: var(--font-serif);
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: var(--color-gold);
+    line-height: 1;
+    margin-top: 2px;
+  }
+
+  .v-info strong {
+    font-size: 1.05rem;
+    color: var(--color-dark-green);
+    display: block;
+    margin-bottom: 0.25rem;
+  }
+
+  .v-info p {
+    font-size: 0.84rem;
+    color: var(--color-text-dark-muted);
+    line-height: 1.5;
+  }
+
+  @media (max-width: 900px) {
+    .about-grid {
+      grid-template-columns: 1fr;
+      gap: 3rem;
+    }
+  }
+</style>

@@ -1,0 +1,554 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Navbar from '../../components/Navbar.astro';
+import Footer from '../../components/global/Footer.astro';
+import PageHero from '../../components/global/PageHero.astro';
+import CaseEvaluation from '../../components/sections/CaseEvaluation.astro';
+import StickyCTA from '../../components/global/StickyCTA.astro';
+import CaseAssistant from '../../components/chat/CaseAssistant.astro';
+
+export function getStaticPaths() {
+  const locations = [
+    {
+      slug: 'los-angeles',
+      name: 'Greater Los Angeles County',
+      title: 'Los Angeles Personal Injury & Employment Lawyers',
+      lead: 'Representing clients across Los Angeles County in the Stanley Mosk Courthouse, Compton Courthouse, Van Nuys, and federal district courts.',
+      courtInfo: [
+        'Los Angeles County Superior Court — Stanley Mosk Courthouse (111 N. Hill St, Los Angeles, CA 90012)',
+        'Van Nuys Courthouse East (6230 Sylmar Ave, Van Nuys, CA 91401)',
+        'U.S. District Court for the Central District of California (First Street Courthouse, 350 W. 1st St, Los Angeles, CA 90012)'
+      ],
+      localContext: 'Los Angeles represents one of the highest-density transit environments in the world, with frequent catastrophic collisions along the I-405, I-10 Santa Monica Freeway, I-5 Golden State Freeway, and US-101. Our trial attorneys also frequently litigate complex wrongful termination, entertainment industry disputes, and port logistics wage theft claims across the San Pedro and Long Beach harbor terminals.',
+      govResources: [
+        'California Department of Industrial Relations — Los Angeles District Office (320 W. 4th St)',
+        'California Highway Patrol — Southern Division Headquarters (411 N. Central Ave, Glendale)',
+        'Los Angeles County Department of Public Health'
+      ],
+      faqs: [
+        {
+          q: 'Where are personal injury lawsuits filed in Los Angeles?',
+          a: 'Most civil injury claims seeking damages over $35,000 are filed in the Personal Injury Hub at the Stanley Mosk Courthouse in Downtown Los Angeles.'
+        },
+        {
+          q: 'Do I have to travel to an office for an initial Los Angeles consultation?',
+          a: 'No. We provide secure encrypted video consultations and can travel to meeting locations or hospital facilities throughout LA County by appointment.'
+        }
+      ]
+    },
+    {
+      slug: 'orange-county',
+      name: 'Orange County & Irvine',
+      title: 'Orange County Injury & Employment Law Attorneys',
+      lead: 'Advocating for injured motorists, executives, and workers in the Central Justice Center in Santa Ana and Orange County superior courts.',
+      courtInfo: [
+        'Orange County Superior Court — Central Justice Center (700 W. Civic Center Dr, Santa Ana, CA 92701)',
+        'Civil Complex Center (751 W. Santa Ana Blvd, Santa Ana, CA 92701)',
+        'Ronald Reagan Federal Building and U.S. Courthouse (411 W. 4th St, Santa Ana, CA 92701)'
+      ],
+      localContext: 'Serving Santa Ana, Irvine, Anaheim, Newport Beach, and Fullerton. Orange County features intensive commuter traffic along the I-5 Santa Ana Freeway, SR-55, SR-91, and the SR-22 Garden Grove Freeway. Our legal team regularly handles corporate employment disputes, healthcare whistleblower actions, and serious multi-vehicle injury litigation throughout the county.',
+      govResources: [
+        'California Labor Commissioner’s Office — Santa Ana Regional Office',
+        'Orange County Health Care Agency',
+        'CHP — Border Division Headquarters'
+      ],
+      faqs: [
+        {
+          q: 'How does Orange County court procedure handle mandatory settlement conferences?',
+          a: 'The Orange County Superior Court Civil Complex Center strictly enforces pre-trial mediation and settlement conferences prior to assigning trial dates.'
+        }
+      ]
+    },
+    {
+      slug: 'san-diego',
+      name: 'San Diego & Imperial County',
+      title: 'San Diego Personal Injury & Civil Rights Attorneys',
+      lead: 'Fierce trial representation in the San Diego Central Courthouse on Union Street and the Southern District of California.',
+      courtInfo: [
+        'San Diego County Superior Court — Central Courthouse (1100 Union St, San Diego, CA 92101)',
+        'North County Regional Center (325 S. Melrose Dr, Vista, CA 92081)',
+        'U.S. District Court for the Southern District of California (221 W. Broadway, San Diego, CA 92101)'
+      ],
+      localContext: 'From downtown San Diego and Chula Vista to Oceanside, Escondido, and El Cajon. Major transit arteries like the I-5, I-8, I-15, and SR-163 experience severe commuter collisions. We also represent healthcare, biotechnology, defense contractor, and hospitality workers confronting workplace harassment, wage theft, and illegal retaliation.',
+      govResources: [
+        'California Civil Rights Department — Southern California Intake',
+        'San Diego Police Department Records Division',
+        'San Diego County Superior Court Civil Filing Division'
+      ],
+      faqs: [
+        {
+          q: 'Can non-citizens in San Diego file civil lawsuits for personal injury or workplace abuse?',
+          a: 'Yes. Under California law, your immigration status is inadmissible in civil injury and employment cases and does not restrict your right to seek full legal compensation.'
+        }
+      ]
+    },
+    {
+      slug: 'inland-empire',
+      name: 'Inland Empire (Riverside & San Bernardino)',
+      title: 'Inland Empire Injury & Warehouse Worker Lawyers',
+      lead: 'Fighting for logistics employees and injured families in Riverside Hall of Justice and San Bernardino Justice Center.',
+      courtInfo: [
+        'Riverside County Superior Court — Hall of Justice (4050 Main St, Riverside, CA 92501)',
+        'San Bernardino County Superior Court — San Bernardino Justice Center (247 W. 3rd St, San Bernardino, CA 92415)',
+        'U.S. District Court for the Central District — Eastern Division (3470 12th St, Riverside, CA 92501)'
+      ],
+      localContext: 'The Inland Empire is the logistics and warehousing capital of the Western United States, traversed by the I-10, I-15, SR-60, and I-215 corridors. Heavy tractor-trailer traffic creates significant truck collision hazards. We are staunch advocates for warehouse workers suffering forklift injuries, quota-induced repetitive stress, wage suppression, and rest break violations.',
+      govResources: [
+        'California Department of Industrial Relations — San Bernardino District Office',
+        'Cal/OSHA Consultation Services — San Bernardino',
+        'Riverside County Department of Public Health'
+      ],
+      faqs: [
+        {
+          q: 'Are warehouse quota systems legal in the Inland Empire?',
+          a: 'Under California Assembly Bill 701, warehouse employers cannot enforce quotas that prevent employees from taking mandatory meal and rest breaks or using bathroom facilities.'
+        }
+      ]
+    },
+    {
+      slug: 'san-francisco-bay-area',
+      name: 'San Francisco Bay Area',
+      title: 'San Francisco Bay Area Injury & Tech Employment Lawyers',
+      lead: 'Holding corporate wrongdoers accountable in the Civic Center Courthouse and the Northern District of California.',
+      courtInfo: [
+        'San Francisco County Superior Court — Civic Center Courthouse (400 McAllister St, San Francisco, CA 94102)',
+        'U.S. District Court for the Northern District of California (Phillip Burton Federal Building, 450 Golden Gate Ave, San Francisco, CA 94102)',
+        'Alameda County Superior Court — René C. Davidson Courthouse (1225 Fallon St, Oakland, CA 94612)'
+      ],
+      localContext: 'Serving San Francisco, Oakland, Berkeley, and the Peninsula. Our Bay Area practice regularly navigates Muni/BART public transit injury claims, bicycle collision disputes, tech sector equity retaliation, executive discrimination, and whistleblower disclosures under California Labor Code § 1102.5.',
+      govResources: [
+        'California Civil Rights Department — Bay Area Regional Office',
+        'San Francisco Department of Public Health',
+        'California Division of Workers’ Compensation — San Francisco'
+      ],
+      faqs: [
+        {
+          q: 'What is the deadline for claims against San Francisco Muni or BART?',
+          a: 'Under the California Government Claims Act, a formal administrative claim against SFMTA or BART must be filed within 6 months of the incident.'
+        }
+      ]
+    },
+    {
+      slug: 'san-jose-silicon-valley',
+      name: 'San Jose & Silicon Valley',
+      title: 'San Jose & Silicon Valley Employment & Injury Lawyers',
+      lead: 'Advocating in the Santa Clara County Superior Court and Northern District Federal Court in San Jose.',
+      courtInfo: [
+        'Santa Clara County Superior Court — Downtown Superior Court (191 N. First St, San Jose, CA 95113)',
+        'U.S. District Court for the Northern District of California — San Jose Division (280 S. 1st St, San Jose, CA 95113)'
+      ],
+      localContext: 'Serving San Jose, Sunnyvale, Santa Clara, Mountain View, and Palo Alto. Silicon Valley workplaces feature specialized employment disputes involving stock option vesting, intellectual property whistleblowing, gender pay disparities under the California Equal Pay Act, and high-impact freeway collisions on US-101 and I-280.',
+      govResources: [
+        'California Labor Commissioner’s Office — San Jose Office (100 Paseo de San Antonio)',
+        'Santa Clara Valley Medical Center Records'
+      ],
+      faqs: [
+        {
+          q: 'How does California’s Equal Pay Act protect tech workers in Silicon Valley?',
+          a: 'California Labor Code § 1197.5 prohibits paying employees less than coworkers of opposite sex or race for substantially similar work viewed across skill, effort, and responsibility.'
+        }
+      ]
+    },
+    {
+      slug: 'sacramento',
+      name: 'Sacramento & Capital Region',
+      title: 'Sacramento Personal Injury & State Regulatory Lawyers',
+      lead: 'Litigating high-stakes disputes in the Gordon D. Schaber Sacramento County Courthouse and Eastern District Federal Court.',
+      courtInfo: [
+        'Sacramento County Superior Court — Gordon D. Schaber Courthouse (720 9th St, Sacramento, CA 95814)',
+        'U.S. District Court for the Eastern District of California (Robert T. Matsui U.S. Courthouse, 501 I St, Sacramento, CA 95814)'
+      ],
+      localContext: 'Serving Sacramento, Roseville, Folsom, Elk Grove, and Davis. As the seat of California state government, Sacramento court dockets handle significant administrative appeals, state agency worker retaliation lawsuits, and dangerous collisions on the I-80, US-50, and Business 80 Capital City Freeway.',
+      govResources: [
+        'State Bar of California — Sacramento Office (180 Howard St / Sacramento branch)',
+        'California State Transportation Agency (CalSTA) Records',
+        'Sacramento County Superior Court Civil Division'
+      ],
+      faqs: [
+        {
+          q: 'Can California state civil service employees bring FEHA retaliation claims?',
+          a: 'Yes. State government employees have full rights under FEHA and can pursue civil remedies in Superior Court after exhausting administrative procedures.'
+        }
+      ]
+    },
+    {
+      slug: 'fresno-central-valley',
+      name: 'Fresno & Central Valley',
+      title: 'Fresno & Central Valley Injury and Labor Lawyers',
+      lead: 'Dedicated advocacy for Central Valley families in the B.F. Sisk Courthouse and Eastern District Federal Court.',
+      courtInfo: [
+        'Fresno County Superior Court — B.F. Sisk Courthouse (1130 O St, Fresno, CA 93721)',
+        'U.S. District Court for the Eastern District of California — Fresno Division (Robert E. Coyle Federal Courthouse, 2500 Tulare St, Fresno, CA 93721)',
+        'Kern County Superior Court — Metropolitan Division (1415 Truxtun Ave, Bakersfield, CA 93301)'
+      ],
+      localContext: 'Serving Fresno, Bakersfield, Visalia, Modesto, and Stockton. The Central Valley’s heavy freight corridor along SR-99 and I-5 experiences devastating high-speed truck collisions and agricultural machinery accidents. Our firm is deeply committed to protecting agricultural, packinghouse, and distribution workers from wage violations and unsafe working conditions.',
+      govResources: [
+        'California Labor Commissioner’s Office — Fresno District Office',
+        'California Department of Fair Employment and Housing (CRD) — Fresno',
+        'Fresno County Department of Public Health'
+      ],
+      faqs: [
+        {
+          q: 'What protections apply to agricultural and packinghouse workers in the Central Valley?',
+          a: 'California Labor Code mandates shade, clean drinking water, mandatory heat illness rest breaks, overtime pay, and strict penalties for retaliation against farmworkers.'
+        }
+      ]
+    }
+  ];
+
+  return locations.map(l => ({
+    params: { slug: l.slug },
+    props: { location: l }
+  }));
+}
+
+const { location } = Astro.props;
+
+const breadcrumbs = [
+  { label: 'Home', href: '/' },
+  { label: 'Locations', href: '/locations' },
+  { label: location.name }
+];
+---
+
+<Layout 
+  title={`${location.title} | Equal Justice Lawyers`}
+  description={`Experienced California trial attorneys serving ${location.name}. Comprehensive courtroom information, local legal context, and free confidential case review.`}
+>
+  <Navbar transparent={false} />
+
+  <main id="main-content">
+    <PageHero 
+      kicker="CALIFORNIA JURISDICTION & SERVICE REGION"
+      title={location.title}
+      lead={location.lead}
+      breadcrumb={breadcrumbs}
+    />
+
+    <section class="section-light location-detail-section">
+      <div class="section-container location-layout-grid">
+        <div class="location-main-column">
+          <!-- Local Context -->
+          <div class="content-block">
+            <h2 class="content-heading">Local Legal Context & Regional Hazards</h2>
+            <p class="body-text">{location.localContext}</p>
+          </div>
+
+          <!-- Superior & Federal Courthouses -->
+          <div class="content-block">
+            <h2 class="content-heading">Key Local Courthouses & Jurisdictions</h2>
+            <ul class="courthouse-list">
+              {location.courtInfo.map(c => (
+                <li class="courthouse-item">
+                  <div class="court-icon">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#c8a04a" stroke-width="2">
+                      <path d="M3 21h18"></path>
+                      <path d="M5 21V9"></path>
+                      <path d="M19 21V9"></path>
+                      <path d="M9 21V9"></path>
+                      <path d="M15 21V9"></path>
+                      <path d="M2 9l10-6 10 6"></path>
+                    </svg>
+                  </div>
+                  <span class="court-name">{c}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <!-- Government Resources -->
+          <div class="content-block">
+            <h2 class="content-heading">Regional Government & Regulatory Agencies</h2>
+            <ul class="gov-resource-list">
+              {location.govResources.map(g => (
+                <li class="gov-item">
+                  <span class="bullet-dot"></span>
+                  <span>{g}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <!-- Local FAQs -->
+          {location.faqs && location.faqs.length > 0 && (
+            <div class="content-block">
+              <h2 class="content-heading">Frequently Asked Questions for {location.name}</h2>
+              <div class="local-faq-list">
+                {location.faqs.map(f => (
+                  <div class="local-faq-card">
+                    <h3 class="local-faq-q">{f.q}</h3>
+                    <p class="local-faq-a">{f.a}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+        </div>
+
+        <!-- Sidebar -->
+        <aside class="detail-sidebar">
+          <div class="sidebar-sticky-box">
+            <div class="sidebar-card eval-card">
+              <h3 class="sidebar-title">Injured or Wronged in {location.name}?</h3>
+              <p class="sidebar-desc">
+                Our California trial attorneys review your situation at no cost. Virtual video conferences or designated appointment consultations available.
+              </p>
+              <a href="#case-evaluation" class="btn-gold sidebar-cta">
+                <span>Start Free Evaluation</span>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M5 12h14M12 5l7 7-7 7"></path>
+                </svg>
+              </a>
+              <div class="sidebar-phone">
+                <span>Direct Toll-Free Intake:</span>
+                <a href="tel:8005555878">(800) 555-JUSTICE</a>
+              </div>
+            </div>
+
+            <div class="sidebar-card nav-card">
+              <h4 class="sidebar-nav-heading">Other California Regions</h4>
+              <ul class="sidebar-links">
+                <li><a href="/locations/los-angeles">Greater Los Angeles</a></li>
+                <li><a href="/locations/orange-county">Orange County</a></li>
+                <li><a href="/locations/san-diego">San Diego</a></li>
+                <li><a href="/locations/inland-empire">Inland Empire</a></li>
+                <li><a href="/locations/san-francisco-bay-area">San Francisco Bay Area</a></li>
+                <li><a href="/locations/san-jose-silicon-valley">Silicon Valley</a></li>
+                <li><a href="/locations/sacramento">Sacramento</a></li>
+                <li><a href="/locations/fresno-central-valley">Fresno & Central Valley</a></li>
+              </ul>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <CaseEvaluation />
+  </main>
+
+  <Footer />
+  <StickyCTA />
+  <CaseAssistant />
+</Layout>
+
+<style>
+  .location-detail-section {
+    padding: 4.5rem 0;
+    border-bottom: 1px solid rgba(200, 160, 74, 0.2);
+  }
+
+  .location-layout-grid {
+    display: grid;
+    grid-template-columns: 1fr 340px;
+    gap: 4rem;
+  }
+
+  .location-main-column {
+    display: flex;
+    flex-direction: column;
+    gap: 2.5rem;
+  }
+
+  .content-heading {
+    font-family: var(--font-serif);
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: var(--color-dark-green);
+    margin-bottom: 1rem;
+    position: relative;
+    padding-bottom: 0.4rem;
+  }
+
+  .content-heading::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 36px;
+    height: 2px;
+    background: var(--color-gold);
+  }
+
+  .body-text {
+    font-size: 0.95rem;
+    line-height: 1.7;
+    color: var(--color-text-dark-muted);
+  }
+
+  .courthouse-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+  }
+
+  .courthouse-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.85rem;
+    background: var(--color-white);
+    border: 1px solid rgba(200, 160, 74, 0.22);
+    border-radius: var(--radius-sm);
+    padding: 1rem 1.25rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+  }
+
+  .court-icon {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: rgba(200, 160, 74, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .court-name {
+    font-size: 0.88rem;
+    color: var(--color-dark-green);
+    font-weight: 600;
+    line-height: 1.45;
+  }
+
+  .gov-resource-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+  }
+
+  .gov-item {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    font-size: 0.9rem;
+    color: var(--color-text-dark-muted);
+  }
+
+  .bullet-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--color-gold);
+    flex-shrink: 0;
+  }
+
+  .local-faq-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+  }
+
+  .local-faq-card {
+    background: var(--color-white);
+    border: 1px solid rgba(200, 160, 74, 0.22);
+    border-radius: var(--radius-sm);
+    padding: 1.4rem;
+  }
+
+  .local-faq-q {
+    font-family: var(--font-serif);
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--color-dark-green);
+    margin-bottom: 0.45rem;
+  }
+
+  .local-faq-a {
+    font-size: 0.88rem;
+    color: var(--color-text-dark-muted);
+    line-height: 1.6;
+  }
+
+  /* Sidebar */
+  .sidebar-sticky-box {
+    position: sticky;
+    top: 90px;
+    display: flex;
+    flex-direction: column;
+    gap: 1.75rem;
+  }
+
+  .sidebar-card {
+    background: var(--color-white);
+    border: 1px solid rgba(200, 160, 74, 0.25);
+    border-radius: var(--radius-md);
+    padding: 1.8rem;
+    box-shadow: var(--shadow-card);
+  }
+
+  .sidebar-title {
+    font-family: var(--font-serif);
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--color-dark-green);
+    margin-bottom: 0.6rem;
+  }
+
+  .sidebar-desc {
+    font-size: 0.84rem;
+    color: var(--color-text-dark-muted);
+    line-height: 1.55;
+    margin-bottom: 1.5rem;
+  }
+
+  .sidebar-cta {
+    width: 100%;
+    justify-content: center;
+    margin-bottom: 1.2rem;
+  }
+
+  .sidebar-phone {
+    text-align: center;
+    font-size: 0.78rem;
+    color: var(--color-text-dark-muted);
+    border-top: 1px solid rgba(200, 160, 74, 0.2);
+    padding-top: 0.8rem;
+  }
+
+  .sidebar-phone a {
+    display: block;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--color-dark-green);
+    margin-top: 0.2rem;
+  }
+
+  .sidebar-phone a:hover {
+    color: var(--color-gold);
+  }
+
+  .sidebar-nav-heading {
+    font-family: var(--font-serif);
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--color-dark-green);
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid rgba(200, 160, 74, 0.2);
+  }
+
+  .sidebar-links {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .sidebar-links a {
+    font-size: 0.84rem;
+    color: var(--color-text-dark-muted);
+    transition: color 0.2s, transform 0.2s;
+    display: inline-block;
+  }
+
+  .sidebar-links a:hover {
+    color: var(--color-gold-dark);
+    transform: translateX(3px);
+  }
+
+  @media (max-width: 980px) {
+    .location-layout-grid {
+      grid-template-columns: 1fr;
+      gap: 3rem;
+    }
+  }
+</style>

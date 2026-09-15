@@ -1,0 +1,256 @@
+---
+interface Props {
+  lang?: string;
+}
+
+const { lang = 'en' } = Astro.props;
+const isSpanish = lang === 'es';
+
+const faqs = isSpanish
+  ? [
+      {
+        q: '¿Puedo hablar directamente con un abogado de California sobre mi caso?',
+        directAnswer: 'Sí. Puede solicitar una evaluación inicial confidencial con nuestro equipo legal sin ningún costo.',
+        fullAnswer: 'Al comunicarse con Equal Justice Lawyers, revisamos los hechos preliminares de su asunto para determinar si existe una reclamación viable bajo las leyes de California y si nuestra firma puede asistirle. Esta consulta inicial no genera honorarios ni compromiso de representación formal.'
+      },
+      {
+        q: '¿Cómo funciona una evaluación de caso gratuita y confidencial?',
+        directAnswer: 'Usted nos proporciona los detalles básicos de lo sucedido y nuestros profesionales evalúan la viabilidad legal de forma protegida.',
+        fullAnswer: 'Puede iniciar el proceso mediante nuestro formulario en línea de 4 pasos, nuestro chat de admisión o por teléfono al (800) 555-JUSTICE. Toda la información enviada se trata con estricta confidencialidad bajo los protocolos de comunicación protegida de la abogacía en California.'
+      },
+      {
+        q: '¿Cuánto tiempo tengo para presentar una demanda legal en California?',
+        directAnswer: 'En general, el plazo para reclamos por lesiones personales es de 2 años, pero los reclamos contra entidades gubernamentales vencen a los 6 meses.',
+        fullAnswer: 'Bajo el Código de Procedimiento Civil de California § 335.1, la mayoría de las demandas por lesiones personales deben presentarse dentro de los 2 años posteriores a la fecha del incidente. Sin embargo, para reclamos contra ciudades, condados o el estado (Gov Code § 911.2), el plazo es de solo 6 meses. En materia laboral (FEHA), generalmente se dispone de hasta 3 años para presentar una queja formal ante el Departamento de Derechos Civiles (CRD).'
+      },
+      {
+        q: '¿Necesito un abogado para resolver mi disputa legal o reclamo?',
+        directAnswer: 'Aunque la ley permite representarse a uno mismo, los litigios frente a aseguradoras y grandes empleadores conllevan complejidades procesales severas.',
+        fullAnswer: 'Las aseguradoras y las empresas cuentan con abogados experimentados dedicados a reducir o denegar compensaciones. Contar con un abogado litigante calificado garantiza que la evidencia se preserve adecuadamente, se calculen todos los daños futuros y se evite la firma involuntaria de renuncias de derechos.'
+      },
+      {
+        q: '¿Qué información debo preparar para mi evaluación inicial?',
+        directAnswer: 'Fechas clave, lugar del hecho, partes involucradas y cualquier reporte médico, policial o de despido disponible.',
+        fullAnswer: 'Resulta de gran utilidad contar con la fecha aproximada en que ocurrió el suceso, el condado de California donde ocurrieron los hechos, nombres de testigos o partes involucradas, y copias de comunicaciones clave (cartas de despido, correos electrónicos, reportes policiales de tránsito o registros de atención médica inicial).'
+      },
+      {
+        q: '¿Ofrecen atención completa y directa en español?',
+        directAnswer: 'Sí, absolutamente. Contamos con abogados y personal de admisión 100% bilingüe para atenderle directamente en español.',
+        fullAnswer: 'Creemos firmemente en el acceso equitativo a la justicia para la comunidad hispanohablante de California. Puede comunicarse, revisar documentos y coordinar su caso en español en todo momento, sin necesidad de traductores externos ni barreras idiomáticas.'
+      }
+    ]
+  : [
+      {
+        q: 'Can I speak with a California lawyer about my situation?',
+        directAnswer: 'Yes. You can request a free, confidential case evaluation directly with our California intake legal team.',
+        fullAnswer: 'When you contact Equal Justice Lawyers, our team reviews the foundational facts of your dispute or accident to determine whether viable claims exist under California statutory frameworks and whether our firm is suited to assist. There is no fee or obligation for this initial consultation.'
+      },
+      {
+        q: 'How does a free, confidential case evaluation work?',
+        directAnswer: 'You provide the preliminary facts of what occurred, and our legal team reviews them under confidentiality protocols at zero charge.',
+        fullAnswer: 'You can initiate intake through our secure 4-step web evaluation form, our interactive case assistant chat, or by phone at (800) 555-JUSTICE. All information transmitted during intake is handled with strict confidentiality under California legal ethics standards.'
+      },
+      {
+        q: 'How long do I have to bring a legal claim in California?',
+        directAnswer: 'Generally 2 years for standard personal injury, but strictly 6 months for claims against public/government entities.',
+        fullAnswer: 'Under California Code of Civil Procedure § 335.1, the general statute of limitations for personal injury claims is two years from the date of harm. However, under the California Government Claims Act (Gov Code § 911.2), claims against public agencies (cities, school districts, transit authorities) must be filed within 6 months. For California employment claims under FEHA, workers generally have up to 3 years to file an administrative complaint with the Civil Rights Department (CRD).'
+      },
+      {
+        q: 'Do I need a lawyer for my case?',
+        directAnswer: 'While self-representation is permitted, navigating corporate insurers and complex California courts without counsel puts your rights at significant risk.',
+        fullAnswer: 'Corporate insurance carriers and corporate defense attorneys employ sophisticated tactics designed to minimize or extinguish liability. Retaining experienced California civil trial counsel ensures procedural rules are followed, critical evidence is subpoenaed, economic damages are calculated accurately, and you are not pressured into undervalued settlements.'
+      },
+      {
+        q: 'What information should I provide during an initial case evaluation?',
+        directAnswer: 'Key dates, location of incident, parties involved, and any preliminary records or incident reports.',
+        fullAnswer: 'It is helpful to provide the approximate date of incident or termination, the California city or county where events took place, the identity of employers or other drivers involved, and any relevant documents such as traffic collision reports, medical discharge summaries, or written termination notices.'
+      },
+      {
+        q: 'Do you offer Spanish-language legal assistance?',
+        directAnswer: 'Yes, fully. We have dedicated bilingual attorneys and intake professionals who assist clients directly in Spanish.',
+        fullAnswer: 'California’s diverse population deserves seamless legal advocacy in their primary language. You can conduct all consultations, intake questionnaires, case reviews, and ongoing legal discussions natively in Spanish without third-party translation barriers.'
+      }
+    ];
+
+// Generate JSON-LD FAQ Schema
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": faqs.map(f => ({
+    "@type": "Question",
+    "name": f.q,
+    "acceptedAnswer": {
+      "@type": "Answer",
+      "text": `${f.directAnswer} ${f.fullAnswer}`
+    }
+  }))
+};
+---
+
+<section class="section-light faq-section" id="faq">
+  <div class="section-container">
+    <div class="section-header-center">
+      <span class="section-kicker">{isSpanish ? 'PREGUNTAS FRECUENTES' : 'CLEAR ANSWERS'}</span>
+      <h2 class="section-title">{isSpanish ? 'Preguntas Frecuentes sobre la Ley de California' : 'Frequently Asked California Legal Questions'}</h2>
+      <div class="gold-divider"></div>
+      <p class="section-subtitle">
+        {isSpanish
+          ? 'Respuestas directas y fundamentadas a las dudas más importantes antes de iniciar una consulta legal en California.'
+          : 'Direct, straightforward answers to high-intent questions regarding California legal representation, deadlines, and rights.'}
+      </p>
+    </div>
+
+    <!-- FAQ Accordion List -->
+    <div class="faq-accordion-list">
+      {faqs.map((faq, index) => (
+        <details class="faq-item" open={index === 0}>
+          <summary class="faq-question">
+            <span class="question-text">{faq.q}</span>
+            <span class="faq-toggle-icon" aria-hidden="true">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="6 9 12 15 18 9"></polyline>
+              </svg>
+            </span>
+          </summary>
+          <div class="faq-answer">
+            <div class="direct-answer-callout">
+              <strong>{isSpanish ? 'Respuesta Directa:' : 'The Short Answer:'}</strong>
+              <span>{faq.directAnswer}</span>
+            </div>
+            <p class="full-answer-text">{faq.fullAnswer}</p>
+          </div>
+        </details>
+      ))}
+    </div>
+
+    <!-- Bottom FAQ Help CTA -->
+    <div class="faq-bottom-cta">
+      <p>
+        {isSpanish ? '¿Tiene una pregunta específica sobre sus circunstancias particulares?' : 'Have a specific question about your individual legal circumstances?'}
+      </p>
+      <a href="#case-evaluation" class="btn-dark">
+        <span>{isSpanish ? 'Hacer una Pregunta al Equipo Legal' : 'Ask Our Legal Team Directly'}</span>
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M5 12h14M12 5l7 7-7 7"></path>
+        </svg>
+      </a>
+    </div>
+  </div>
+
+  <!-- Embed FAQPage Structured Data -->
+  <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
+</section>
+
+<style>
+  .faq-section {
+    border-bottom: 1px solid rgba(200, 160, 74, 0.2);
+  }
+
+  .faq-accordion-list {
+    max-width: 900px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+
+  .faq-item {
+    background: var(--color-white);
+    border: 1px solid rgba(200, 160, 74, 0.25);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    box-shadow: var(--shadow-card);
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .faq-item[open] {
+    border-color: var(--color-gold);
+    box-shadow: var(--shadow-card-hover);
+  }
+
+  .faq-question {
+    padding: 1.4rem 1.75rem;
+    font-family: var(--font-serif);
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--color-dark-green);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    user-select: none;
+    list-style: none;
+  }
+
+  .faq-question::-webkit-details-marker {
+    display: none;
+  }
+
+  .question-text {
+    flex: 1;
+    line-height: 1.35;
+  }
+
+  .faq-toggle-icon {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: rgba(200, 160, 74, 0.12);
+    color: var(--color-gold-dark);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    transition: transform 0.25s ease, background 0.2s;
+  }
+
+  .faq-item[open] .faq-toggle-icon {
+    transform: rotate(180deg);
+    background: var(--color-gold);
+    color: var(--color-dark-green);
+  }
+
+  .faq-answer {
+    padding: 0 1.75rem 1.6rem;
+    border-top: 1px solid rgba(200, 160, 74, 0.15);
+    padding-top: 1.2rem;
+  }
+
+  .direct-answer-callout {
+    background: rgba(200, 160, 74, 0.09);
+    border-left: 3px solid var(--color-gold);
+    padding: 0.75rem 1rem;
+    border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+    margin-bottom: 1rem;
+    font-size: 0.88rem;
+    line-height: 1.5;
+    color: var(--color-dark-green);
+  }
+
+  .direct-answer-callout strong {
+    color: var(--color-gold-dark);
+    margin-right: 0.35rem;
+  }
+
+  .full-answer-text {
+    font-size: 0.86rem;
+    color: var(--color-text-dark-muted);
+    line-height: 1.65;
+  }
+
+  .faq-bottom-cta {
+    text-align: center;
+    margin-top: 3.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .faq-bottom-cta p {
+    font-size: 0.95rem;
+    color: var(--color-text-dark-muted);
+    font-weight: 500;
+  }
+</style>

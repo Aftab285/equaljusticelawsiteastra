@@ -1,0 +1,39 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Navbar from '../../components/Navbar.astro';
+import Footer from '../../components/global/Footer.astro';
+import PageHero from '../../components/global/PageHero.astro';
+import CaliforniaFocus from '../../components/sections/CaliforniaFocus.astro';
+import CaseEvaluation from '../../components/sections/CaseEvaluation.astro';
+import StickyCTA from '../../components/global/StickyCTA.astro';
+import CaseAssistant from '../../components/chat/CaseAssistant.astro';
+
+const breadcrumbs = [
+  { label: 'Home', href: '/' },
+  { label: 'California Locations' }
+];
+---
+
+<Layout 
+  title="California Legal Locations & Service Hubs | Equal Justice Lawyers"
+  description="Explore our statewide California legal coverage across Los Angeles, Orange County, San Diego, Inland Empire, San Francisco, Silicon Valley, Sacramento, and Central Valley."
+>
+  <Navbar transparent={false} />
+
+  <main id="main-content">
+    <PageHero 
+      kicker="STATEWIDE COURT ADMISSIONS"
+      title="Serving Communities Across California"
+      lead="Licensed trial attorneys handling personal injury, wrongful termination, disability access, and civil litigation in every California Superior Court jurisdiction."
+      breadcrumb={breadcrumbs}
+    />
+
+    <CaliforniaFocus />
+
+    <CaseEvaluation />
+  </main>
+
+  <Footer />
+  <StickyCTA />
+  <CaseAssistant />
+</Layout>

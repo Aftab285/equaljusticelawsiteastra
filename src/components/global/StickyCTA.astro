@@ -1,0 +1,98 @@
+---
+interface Props {
+  lang?: string;
+}
+
+const { lang = 'en' } = Astro.props;
+const isSpanish = lang === 'es';
+---
+
+<aside class="sticky-cta-bar" aria-label="Quick Action Bar">
+  <div class="sticky-inner">
+    <a href="tel:8005555878" class="sticky-btn sticky-call">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+      </svg>
+      <span>{isSpanish ? 'Llamar' : 'Call'}</span>
+    </a>
+
+    <button type="button" class="sticky-btn sticky-chat" id="trigger-chat-btn" aria-label="Open intake assistant chat">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+      </svg>
+      <span>{isSpanish ? 'Chat' : 'Chat'}</span>
+    </button>
+
+    <a href="#case-evaluation" class="sticky-btn sticky-eval">
+      <span>{isSpanish ? 'Evaluación Gratis' : 'Free Evaluation'}</span>
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M5 12h14M12 5l7 7-7 7"></path>
+      </svg>
+    </a>
+  </div>
+</aside>
+
+<style>
+  .sticky-cta-bar {
+    display: none;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(18, 32, 25, 0.96);
+    backdrop-filter: blur(12px);
+    border-top: 1px solid rgba(200, 160, 74, 0.35);
+    z-index: 990;
+    padding: 0.6rem 0.8rem;
+    box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.3);
+  }
+
+  .sticky-inner {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    max-width: 500px;
+    margin: 0 auto;
+  }
+
+  .sticky-btn {
+    flex: 1;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4rem;
+    padding: 0.65rem 0.5rem;
+    border-radius: var(--radius-pill);
+    font-size: 0.78rem;
+    font-weight: 600;
+    text-align: center;
+    white-space: nowrap;
+    transition: all 0.2s ease;
+  }
+
+  .sticky-call {
+    background: rgba(255, 255, 255, 0.08);
+    color: var(--color-white);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+  }
+
+  .sticky-chat {
+    background: rgba(26, 51, 40, 0.9);
+    color: var(--color-gold);
+    border: 1px solid rgba(200, 160, 74, 0.4);
+  }
+
+  .sticky-eval {
+    flex: 1.4;
+    background: var(--color-gold);
+    color: var(--color-dark-green);
+    font-weight: 700;
+    box-shadow: 0 2px 10px rgba(200, 160, 74, 0.3);
+  }
+
+  @media (max-width: 768px) {
+    .sticky-cta-bar {
+      display: block;
+    }
+  }
+</style>

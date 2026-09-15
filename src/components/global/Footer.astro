@@ -1,0 +1,382 @@
+---
+interface Props {
+  lang?: string;
+}
+
+const { lang = 'en' } = Astro.props;
+const isSpanish = lang === 'es';
+const currentYear = new Date().getFullYear();
+---
+
+<footer class="site-footer" aria-label="Footer">
+  <!-- Top Gold Divider -->
+  <div class="footer-gold-line"></div>
+
+  <div class="section-container footer-inner">
+    <div class="footer-grid">
+      <!-- Col 1: Brand & Identity -->
+      <div class="footer-col footer-col-brand">
+        <a href={isSpanish ? '/es' : '/'} class="footer-logo" aria-label="Equal Justice Lawyers Home">
+          <img src="/images/logo-white.png" alt="Equal Justice Lawyers" class="footer-logo-img" width="180" height="60" />
+        </a>
+
+        <p class="footer-mission">
+          {isSpanish
+            ? 'Defendiendo a personas y familias en todo el estado de California contra corporaciones e instituciones poderosas. Enfóquese en sanar — nosotros nos enfocamos en la justicia.'
+            : 'Standing with individuals and families across California against powerful corporations and insurance companies. You focus on healing — we focus on justice.'}
+        </p>
+
+        <div class="footer-contact-items">
+          <div class="contact-item">
+            <span class="contact-label">{isSpanish ? 'Teléfono Directo:' : 'Toll-Free 24/7:'}</span>
+            <a href="tel:8005555878" class="contact-value highlight">(800) 555-JUSTICE</a>
+          </div>
+          <div class="contact-item">
+            <span class="contact-label">{isSpanish ? 'Correo Electrónico:' : 'Confidential Email:'}</span>
+            <a href="mailto:legal@equaljusticelawyers.com" class="contact-value">legal@equaljusticelawyers.com</a>
+          </div>
+        </div>
+
+        <div class="footer-lang-box">
+          <span class="lang-heading">{isSpanish ? 'Idioma / Language:' : 'Select Language:'}</span>
+          <div class="lang-links">
+            <a href="/" class={`lang-pill ${!isSpanish ? 'active' : ''}`}>English (EN)</a>
+            <a href="/es" class={`lang-pill ${isSpanish ? 'active' : ''}`}>Español (ES)</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Col 2: Core Practice Areas -->
+      <div class="footer-col">
+        <h3 class="footer-heading">{isSpanish ? 'Áreas de Práctica' : 'Practice Areas'}</h3>
+        <ul class="footer-links">
+          <li><a href="/practice-areas/personal-injury">{isSpanish ? 'Lesiones Personales' : 'Personal Injury'}</a></li>
+          <li><a href="/practice-areas/car-accidents">{isSpanish ? 'Accidentes de Tráfico' : 'Car & Vehicle Accidents'}</a></li>
+          <li><a href="/practice-areas/wrongful-death">{isSpanish ? 'Homicidio Culposo' : 'Wrongful Death'}</a></li>
+          <li><a href="/practice-areas/employment-law">{isSpanish ? 'Derecho Laboral' : 'Employment Law'}</a></li>
+          <li><a href="/practice-areas/workplace-discrimination">{isSpanish ? 'Discriminación Laboral' : 'Workplace Discrimination'}</a></li>
+          <li><a href="/practice-areas/sexual-harassment">{isSpanish ? 'Acoso Sexual en el Trabajo' : 'Sexual Harassment'}</a></li>
+          <li><a href="/practice-areas/wage-and-hour">{isSpanish ? 'Salarios no Pagados y Horas Extras' : 'Wage & Hour Violations'}</a></li>
+          <li><a href="/practice-areas/disability-rights">{isSpanish ? 'Derechos de Discapacidad (ADA/Unruh)' : 'Disability Rights & ADA'}</a></li>
+          <li><a href="/practice-areas/medical-malpractice">{isSpanish ? 'Negligencia Médica' : 'Medical Malpractice'}</a></li>
+          <li><a href="/practice-areas/consumer-protection">{isSpanish ? 'Protección al Consumidor' : 'Consumer Protection'}</a></li>
+        </ul>
+      </div>
+
+      <!-- Col 3: California Regions Served -->
+      <div class="footer-col">
+        <h3 class="footer-heading">{isSpanish ? 'Cobertura en California' : 'California Service Areas'}</h3>
+        <ul class="footer-links">
+          <li><a href="/locations/los-angeles">Greater Los Angeles County</a></li>
+          <li><a href="/locations/orange-county">Orange County & Irvine</a></li>
+          <li><a href="/locations/san-diego">San Diego & Imperial County</a></li>
+          <li><a href="/locations/inland-empire">Riverside & San Bernardino</a></li>
+          <li><a href="/locations/san-francisco-bay-area">San Francisco Bay Area</a></li>
+          <li><a href="/locations/san-jose-silicon-valley">San Jose & Silicon Valley</a></li>
+          <li><a href="/locations/sacramento">Sacramento & Capital Region</a></li>
+          <li><a href="/locations/fresno-central-valley">Fresno & Central Valley</a></li>
+          <li><a href="/locations/oakland-east-bay">Oakland & East Bay</a></li>
+          <li><a href="/locations">Statewide Virtual & In-Person Services</a></li>
+        </ul>
+      </div>
+
+      <!-- Col 4: Resources & About -->
+      <div class="footer-col">
+        <h3 class="footer-heading">{isSpanish ? 'Recursos e Información' : 'Resources & Firm'}</h3>
+        <ul class="footer-links">
+          <li><a href="/about">{isSpanish ? 'Nuestra Firma' : 'About Equal Justice Lawyers'}</a></li>
+          <li><a href="/resources">{isSpanish ? 'Guías Legales de California' : 'California Legal Guides'}</a></li>
+          <li><a href="/resources/california-statutes-of-limitations">{isSpanish ? 'Plazos Legales de California' : 'CA Statutes of Limitations'}</a></li>
+          <li><a href="/resources/what-to-do-after-accident">{isSpanish ? 'Qué Hacer Después de un Accidente' : 'Accident Step-by-Step Guide'}</a></li>
+          <li><a href="/resources/california-wrongful-termination-laws">{isSpanish ? 'Leyes de Despido Injustificado' : 'CA Wrongful Termination Laws'}</a></li>
+          <li><a href="#case-evaluation" class="link-gold">{isSpanish ? 'Iniciar Evaluación Gratuita →' : 'Start Free Evaluation →'}</a></li>
+          <li><a href="/contact">{isSpanish ? 'Contáctenos' : 'Contact & Intake'}</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Legal Disclaimers (California State Bar Ethics Compliance) -->
+    <div class="footer-disclaimers">
+      <div class="disclaimer-header">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#c8a04a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="10"></circle>
+          <line x1="12" y1="8" x2="12" y2="12"></line>
+          <line x1="12" y1="16" x2="12.01" y2="16"></line>
+        </svg>
+        <span>Important Legal Disclosures & Professional Ethics Notice</span>
+      </div>
+
+      <p class="disclaimer-text">
+        <strong>Attorney Advertising:</strong> This website is an advertisement and is designed for general educational and informational purposes only. Nothing on this site should be taken as legal advice for any individual case or situation. This information is not intended to create, and receipt or viewing does not constitute, an attorney-client relationship.
+      </p>
+      <p class="disclaimer-text">
+        <strong>No Attorney-Client Relationship:</strong> Transmitting information through the online case evaluation form, chatbot intake assistant, or direct email does not establish an attorney-client relationship. An attorney-client relationship with Equal Justice Lawyers is only formed after a conflict check is completed and a formal, written representation agreement is signed by both the client and an authorized attorney of the firm.
+      </p>
+      <p class="disclaimer-text">
+        <strong>Past Results & Experience:</strong> Any descriptions of past case experience, settlement ranges, or prior representative matters do not guarantee or predict a similar outcome in any future legal matter. Every case involves unique facts, evidence, and applicable California law.
+      </p>
+      <p class="disclaimer-text">
+        <strong>Jurisdiction:</strong> The attorneys of Equal Justice Lawyers are licensed to practice law in the State of California. Services outside California are offered only in accordance with applicable multi-jurisdictional practice rules and local counsel associations where required.
+      </p>
+    </div>
+
+    <!-- Bottom Bar -->
+    <div class="footer-bottom">
+      <p class="copyright">
+        &copy; {currentYear} Equal Justice Lawyers LLP. All Rights Reserved.
+      </p>
+      <div class="bottom-links">
+        <a href="/privacy-policy">Privacy Policy</a>
+        <span class="sep">•</span>
+        <a href="/terms-of-service">Terms of Service</a>
+        <span class="sep">•</span>
+        <a href="/accessibility">Accessibility Statement</a>
+        <span class="sep">•</span>
+        <a href="/sitemap">Site Directory</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    background-color: var(--color-dark-green-deep);
+    color: var(--color-text-light);
+    position: relative;
+    padding-top: 4.5rem;
+    padding-bottom: 2rem;
+    border-top: 1px solid rgba(200, 160, 74, 0.2);
+  }
+
+  .footer-gold-line {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, transparent 0%, var(--color-gold) 25%, var(--color-gold-light) 50%, var(--color-gold) 75%, transparent 100%);
+  }
+
+  .footer-grid {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr 1fr 1fr;
+    gap: 3rem;
+    padding-bottom: 3.5rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  .footer-col-brand {
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+  }
+
+  .footer-logo {
+    display: inline-flex;
+    align-items: center;
+  }
+
+  .footer-logo-img {
+    height: 46px;
+    width: auto;
+    object-fit: contain;
+    display: block;
+  }
+
+  .footer-mission {
+    font-size: 0.88rem;
+    line-height: 1.65;
+    color: var(--color-text-muted);
+  }
+
+  .footer-contact-items {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-top: 0.2rem;
+  }
+
+  .contact-item {
+    font-size: 0.85rem;
+  }
+
+  .contact-label {
+    display: block;
+    color: var(--color-text-muted);
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .contact-value {
+    color: var(--color-white);
+    font-weight: 600;
+    transition: color 0.2s ease;
+  }
+
+  .contact-value.highlight {
+    color: var(--color-gold);
+    font-size: 1.05rem;
+  }
+
+  .contact-value:hover {
+    color: var(--color-gold-light);
+  }
+
+  .footer-lang-box {
+    margin-top: 0.5rem;
+  }
+
+  .lang-heading {
+    display: block;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--color-text-muted);
+    margin-bottom: 0.5rem;
+  }
+
+  .lang-links {
+    display: flex;
+    gap: 0.5rem;
+  }
+
+  .lang-pill {
+    font-size: 0.78rem;
+    padding: 4px 10px;
+    border-radius: var(--radius-sm);
+    border: 1px solid rgba(200, 160, 74, 0.3);
+    color: var(--color-text-light);
+    transition: all 0.2s ease;
+  }
+
+  .lang-pill:hover,
+  .lang-pill.active {
+    background: var(--color-gold);
+    color: var(--color-dark-green);
+    font-weight: 600;
+  }
+
+  .footer-heading {
+    font-family: var(--font-serif);
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--color-white);
+    margin-bottom: 1.25rem;
+    position: relative;
+    padding-bottom: 0.5rem;
+  }
+
+  .footer-heading::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 28px;
+    height: 2px;
+    background: var(--color-gold);
+  }
+
+  .footer-links {
+    display: flex;
+    flex-direction: column;
+    gap: 0.65rem;
+  }
+
+  .footer-links a {
+    font-size: 0.85rem;
+    color: var(--color-text-muted);
+    transition: color 0.2s ease, transform 0.2s ease;
+    display: inline-block;
+  }
+
+  .footer-links a:hover {
+    color: var(--color-gold);
+    transform: translateX(3px);
+  }
+
+  .link-gold {
+    color: var(--color-gold) !important;
+    font-weight: 600;
+  }
+
+  /* Disclaimers */
+  .footer-disclaimers {
+    padding: 2rem 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+  }
+
+  .disclaimer-header {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: var(--color-gold);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+
+  .disclaimer-text {
+    font-size: 0.72rem;
+    line-height: 1.6;
+    color: rgba(197, 191, 179, 0.8);
+  }
+
+  .disclaimer-text strong {
+    color: var(--color-text-light);
+  }
+
+  /* Bottom Bar */
+  .footer-bottom {
+    padding-top: 1.8rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+    font-size: 0.78rem;
+    color: var(--color-text-muted);
+  }
+
+  .bottom-links {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+  }
+
+  .bottom-links a {
+    color: var(--color-text-muted);
+    transition: color 0.2s;
+  }
+
+  .bottom-links a:hover {
+    color: var(--color-gold);
+  }
+
+  .sep {
+    opacity: 0.3;
+  }
+
+  @media (max-width: 1024px) {
+    .footer-grid {
+      grid-template-columns: 1fr 1fr;
+      gap: 2.5rem;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .footer-grid {
+      grid-template-columns: 1fr;
+      gap: 2rem;
+    }
+
+    .footer-bottom {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+  }
+</style>
