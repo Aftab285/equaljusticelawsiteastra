@@ -11,6 +11,12 @@ export default defineConfig({
   integrations: [
     sitemap({
       filter: (page) => !page.includes('/api/'),
+      namespaces: {
+        news: false,
+        image: false,
+        video: false,
+        xhtml: true,
+      },
       serialize(item) {
         if (item.url === 'https://equaljusticelawyers.com/' || item.url === 'https://equaljusticelawyers.com/es/') {
           item.links = [
