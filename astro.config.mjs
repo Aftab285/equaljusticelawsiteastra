@@ -15,17 +15,7 @@ export default defineConfig({
         news: false,
         image: false,
         video: false,
-        xhtml: true,
-      },
-      serialize(item) {
-        if (item.url === 'https://equaljusticelawyers.com/' || item.url === 'https://equaljusticelawyers.com/es/') {
-          item.links = [
-            { lang: 'en', url: 'https://equaljusticelawyers.com/' },
-            { lang: 'es', url: 'https://equaljusticelawyers.com/es/' },
-            { lang: 'x-default', url: 'https://equaljusticelawyers.com/' },
-          ];
-        }
-        return item;
+        xhtml: false,
       },
     }),
   ],
