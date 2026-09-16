@@ -9,8 +9,8 @@ function formatXml(xml) {
     .map(line => line.trim())
     .filter(Boolean)
     .map(line => {
-      if (line.startsWith('</urlset>') || line.startsWith('</sitemapindex>')) return line;
-      if (line.startsWith('<url>') || line.startsWith('</url>') || line.startsWith('<sitemap>') || line.startsWith('</sitemap>')) return '  ' + line;
+      if (line.startsWith('</urlset>')) return line;
+      if (line.startsWith('<url>') || line.startsWith('</url>')) return '  ' + line;
       if (line.startsWith('<loc>') || line.startsWith('<lastmod>')) return '    ' + line;
       return line;
     })
@@ -22,26 +22,31 @@ if (fs.existsSync('dist/client')) {
   fs.cpSync('dist/client', 'dist', { recursive: true });
 }
 
-// 2. Also ensure /sitemap.xml is available as pure XML for crawlers requesting that path directly
-if (fs.existsSync('dist/sitemap-0.xml')) {
-  fs.copyFileSync('dist/sitemap-0.xml', 'dist/sitemap.xml');
+// 2. Promote generated sitemap to the single canonical /sitemap.xml
+const sourceSitemap = fs.existsSync('dist/sitemap-0.xml')
+  ? 'dist/sitemap-0.xml'
+  : (fs.existsSync('dist/client/sitemap-0.xml') ? 'dist/client/sitemap-0.xml' : null);
+
+if (sourceSitemap) {
+  const rawXml = fs.readFileSync(sourceSitemap, 'utf8');
+  const formatted = formatXml(rawXml);
+  fs.writeFileSync('dist/sitemap.xml', formatted, 'utf8');
   if (fs.existsSync('dist/client')) {
-    fs.copyFileSync('dist/sitemap-0.xml', 'dist/client/sitemap.xml');
+    fs.writeFileSync('dist/client/sitemap.xml', formatted, 'utf8');
   }
 }
 
-// 3. Format all sitemaps in dist and dist/client with clean, human- and machine-readable XML indentation
-for (const dir of ['dist', 'dist/client']) {
-  if (fs.existsSync(dir)) {
-    const files = fs.readdirSync(dir);
-    for (const file of files) {
-      if (file.startsWith('sitemap') && file.endsWith('.xml')) {
-        const filePath = path.join(dir, file);
-        const rawXml = fs.readFileSync(filePath, 'utf8');
-        const formatted = formatXml(rawXml);
-        fs.writeFileSync(filePath, formatted, 'utf8');
-      }
-    }
+// 3. Remove index and child sitemaps so ONLY /sitemap.xml is the single production sitemap
+const redundantFiles = [
+  'dist/sitemap-0.xml',
+  'dist/sitemap-index.xml',
+  'dist/client/sitemap-0.xml',
+  'dist/client/sitemap-index.xml',
+];
+
+for (const file of redundantFiles) {
+  if (fs.existsSync(file)) {
+    fs.unlinkSync(file);
   }
 }
 
@@ -50,4 +55,4 @@ if (fs.existsSync('dist/server/entry.mjs')) {
   fs.writeFileSync('dist/_worker.js', "export { default } from './server/entry.mjs';\n");
 }
 
-console.log('Successfully prepared Cloudflare Pages build artifacts with clean XML sitemaps.');
+console.log('Successfully prepared Cloudflare Pages build artifacts with single sitemap.xml.');
