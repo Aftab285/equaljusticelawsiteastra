@@ -1,10 +1,10 @@
 ---
-import Layout from '../layouts/Layout.astro';
-import Navbar from '../components/Navbar.astro';
-import Footer from '../components/global/Footer.astro';
-import PageHero from '../components/global/PageHero.astro';
-import StickyCTA from '../components/global/StickyCTA.astro';
-import CaseAssistant from '../components/chat/CaseAssistant.astro';
+import Layout from '../../layouts/Layout.astro';
+import Navbar from '../../components/Navbar.astro';
+import Footer from '../../components/global/Footer.astro';
+import PageHero from '../../components/global/PageHero.astro';
+import StickyCTA from '../../components/global/StickyCTA.astro';
+import CaseAssistant from '../../components/chat/CaseAssistant.astro';
 
 const breadcrumbs = [
   { label: 'Home', href: '/' },
@@ -19,7 +19,8 @@ const mainPages = [
   { name: 'Privacy Policy', url: '/privacy-policy' },
   { name: 'Terms of Service', url: '/terms-of-service' },
   { name: 'Accessibility Statement', url: '/accessibility' },
-  { name: 'XML Sitemap (Search Engines)', url: '/sitemap.xml' },
+  { name: 'XML Sitemap Index (Search Engines)', url: '/sitemap-index.xml' },
+  { name: 'XML Primary Sitemap (Search Engines)', url: '/sitemap-0.xml' },
 ];
 
 const practiceAreas = [
@@ -69,9 +70,9 @@ const resources = [
 ---
 
 <Layout 
-  title="Site Directory & Sitemap | Equal Justice Lawyers"
+  title="Site Directory & Human Sitemap | Equal Justice Lawyers"
   description="Comprehensive sitemap and site directory for Equal Justice Lawyers. Explore all California practice areas, regional locations, legal resources, and firm information."
-  canonical="https://equaljusticelawyers.com/sitemap"
+  canonical="https://equaljusticelawyers.com/sitemap/"
 >
   <Navbar transparent={false} />
 
@@ -101,16 +102,16 @@ const resources = [
             </div>
           </div>
           <div class="xml-links">
-            <a href="/sitemap.xml" target="_blank" class="btn-gold">
-              <span>View sitemap.xml</span>
+            <a href="/sitemap-index.xml" target="_blank" class="btn-gold">
+              <span>View sitemap-index.xml</span>
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
                 <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
                 <polyline points="15 3 21 3 21 9"></polyline>
                 <line x1="10" y1="14" x2="21" y2="3"></line>
               </svg>
             </a>
-            <a href="/sitemap-index.xml" target="_blank" class="btn-dark">
-              <span>sitemap-index.xml</span>
+            <a href="/sitemap-0.xml" target="_blank" class="btn-dark">
+              <span>sitemap-0.xml</span>
             </a>
           </div>
         </div>

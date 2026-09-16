@@ -9,6 +9,12 @@ export default defineConfig({
   adapter: cloudflare(),
   integrations: [
     sitemap({
+      filter: (page) =>
+        !page.includes('/api/') &&
+        !page.includes('/admin/') &&
+        !page.includes('/test/') &&
+        !page.includes('/preview/') &&
+        !page.includes('/404'),
       changefreq: 'weekly',
       priority: 0.8,
       lastmod: new Date(),
