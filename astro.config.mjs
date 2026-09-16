@@ -15,15 +15,12 @@ export default defineConfig({
         !page.includes('/test/') &&
         !page.includes('/preview/') &&
         !page.includes('/404'),
-      changefreq: 'weekly',
-      priority: 0.8,
       lastmod: new Date(),
-      i18n: {
-        defaultLocale: 'en',
-        locales: {
-          en: 'en-US',
-          es: 'es-US',
-        },
+      namespaces: {
+        news: false,
+        xhtml: false,
+        image: false,
+        video: false,
       },
     }),
   ],
