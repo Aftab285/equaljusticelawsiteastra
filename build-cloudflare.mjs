@@ -45,14 +45,20 @@ if (fs.existsSync('dist/sitemap-0.xml')) {
   }
 }
 
-// 3. Format all sitemaps in dist and dist/client for clean readability
+// 3. Attach XSL stylesheet & format all sitemaps in dist and dist/client
 for (const dir of ['dist', 'dist/client']) {
   if (fs.existsSync(dir)) {
     const files = fs.readdirSync(dir);
     for (const file of files) {
       if (file.startsWith('sitemap') && file.endsWith('.xml')) {
         const filePath = path.join(dir, file);
-        const rawXml = fs.readFileSync(filePath, 'utf8');
+        let rawXml = fs.readFileSync(filePath, 'utf8');
+        if (!rawXml.includes('xml-stylesheet')) {
+          rawXml = rawXml.replace(
+            '<?xml version="1.0" encoding="UTF-8"?>',
+            '<?xml version="1.0" encoding="UTF-8"?>\n<?xml-stylesheet type="text/xsl" href="/sitemap.xsl"?>'
+          );
+        }
         const formatted = prettyXml(rawXml);
         fs.writeFileSync(filePath, formatted + '\n', 'utf8');
       }
@@ -65,4 +71,4 @@ if (fs.existsSync('dist/server/entry.mjs')) {
   fs.writeFileSync('dist/_worker.js', "export { default } from './server/entry.mjs';\n");
 }
 
-console.log('Successfully prepared Cloudflare Pages build artifacts with sitemaps.');
+console.log('Successfully prepared Cloudflare Pages build artifacts with styled XML sitemaps.');
