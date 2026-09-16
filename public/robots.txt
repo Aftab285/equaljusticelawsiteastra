@@ -3,4 +3,5 @@ Allow: /
 
 Disallow: /api/
 
+Sitemap: https://equaljusticelawyers.com/sitemap.xml
 Sitemap: https://equaljusticelawyers.com/sitemap-index.xml

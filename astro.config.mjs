@@ -6,16 +6,18 @@ import sitemap from '@astrojs/sitemap';
 // https://astro.build/config
 export default defineConfig({
   site: 'https://equaljusticelawyers.com',
-  trailingSlash: 'always',
   adapter: cloudflare(),
   integrations: [
     sitemap({
-      filter: (page) => !page.includes('/api/'),
-      namespaces: {
-        news: false,
-        image: false,
-        video: false,
-        xhtml: false,
+      changefreq: 'weekly',
+      priority: 0.8,
+      lastmod: new Date(),
+      i18n: {
+        defaultLocale: 'en',
+        locales: {
+          en: 'en-US',
+          es: 'es-US',
+        },
       },
     }),
   ],

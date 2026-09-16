@@ -1,0 +1,153 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Navbar from '../components/Navbar.astro';
+import Footer from '../components/global/Footer.astro';
+import PageHero from '../components/global/PageHero.astro';
+import StickyCTA from '../components/global/StickyCTA.astro';
+import CaseAssistant from '../components/chat/CaseAssistant.astro';
+
+const breadcrumbs = [
+  { label: 'Home', href: '/' },
+  { label: 'Terms of Service' }
+];
+---
+
+<Layout 
+  title="Terms of Service & Legal Disclaimer | Equal Justice Lawyers"
+  description="Terms of service, attorney advertising disclosures, and legal notices for Equal Justice Lawyers LLP under California State Bar rules."
+  canonical="https://equaljusticelawyers.com/terms-of-service"
+>
+  <Navbar transparent={false} />
+
+  <main id="main-content">
+    <PageHero 
+      kicker="LEGAL NOTICES"
+      title="Terms of Service"
+      lead="Important terms governing your use of this website, California State Bar advertising disclosures, and attorney-client relationship boundaries."
+      breadcrumb={breadcrumbs}
+    />
+
+    <section class="section-light legal-content-section">
+      <div class="section-container">
+        <div class="legal-card">
+          <p class="effective-date"><strong>Effective Date:</strong> September 16, 2026 | <strong>Jurisdiction:</strong> State of California, USA</p>
+
+          <h2>1. Attorney Advertising Notice</h2>
+          <p>
+            Under the California Rules of Professional Conduct (Rule 7.1, 7.2, 7.3), this website and its contents constitute an <strong>attorney advertisement</strong>. The information provided on this website is designed for general educational and informational purposes only. Nothing on this site should be construed as formal legal advice for any individual case or controversy.
+          </p>
+
+          <h2>2. No Attorney-Client Relationship Created</h2>
+          <p>
+            Visiting this site, submitting information through any web form, using our conversational case assistant, or sending an email to our office <strong>does NOT create an attorney-client relationship</strong>.
+          </p>
+          <p>
+            An attorney-client relationship with Equal Justice Lawyers LLP is established only after:
+          </p>
+          <ol>
+            <li>Our firm conducts a mandatory conflicts check to confirm no conflict of interest exists; and</li>
+            <li>Both you and an authorized representative of Equal Justice Lawyers LLP execute a formal, written representation and retainer agreement.</li>
+          </ol>
+
+          <h2>3. Past Results & Testimonials Do Not Guarantee Outcomes</h2>
+          <p>
+            Any case results, verdicts, settlements, or representative matters described on this website are illustrative only. Prior results do not guarantee, predict, or warrant a similar outcome in your legal matter. Every case involves distinct facts, legal nuances, liability disputes, and court jurisdictions across California.
+          </p>
+
+          <h2>4. California Statutes of Limitations & Urgency</h2>
+          <p>
+            All civil claims in the State of California are subject to strict statutory deadlines (statutes of limitations). Failing to file an administrative claim or lawsuit within the statutory window will forever extinguish your right to recovery. Transmitting an inquiry through this website does not stay, extend, or toll any statutory deadlines. If your deadline is imminent, you must contact an attorney immediately.
+          </p>
+
+          <h2>5. Intellectual Property</h2>
+          <p>
+            All text, logos, graphical designs, layout structures, and code on this website are the intellectual property of Equal Justice Lawyers LLP and are protected under federal copyright and trademark laws.
+          </p>
+
+          <h2>6. Inquiries & Contact</h2>
+          <p>
+            For questions regarding these terms or legal inquiries across California:
+          </p>
+          <div class="contact-box">
+            <strong>Equal Justice Lawyers LLP</strong><br />
+            Email: <a href="mailto:legal@equaljusticelawyers.com">legal@equaljusticelawyers.com</a><br />
+            Statewide California Legal Services
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <StickyCTA />
+  <CaseAssistant />
+  <Footer />
+</Layout>
+
+<style>
+  .legal-content-section {
+    padding: 3.5rem 0 5rem;
+  }
+
+  .legal-card {
+    max-width: 860px;
+    margin: 0 auto;
+    background: #ffffff;
+    border: 1px solid rgba(200, 160, 74, 0.25);
+    border-radius: 12px;
+    padding: 3rem 3.5rem;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04);
+  }
+
+  .effective-date {
+    font-size: 0.85rem;
+    color: #64748b;
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid #e2e8f0;
+  }
+
+  h2 {
+    font-family: var(--font-serif);
+    font-size: 1.4rem;
+    color: var(--color-dark-green-deep);
+    margin-top: 2rem;
+    margin-bottom: 0.75rem;
+  }
+
+  p, li {
+    font-size: 0.95rem;
+    line-height: 1.7;
+    color: #334155;
+    margin-bottom: 1rem;
+  }
+
+  ol {
+    padding-left: 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+
+  li {
+    margin-bottom: 0.5rem;
+  }
+
+  .contact-box {
+    background: #fbf8f2;
+    border-left: 4px solid var(--color-gold);
+    padding: 1.25rem 1.5rem;
+    border-radius: 6px;
+    margin-top: 1.5rem;
+    font-size: 0.92rem;
+    line-height: 1.6;
+  }
+
+  .contact-box a {
+    color: var(--color-gold);
+    font-weight: 600;
+  }
+
+  @media (max-width: 768px) {
+    .legal-card {
+      padding: 2rem 1.5rem;
+    }
+  }
+</style>

@@ -1,7 +1,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 
-// Function to pretty-print XML with proper indentation and newlines
+// Function to format XML with clean indentation and newlines
 function prettyXml(xmlContent) {
   const lines = xmlContent
     .replace(/>\s*</g, '>\n<')
@@ -27,33 +27,35 @@ function prettyXml(xmlContent) {
   return formatted.join('\n');
 }
 
-// 1. Format all generated sitemaps in dist/client
-if (fs.existsSync('dist/client')) {
-  const files = fs.readdirSync('dist/client');
-  for (const file of files) {
-    if (file.startsWith('sitemap') && file.endsWith('.xml')) {
-      const filePath = path.join('dist/client', file);
-      const rawXml = fs.readFileSync(filePath, 'utf8');
-      const formattedXml = prettyXml(rawXml);
-      fs.writeFileSync(filePath, formattedXml + '\n', 'utf8');
-    }
-  }
-}
-
-// 2. Copy all static files from dist/client to dist root so Cloudflare Pages finds index.html and sitemaps
+// 1. Copy all static files from dist/client to dist root so Cloudflare Pages finds index.html
 if (fs.existsSync('dist/client')) {
   fs.cpSync('dist/client', 'dist', { recursive: true });
 }
 
-// 3. Ensure sitemaps at dist root are also formatted
-if (fs.existsSync('dist')) {
-  const files = fs.readdirSync('dist');
-  for (const file of files) {
-    if (file.startsWith('sitemap') && file.endsWith('.xml')) {
-      const filePath = path.join('dist', file);
-      const rawXml = fs.readFileSync(filePath, 'utf8');
-      const formattedXml = prettyXml(rawXml);
-      fs.writeFileSync(filePath, formattedXml + '\n', 'utf8');
+// 2. Ensure standard sitemap.xml exists alongside sitemap-index.xml and sitemap-0.xml
+if (fs.existsSync('dist/sitemap-0.xml')) {
+  fs.copyFileSync('dist/sitemap-0.xml', 'dist/sitemap.xml');
+  if (fs.existsSync('dist/client')) {
+    fs.copyFileSync('dist/sitemap-0.xml', 'dist/client/sitemap.xml');
+  }
+} else if (fs.existsSync('dist/sitemap-index.xml')) {
+  fs.copyFileSync('dist/sitemap-index.xml', 'dist/sitemap.xml');
+  if (fs.existsSync('dist/client')) {
+    fs.copyFileSync('dist/sitemap-index.xml', 'dist/client/sitemap.xml');
+  }
+}
+
+// 3. Format all sitemaps in dist and dist/client for clean readability
+for (const dir of ['dist', 'dist/client']) {
+  if (fs.existsSync(dir)) {
+    const files = fs.readdirSync(dir);
+    for (const file of files) {
+      if (file.startsWith('sitemap') && file.endsWith('.xml')) {
+        const filePath = path.join(dir, file);
+        const rawXml = fs.readFileSync(filePath, 'utf8');
+        const formatted = prettyXml(rawXml);
+        fs.writeFileSync(filePath, formatted + '\n', 'utf8');
+      }
     }
   }
 }
@@ -63,4 +65,4 @@ if (fs.existsSync('dist/server/entry.mjs')) {
   fs.writeFileSync('dist/_worker.js', "export { default } from './server/entry.mjs';\n");
 }
 
-console.log('Successfully prepared Cloudflare Pages build artifacts with formatted XML sitemaps.');
+console.log('Successfully prepared Cloudflare Pages build artifacts with sitemaps.');

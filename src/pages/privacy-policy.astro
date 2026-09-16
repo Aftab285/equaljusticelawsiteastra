@@ -1,0 +1,168 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Navbar from '../components/Navbar.astro';
+import Footer from '../components/global/Footer.astro';
+import PageHero from '../components/global/PageHero.astro';
+import StickyCTA from '../components/global/StickyCTA.astro';
+import CaseAssistant from '../components/chat/CaseAssistant.astro';
+
+const breadcrumbs = [
+  { label: 'Home', href: '/' },
+  { label: 'Privacy Policy' }
+];
+---
+
+<Layout 
+  title="Privacy Policy | Equal Justice Lawyers"
+  description="Privacy Policy for Equal Justice Lawyers. Learn how we safeguard and protect your personal information, attorney-client privileged communications, and CCPA rights."
+  canonical="https://equaljusticelawyers.com/privacy-policy"
+>
+  <Navbar transparent={false} />
+
+  <main id="main-content">
+    <PageHero 
+      kicker="LEGAL POLICIES"
+      title="Privacy Policy"
+      lead="Your privacy and the absolute confidentiality of your legal inquiries are foundational to our firm. Review how Equal Justice Lawyers collects, protects, and handles your information."
+      breadcrumb={breadcrumbs}
+    />
+
+    <section class="section-light legal-content-section">
+      <div class="section-container">
+        <div class="legal-card">
+          <p class="effective-date"><strong>Effective Date:</strong> September 16, 2026 | <strong>Jurisdiction:</strong> State of California, USA</p>
+
+          <h2>1. Introduction & Scope</h2>
+          <p>
+            Equal Justice Lawyers LLP ("we," "our," or "the Firm") operates <code>https://equaljusticelawyers.com</code>. This Privacy Policy governs the collection, use, and disclosure of personal information collected through our website, online intake forms, chatbot assistant, and direct email communications.
+          </p>
+
+          <h2>2. Attorney-Client Privilege & Confidentiality</h2>
+          <p>
+            Communications sent through our case evaluation forms and confidential assistant are treated with the highest standard of professional care. Under California Evidence Code §§ 950–962, initial disclosures made by prospective clients for the purpose of seeking legal consultation and representation are protected under the prospective client privilege doctrine, regardless of whether formal representation is ultimately agreed upon.
+          </p>
+
+          <h2>3. Information We Collect</h2>
+          <p>We collect information that you voluntarily provide to us when seeking legal assistance:</p>
+          <ul>
+            <li><strong>Contact Information:</strong> Full name, telephone number, and email address.</li>
+            <li><strong>Case Details:</strong> Information regarding motor vehicle accidents, employment incidents, injuries, employers, dates, and locations.</li>
+            <li><strong>Technical Data:</strong> IP address, device type, browser information, and referral URLs collected automatically for security, fraud prevention, and site performance.</li>
+          </ul>
+
+          <h2>4. How We Use Your Information</h2>
+          <p>Your information is used strictly to:</p>
+          <ul>
+            <li>Evaluate your potential legal claim and perform initial conflict checks.</li>
+            <li>Contact you regarding your inquiry via telephone, email, or text.</li>
+            <li>Comply with professional ethics rules established by the State Bar of California.</li>
+            <li>Prevent fraud, spam submissions, and security breaches on our digital platforms.</li>
+          </ul>
+          <p>
+            <strong>We do not sell, rent, or trade your personal information.</strong> We never monetize client contact data to third-party data brokers or marketing syndicates.
+          </p>
+
+          <h2>5. California Consumer Privacy Act (CCPA / CPRA)</h2>
+          <p>
+            If you are a California resident, the California Consumer Privacy Act (Cal. Civ. Code § 1798.100 et seq.) provides you with specific rights:
+          </p>
+          <ul>
+            <li><strong>Right to Know:</strong> The categories and specific pieces of personal information we have collected about you.</li>
+            <li><strong>Right to Delete:</strong> The right to request deletion of personal information, subject to statutory exceptions such as legal record retention obligations.</li>
+            <li><strong>Right to Non-Discrimination:</strong> We will not discriminate against you for exercising your privacy rights.</li>
+          </ul>
+
+          <h2>6. Contact Our Privacy & Compliance Team</h2>
+          <p>
+            If you have questions regarding this Privacy Policy or wish to exercise your California privacy rights, contact us at:
+          </p>
+          <div class="contact-box">
+            <strong>Equal Justice Lawyers LLP — Legal Intake & Compliance</strong><br />
+            Email: <a href="mailto:legal@equaljusticelawyers.com">legal@equaljusticelawyers.com</a><br />
+            State of California, United States
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <StickyCTA />
+  <CaseAssistant />
+  <Footer />
+</Layout>
+
+<style>
+  .legal-content-section {
+    padding: 3.5rem 0 5rem;
+  }
+
+  .legal-card {
+    max-width: 860px;
+    margin: 0 auto;
+    background: #ffffff;
+    border: 1px solid rgba(200, 160, 74, 0.25);
+    border-radius: 12px;
+    padding: 3rem 3.5rem;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04);
+  }
+
+  .effective-date {
+    font-size: 0.85rem;
+    color: #64748b;
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid #e2e8f0;
+  }
+
+  h2 {
+    font-family: var(--font-serif);
+    font-size: 1.4rem;
+    color: var(--color-dark-green-deep);
+    margin-top: 2rem;
+    margin-bottom: 0.75rem;
+  }
+
+  p, li {
+    font-size: 0.95rem;
+    line-height: 1.7;
+    color: #334155;
+    margin-bottom: 1rem;
+  }
+
+  ul {
+    padding-left: 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+
+  li {
+    margin-bottom: 0.5rem;
+  }
+
+  code {
+    background: #f1f5f9;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 0.9em;
+  }
+
+  .contact-box {
+    background: #fbf8f2;
+    border-left: 4px solid var(--color-gold);
+    padding: 1.25rem 1.5rem;
+    border-radius: 6px;
+    margin-top: 1.5rem;
+    font-size: 0.92rem;
+    line-height: 1.6;
+  }
+
+  .contact-box a {
+    color: var(--color-gold);
+    font-weight: 600;
+  }
+
+  @media (max-width: 768px) {
+    .legal-card {
+      padding: 2rem 1.5rem;
+    }
+  }
+</style>

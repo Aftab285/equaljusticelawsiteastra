@@ -1,0 +1,286 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Navbar from '../components/Navbar.astro';
+import Footer from '../components/global/Footer.astro';
+import PageHero from '../components/global/PageHero.astro';
+import StickyCTA from '../components/global/StickyCTA.astro';
+import CaseAssistant from '../components/chat/CaseAssistant.astro';
+
+const breadcrumbs = [
+  { label: 'Home', href: '/' },
+  { label: 'Site Directory & Sitemap' }
+];
+
+const mainPages = [
+  { name: 'Home (English)', url: '/' },
+  { name: 'Página Principal (Español)', url: '/es' },
+  { name: 'About Our Firm', url: '/about' },
+  { name: 'Contact & Case Evaluation', url: '/contact' },
+  { name: 'Privacy Policy', url: '/privacy-policy' },
+  { name: 'Terms of Service', url: '/terms-of-service' },
+  { name: 'Accessibility Statement', url: '/accessibility' },
+  { name: 'XML Sitemap (Search Engines)', url: '/sitemap.xml' },
+];
+
+const practiceAreas = [
+  { name: 'All Practice Areas Overview', url: '/practice-areas' },
+  { name: 'Personal Injury', url: '/practice-areas/personal-injury' },
+  { name: 'Car & Motor Vehicle Accidents', url: '/practice-areas/car-accidents' },
+  { name: 'Truck & Commercial Carrier Accidents', url: '/practice-areas/truck-accidents' },
+  { name: 'Motorcycle Accidents', url: '/practice-areas/motorcycle-accidents' },
+  { name: 'Pedestrian Accidents', url: '/practice-areas/pedestrian-accidents' },
+  { name: 'Uber & Lyft Rideshare Accidents', url: '/practice-areas/rideshare-accidents' },
+  { name: 'Slip and Fall / Premises Liability', url: '/practice-areas/slip-and-fall' },
+  { name: 'Dog Bite & Animal Attacks', url: '/practice-areas/dog-bites' },
+  { name: 'Traumatic Brain Injuries (TBI)', url: '/practice-areas/brain-injuries' },
+  { name: 'Spinal Cord & Catastrophic Injury', url: '/practice-areas/spinal-cord-injuries' },
+  { name: 'California Wrongful Death Claims', url: '/practice-areas/wrongful-death' },
+  { name: 'Employment Law Overview', url: '/practice-areas/employment-law' },
+  { name: 'Wrongful Termination in California', url: '/practice-areas/wrongful-termination' },
+  { name: 'Workplace Discrimination & FEHA', url: '/practice-areas/workplace-discrimination' },
+  { name: 'Sexual Harassment & Hostile Environment', url: '/practice-areas/sexual-harassment' },
+  { name: 'Unpaid Wages & Overtime Claims', url: '/practice-areas/wage-and-hour' },
+  { name: 'Workplace Retaliation Claims', url: '/practice-areas/workplace-retaliation' },
+  { name: 'Whistleblower Retaliation (Labor Code 1102.5)', url: '/practice-areas/whistleblower-retaliation' },
+  { name: 'Disability Rights & ADA Access (Unruh)', url: '/practice-areas/disability-rights' },
+  { name: 'Medical Malpractice & Negligence (MICRA)', url: '/practice-areas/medical-malpractice' },
+  { name: 'Consumer Protection & Fraud Claims', url: '/practice-areas/consumer-protection' },
+];
+
+const locations = [
+  { name: 'All California Service Areas', url: '/locations' },
+  { name: 'Greater Los Angeles County', url: '/locations/los-angeles' },
+  { name: 'Orange County & Irvine', url: '/locations/orange-county' },
+  { name: 'San Diego & Imperial County', url: '/locations/san-diego' },
+  { name: 'Inland Empire (Riverside & San Bernardino)', url: '/locations/inland-empire' },
+  { name: 'San Francisco Bay Area', url: '/locations/san-francisco-bay-area' },
+  { name: 'San Jose & Silicon Valley', url: '/locations/san-jose-silicon-valley' },
+  { name: 'Sacramento & Capital Region', url: '/locations/sacramento' },
+  { name: 'Fresno & Central Valley', url: '/locations/fresno-central-valley' },
+];
+
+const resources = [
+  { name: 'California Legal Resources Library', url: '/resources' },
+  { name: 'California Statutes of Limitations Guide', url: '/resources/california-statutes-of-limitations' },
+  { name: 'California Wrongful Termination Laws Guide', url: '/resources/california-wrongful-termination-laws' },
+  { name: 'What to Do After an Accident in California', url: '/resources/what-to-do-after-accident' },
+  { name: 'Unruh Civil Rights Act & Disability Guide', url: '/resources/unruh-civil-rights-act-disability' },
+];
+---
+
+<Layout 
+  title="Site Directory & Sitemap | Equal Justice Lawyers"
+  description="Comprehensive sitemap and site directory for Equal Justice Lawyers. Explore all California practice areas, regional locations, legal resources, and firm information."
+  canonical="https://equaljusticelawyers.com/sitemap"
+>
+  <Navbar transparent={false} />
+
+  <main id="main-content">
+    <PageHero 
+      kicker="SITE DIRECTORY"
+      title="Sitemap & Complete Site Directory"
+      lead="Explore every page, practice area, regional location, and legal guide across the Equal Justice Lawyers network."
+      breadcrumb={breadcrumbs}
+    />
+
+    <section class="section-light sitemap-section">
+      <div class="section-container">
+        <!-- XML Sitemap Callout -->
+        <div class="xml-callout-card">
+          <div class="xml-info">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#c8a04a" stroke-width="2">
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+              <polyline points="14 2 14 8 20 8"></polyline>
+              <line x1="16" y1="13" x2="8" y2="13"></line>
+              <line x1="16" y1="17" x2="8" y2="17"></line>
+              <polyline points="10 9 9 9 8 9"></polyline>
+            </svg>
+            <div>
+              <strong>Machine-Readable XML Sitemap</strong>
+              <p>For search engine crawlers (Google, Bing, Yahoo), indexing robots, and web syndication:</p>
+            </div>
+          </div>
+          <div class="xml-links">
+            <a href="/sitemap.xml" target="_blank" class="btn-gold">
+              <span>View sitemap.xml</span>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                <polyline points="15 3 21 3 21 9"></polyline>
+                <line x1="10" y1="14" x2="21" y2="3"></line>
+              </svg>
+            </a>
+            <a href="/sitemap-index.xml" target="_blank" class="btn-dark">
+              <span>sitemap-index.xml</span>
+            </a>
+          </div>
+        </div>
+
+        <div class="sitemap-grid">
+          <!-- Col 1: Core Firm Pages -->
+          <div class="sitemap-category-card">
+            <h2 class="category-heading">Main Firm Pages</h2>
+            <div class="gold-line-mini"></div>
+            <ul class="sitemap-link-list">
+              {mainPages.map((page) => (
+                <li>
+                  <a href={page.url}>{page.name}</a>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <!-- Col 2: Practice Areas -->
+          <div class="sitemap-category-card">
+            <h2 class="category-heading">California Practice Areas ({practiceAreas.length})</h2>
+            <div class="gold-line-mini"></div>
+            <ul class="sitemap-link-list">
+              {practiceAreas.map((pa) => (
+                <li>
+                  <a href={pa.url}>{pa.name}</a>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <!-- Col 3: Regional Locations -->
+          <div class="sitemap-category-card">
+            <h2 class="category-heading">California Service Areas ({locations.length})</h2>
+            <div class="gold-line-mini"></div>
+            <ul class="sitemap-link-list">
+              {locations.map((loc) => (
+                <li>
+                  <a href={loc.url}>{loc.name}</a>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <!-- Col 4: Legal Guides & Resources -->
+          <div class="sitemap-category-card">
+            <h2 class="category-heading">Legal Resources & Guides</h2>
+            <div class="gold-line-mini"></div>
+            <ul class="sitemap-link-list">
+              {resources.map((res) => (
+                <li>
+                  <a href={res.url}>{res.name}</a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <StickyCTA />
+  <CaseAssistant />
+  <Footer />
+</Layout>
+
+<style>
+  .sitemap-section {
+    padding: 3.5rem 0 6rem;
+  }
+
+  /* XML Callout */
+  .xml-callout-card {
+    background: var(--color-dark-green-deep);
+    border: 1.5px solid var(--color-gold);
+    border-radius: 12px;
+    padding: 1.5rem 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2rem;
+    margin-bottom: 3.5rem;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  }
+
+  .xml-info {
+    display: flex;
+    align-items: center;
+    gap: 1.2rem;
+  }
+
+  .xml-info strong {
+    display: block;
+    color: #ffffff;
+    font-size: 1.05rem;
+    font-family: var(--font-serif);
+    margin-bottom: 0.2rem;
+  }
+
+  .xml-info p {
+    color: var(--color-text-muted);
+    font-size: 0.85rem;
+    margin: 0;
+  }
+
+  .xml-links {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    flex-shrink: 0;
+  }
+
+  /* Grid */
+  .sitemap-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem;
+  }
+
+  .sitemap-category-card {
+    background: #ffffff;
+    border: 1px solid rgba(200, 160, 74, 0.25);
+    border-radius: 10px;
+    padding: 2rem;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+  }
+
+  .category-heading {
+    font-family: var(--font-serif);
+    font-size: 1.2rem;
+    color: var(--color-dark-green-deep);
+    margin: 0 0 0.5rem;
+  }
+
+  .gold-line-mini {
+    width: 40px;
+    height: 2px;
+    background: var(--color-gold);
+    margin-bottom: 1.2rem;
+  }
+
+  .sitemap-link-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.65rem;
+  }
+
+  .sitemap-link-list a {
+    color: #334155;
+    font-size: 0.88rem;
+    line-height: 1.4;
+    transition: color 0.2s, padding-left 0.2s;
+    display: inline-block;
+  }
+
+  .sitemap-link-list a:hover {
+    color: var(--color-gold);
+    padding-left: 4px;
+    font-weight: 500;
+  }
+
+  @media (max-width: 860px) {
+    .xml-callout-card {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 1.2rem;
+      padding: 1.25rem 1.5rem;
+    }
+  }
+</style>
