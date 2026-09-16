@@ -10,10 +10,18 @@ interface Props {
 const {
   title,
   description = "Equal Justice Lawyers — California attorneys fighting for people wronged in personal injury, employment law, disability rights, medical malpractice, and consumer protection.",
-  canonical = "https://equaljusticelawyers.com",
+  canonical,
   lang = "en",
   schemaJson
 } = Astro.props;
+
+const siteUrl = "https://equaljusticelawyers.com";
+const currentPath = Astro.url.pathname.replace(/^\/?/, '/').replace(/\/?$/, '/');
+const canonicalUrl = canonical
+  ? (canonical.startsWith('http') ? (canonical.endsWith('/') || canonical.includes('.') ? canonical : `${canonical}/`) : `${siteUrl}${canonical.startsWith('/') ? canonical : '/' + canonical}`)
+  : `${siteUrl}${currentPath === '//' ? '/' : currentPath}`;
+
+const isHome = currentPath === '/' || currentPath === '/es/';
 ---
 
 <!doctype html>
@@ -23,7 +31,14 @@ const {
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{title}</title>
     <meta name="description" content={description} />
-    <link rel="canonical" href={canonical} />
+    <link rel="canonical" href={canonicalUrl} />
+    {isHome && (
+      <>
+        <link rel="alternate" hreflang="en" href="https://equaljusticelawyers.com/" />
+        <link rel="alternate" hreflang="es" href="https://equaljusticelawyers.com/es/" />
+        <link rel="alternate" hreflang="x-default" href="https://equaljusticelawyers.com/" />
+      </>
+    )}
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon.png" />
     <link rel="shortcut icon" href="/favicon.ico" />
@@ -33,7 +48,7 @@ const {
     <meta property="og:type" content="website" />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
-    <meta property="og:url" content={canonical} />
+    <meta property="og:url" content={canonicalUrl} />
     <meta property="og:site_name" content="Equal Justice Lawyers" />
     <meta name="twitter:card" content="summary_large_image" />
 
