@@ -1,0 +1,222 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Navbar from '../components/Navbar.astro';
+import Footer from '../components/global/Footer.astro';
+
+const popularLinks = [
+  { title: 'Personal Injury', href: '/practice-areas/personal-injury/', desc: 'Car accidents, truck crashes, slip & fall, catastrophic injury claims.' },
+  { title: 'Employment Law', href: '/practice-areas/employment-law/', desc: 'Wrongful termination, workplace discrimination, retaliation, and wage disputes.' },
+  { title: 'Disability Rights', href: '/practice-areas/disability-rights/', desc: 'California Unruh Civil Rights Act and ADA Title III accessibility enforcement.' },
+  { title: 'Medical Malpractice', href: '/practice-areas/medical-malpractice/', desc: 'Complex surgical errors, hospital negligence, and missed diagnoses.' },
+  { title: 'Our Office Locations', href: '/locations/', desc: 'Serving Los Angeles, Bay Area, Orange County, San Diego, and statewide.' },
+  { title: 'Legal Guides & Resources', href: '/resources/', desc: 'California statutes of limitations, rights guides, and legal analysis.' }
+];
+---
+
+<Layout
+  title="404: Page Not Found | Equal Justice Lawyers"
+  description="The page you are looking for does not exist, has been removed, or is temporarily unavailable. Return to Equal Justice Lawyers homepage or explore our California legal practice areas."
+  noindex={true}
+>
+  <Navbar transparent={false} />
+
+  <main id="main-content" class="error-404-main">
+    <section class="error-hero">
+      <div class="error-container">
+        <span class="error-kicker">ERROR 404</span>
+        <h1 class="error-title">Page Not Found</h1>
+        <div class="gold-divider"></div>
+        <p class="error-lead">
+          The requested page could not be located. It may have been moved, renamed, or is no longer part of our website.
+        </p>
+        
+        <div class="error-actions">
+          <a href="/" class="btn-gold">Return to Homepage</a>
+          <a href="/contact/" class="btn-outline">Contact Our Legal Team</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="popular-links-section">
+      <div class="links-container">
+        <h2 class="section-title-small">Explore Our California Practice Areas & Resources</h2>
+        <div class="cards-grid">
+          {popularLinks.map(link => (
+            <a href={link.href} class="link-card">
+              <h3 class="card-title">{link.title}</h3>
+              <p class="card-desc">{link.desc}</p>
+              <span class="card-arrow">View details &rarr;</span>
+            </a>
+          ))}
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <Footer />
+</Layout>
+
+<style>
+  .error-404-main {
+    min-height: 80vh;
+    display: flex;
+    flex-direction: column;
+    background-color: var(--color-bg-light);
+  }
+
+  .error-hero {
+    background: linear-gradient(135deg, #122019 0%, #1a3328 100%);
+    color: #ffffff;
+    padding: 5rem 1.5rem 4rem;
+    text-align: center;
+    border-bottom: 1px solid var(--color-gold-border);
+  }
+
+  .error-container {
+    max-width: 720px;
+    margin: 0 auto;
+  }
+
+  .error-kicker {
+    display: inline-block;
+    color: var(--color-gold);
+    font-size: 0.85rem;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 0.75rem;
+  }
+
+  .error-title {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: clamp(2.2rem, 5vw, 3.5rem);
+    font-weight: 700;
+    line-height: 1.15;
+    margin: 0 0 1rem;
+    color: #ffffff;
+  }
+
+  .gold-divider {
+    width: 60px;
+    height: 3px;
+    background: var(--color-gold);
+    margin: 1rem auto 1.5rem;
+    border-radius: 2px;
+  }
+
+  .error-lead {
+    font-size: 1.125rem;
+    line-height: 1.6;
+    color: rgba(255, 255, 255, 0.85);
+    margin-bottom: 2.25rem;
+  }
+
+  .error-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    justify-content: center;
+  }
+
+  .btn-gold {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--color-gold);
+    color: #122019;
+    font-weight: 600;
+    font-size: 0.95rem;
+    padding: 0.85rem 1.8rem;
+    border-radius: 4px;
+    text-decoration: none;
+    transition: background-color 0.2s, transform 0.15s;
+  }
+
+  .btn-gold:hover {
+    background-color: var(--color-gold-light);
+    transform: translateY(-1px);
+  }
+
+  .btn-outline {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    color: #ffffff;
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    font-weight: 500;
+    font-size: 0.95rem;
+    padding: 0.85rem 1.8rem;
+    border-radius: 4px;
+    text-decoration: none;
+    transition: background-color 0.2s, border-color 0.2s;
+  }
+
+  .btn-outline:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: #ffffff;
+  }
+
+  .popular-links-section {
+    padding: 4rem 1.5rem;
+    background-color: var(--color-bg-light);
+  }
+
+  .links-container {
+    max-width: 1080px;
+    margin: 0 auto;
+  }
+
+  .section-title-small {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 1.6rem;
+    color: var(--color-dark-green-deep);
+    text-align: center;
+    margin-bottom: 2.5rem;
+  }
+
+  .cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .link-card {
+    background: #ffffff;
+    border: 1px solid rgba(26, 51, 40, 0.1);
+    border-radius: 6px;
+    padding: 1.75rem;
+    text-decoration: none;
+    color: inherit;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
+  }
+
+  .link-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.07);
+    border-color: var(--color-gold);
+  }
+
+  .card-title {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 1.25rem;
+    color: var(--color-dark-green);
+    margin: 0 0 0.5rem;
+  }
+
+  .card-desc {
+    font-size: 0.9rem;
+    color: var(--color-text-dark-muted);
+    line-height: 1.5;
+    flex-grow: 1;
+    margin-bottom: 1rem;
+  }
+
+  .card-arrow {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--color-gold-dark);
+  }
+</style>

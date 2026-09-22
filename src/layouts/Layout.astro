@@ -5,6 +5,7 @@ interface Props {
   canonical?: string;
   lang?: string;
   schemaJson?: object;
+  noindex?: boolean;
 }
 
 const {
@@ -12,13 +13,28 @@ const {
   description = "Equal Justice Lawyers — California attorneys fighting for people wronged in personal injury, employment law, disability rights, medical malpractice, and consumer protection.",
   canonical,
   lang = "en",
-  schemaJson
+  schemaJson,
+  noindex = false
 } = Astro.props;
 
 const siteUrl = "https://equaljusticelawyers.com";
 const currentPath = Astro.url.pathname.replace(/^\/?/, '/').replace(/\/?$/, '/');
+
+function formatCanonical(urlStr: string) {
+  try {
+    const parsed = new URL(urlStr, siteUrl);
+    let pathname = parsed.pathname;
+    if (!pathname.endsWith('/') && !pathname.split('/').pop()?.includes('.')) {
+      pathname += '/';
+    }
+    return `${siteUrl}${pathname}`;
+  } catch {
+    return urlStr;
+  }
+}
+
 const canonicalUrl = canonical
-  ? (canonical.startsWith('http') ? (canonical.endsWith('/') || canonical.includes('.') ? canonical : `${canonical}/`) : `${siteUrl}${canonical.startsWith('/') ? canonical : '/' + canonical}`)
+  ? formatCanonical(canonical)
   : `${siteUrl}${currentPath === '//' ? '/' : currentPath}`;
 
 const isHome = currentPath === '/' || currentPath === '/es/';
@@ -31,6 +47,7 @@ const isHome = currentPath === '/' || currentPath === '/es/';
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{title}</title>
     <meta name="description" content={description} />
+    {noindex && <meta name="robots" content="noindex, follow" />}
     <link rel="canonical" href={canonicalUrl} />
     {isHome && (
       <>

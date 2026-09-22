@@ -9,20 +9,20 @@ const { transparent = true, lang = 'en' } = Astro.props;
 const isSpanish = lang === 'es';
 const links = isSpanish
   ? [
-      { name: 'Inicio', href: '/es' },
-      { name: 'Áreas de Práctica', href: '/practice-areas' },
-      { name: 'Ubicaciones', href: '/locations' },
-      { name: 'Recursos', href: '/resources' },
-      { name: 'Nosotros', href: '/about' },
-      { name: 'Contacto', href: '/contact' },
+      { name: 'Inicio', href: '/es/' },
+      { name: 'Áreas de Práctica', href: '/practice-areas/' },
+      { name: 'Ubicaciones', href: '/locations/' },
+      { name: 'Recursos', href: '/resources/' },
+      { name: 'Nosotros', href: '/about/' },
+      { name: 'Contacto', href: '/contact/' },
     ]
   : [
       { name: 'Home', href: '/' },
-      { name: 'Practice Areas', href: '/practice-areas' },
-      { name: 'Locations', href: '/locations' },
-      { name: 'Resources', href: '/resources' },
-      { name: 'About', href: '/about' },
-      { name: 'Contact', href: '/contact' },
+      { name: 'Practice Areas', href: '/practice-areas/' },
+      { name: 'Locations', href: '/locations/' },
+      { name: 'Resources', href: '/resources/' },
+      { name: 'About', href: '/about/' },
+      { name: 'Contact', href: '/contact/' },
     ];
 ---
 
@@ -30,7 +30,7 @@ const links = isSpanish
   <nav class="navbar" aria-label="Main Navigation">
     <div class="navbar-inner">
       <!-- Logo -->
-      <a href={isSpanish ? '/es' : '/'} class="logo" aria-label="Equal Justice Lawyers Home">
+      <a href={isSpanish ? '/es/' : '/'} class="logo" aria-label="Equal Justice Lawyers Home">
         <img src="/images/logo-white.png" alt="Equal Justice Lawyers" class="logo-img" width="280" height="90" />
       </a>
 
@@ -49,7 +49,7 @@ const links = isSpanish
         <div class="lang-selector">
           <a href="/" class={`lang-text ${!isSpanish ? 'is-active' : ''}`}>EN</a>
           <span class="lang-divider">|</span>
-          <a href="/es" class={`lang-text ${isSpanish ? 'is-active' : ''}`}>ES</a>
+          <a href="/es/" class={`lang-text ${isSpanish ? 'is-active' : ''}`}>ES</a>
         </div>
 
         <!-- CTA Button -->
@@ -81,7 +81,7 @@ const links = isSpanish
         <div class="mobile-lang-row">
           <span>Language / Idioma:</span>
           <a href="/" class={`lang-btn ${!isSpanish ? 'active' : ''}`}>English (EN)</a>
-          <a href="/es" class={`lang-btn ${isSpanish ? 'active' : ''}`}>Español (ES)</a>
+          <a href="/es/" class={`lang-btn ${isSpanish ? 'active' : ''}`}>Español (ES)</a>
         </div>
         <a href="#case-evaluation" class="btn-gold mobile-drawer-cta">
           {isSpanish ? 'Iniciar Evaluación Confidencial' : 'Start Free Evaluation'}

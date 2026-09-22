@@ -100,7 +100,7 @@ const articles = isSpanish
           </div>
 
           <h3 class="resource-card-title">
-            <a href={`/resources/${art.slug}`}>{art.title}</a>
+            <a href={`/resources/${art.slug}/`}>{art.title}</a>
           </h3>
 
           <p class="resource-card-desc">{art.desc}</p>
@@ -114,7 +114,7 @@ const articles = isSpanish
               <span>{art.author}</span>
             </span>
 
-            <a href={`/resources/${art.slug}`} class="read-guide-link">
+            <a href={`/resources/${art.slug}/`} class="read-guide-link">
               <span>{isSpanish ? 'Leer Guía' : 'Read Guide'}</span>
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
                 <path d="M5 12h14M12 5l7 7-7 7"></path>
@@ -126,7 +126,7 @@ const articles = isSpanish
     </div>
 
     <div class="resources-view-all">
-      <a href="/resources" class="btn-dark">
+      <a href="/resources/" class="btn-dark">
         <span>{isSpanish ? 'Ver Todas las Guías Legales de California' : 'Explore All California Legal Guides'}</span>
         <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
           <path d="M5 12h14M12 5l7 7-7 7"></path>
