@@ -15,7 +15,6 @@ export default defineConfig({
         !page.includes('/test/') &&
         !page.includes('/preview/') &&
         !page.includes('/404'),
-      lastmod: new Date(),
       namespaces: {
         news: false,
         xhtml: false,

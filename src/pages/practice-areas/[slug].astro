@@ -6,6 +6,7 @@ import PageHero from '../../components/global/PageHero.astro';
 import CaseEvaluation from '../../components/sections/CaseEvaluation.astro';
 import StickyCTA from '../../components/global/StickyCTA.astro';
 import CaseAssistant from '../../components/chat/CaseAssistant.astro';
+import { practiceFaqs } from '../../data/practiceFaqs';
 
 export function getStaticPaths() {
   const practices = [
@@ -49,7 +50,7 @@ export function getStaticPaths() {
       lead: 'Relentless representation for motorists, passengers, and families injured on California freeways and arterial roadways.',
       directAnswer: 'California operates under a pure comparative fault doctrine (Li v. Yellow Cab Co.). Even if you were partially at fault for a motor vehicle collision, you are still entitled to recover damages reduced proportionately by your share of fault.',
       statutes: 'California Vehicle Code § 23152 (DUI); CVC § 22350 (Basic Speed Law); California Civil Code § 1714; Civil Code § 3333.4 (Proposition 213 limitations).',
-      deadline: '2 Years for bodily injury under CCP § 335.1. 3 Years for property damage under CCP § 338. 6 Months if public entity involved.',
+      deadline: '2 Years for bodily injury under CCP § 335.1. 3 Years for property damage under CCP § 338. If a city, county, state agency or public transit vehicle was involved, a written government claim must generally be presented within 6 months (Gov. Code § 911.2) before any lawsuit can be filed.',
       whoApplies: 'Drivers, rideshare passengers, motorcyclists, and pedestrians harmed by negligent, distracted, speeding, or intoxicated drivers in California.',
       commonSituations: [
         'High-speed freeway pileups on I-5, I-10, I-405, US-101, and SR-99',
@@ -485,11 +486,69 @@ const breadcrumbs = [
   { label: 'Practice Areas', href: '/practice-areas/' },
   { label: practice.title }
 ];
+
+const siteUrl = 'https://equaljusticelawyers.com';
+const pageUrl = `${siteUrl}/practice-areas/${practice.slug}/`;
+const faqs = practiceFaqs[practice.slug] ?? [];
+
+// Keep titles within ~60 characters so they are not cut off in Google.
+const fullTitle = `${practice.title} | Equal Justice Lawyers`;
+const seoTitle = fullTitle.length <= 60 ? fullTitle : practice.title;
+
+// Use the page's own direct answer for a unique description, trimmed to ~155 characters.
+function trimTo(text: string, max: number) {
+  if (text.length <= max) return text;
+  const cut = text.slice(0, max - 1);
+  return cut.slice(0, cut.lastIndexOf(' ')).replace(/[,;:\s]+$/, '') + '…';
+}
+const seoDescription = trimTo(practice.directAnswer, 155);
+
+const schemaJson = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'LegalService',
+      '@id': `${siteUrl}/#legalservice`,
+      name: 'Equal Justice Lawyers',
+      url: `${siteUrl}/`,
+      areaServed: { '@type': 'State', name: 'California' },
+      knowsLanguage: ['en', 'es']
+    },
+    {
+      '@type': 'WebPage',
+      '@id': pageUrl,
+      url: pageUrl,
+      name: practice.title,
+      description: seoDescription,
+      about: { '@type': 'Thing', name: practice.title },
+      provider: { '@id': `${siteUrl}/#legalservice` }
+    },
+    {
+      '@type': 'BreadcrumbList',
+      itemListElement: [
+        { '@type': 'ListItem', position: 1, name: 'Home', item: `${siteUrl}/` },
+        { '@type': 'ListItem', position: 2, name: 'Practice Areas', item: `${siteUrl}/practice-areas/` },
+        { '@type': 'ListItem', position: 3, name: practice.title, item: pageUrl }
+      ]
+    },
+    ...(faqs.length
+      ? [{
+          '@type': 'FAQPage',
+          mainEntity: faqs.map((f) => ({
+            '@type': 'Question',
+            name: f.q,
+            acceptedAnswer: { '@type': 'Answer', text: f.a }
+          }))
+        }]
+      : [])
+  ]
+};
 ---
 
 <Layout 
-  title={`${practice.title} | Equal Justice Lawyers`}
-  description={`Comprehensive California legal guide on ${practice.title}. Learn your statutory rights, deadlines, and how our trial attorneys fight for you.`}
+  title={seoTitle}
+  description={seoDescription}
+  schemaJson={schemaJson}
 >
   <Navbar transparent={false} />
 
@@ -598,6 +657,32 @@ const breadcrumbs = [
             </ul>
           </div>
 
+          <!-- Section: FAQs -->
+          {faqs.length > 0 && (
+            <div class="content-block faq-block">
+              <h2 class="content-heading">Frequently Asked Questions</h2>
+              <div class="faq-list">
+                {faqs.map((f) => (
+                  <details class="faq-item">
+                    <summary class="faq-question">{f.q}</summary>
+                    <p class="faq-answer">{f.a}</p>
+                  </details>
+                ))}
+              </div>
+            </div>
+          )}
+
+          <!-- Section: Related guides -->
+          <div class="content-block">
+            <h2 class="content-heading">Related California Legal Guides</h2>
+            <ul class="bullet-list">
+              <li><span class="bullet-icon">✓</span><span><a class="inline-link" href="/resources/california-statutes-of-limitations/">California statutes of limitations: filing deadlines by claim type</a></span></li>
+              <li><span class="bullet-icon">✓</span><span><a class="inline-link" href="/resources/what-to-do-after-accident/">What to do after an accident in California</a></span></li>
+              <li><span class="bullet-icon">✓</span><span><a class="inline-link" href="/resources/california-wrongful-termination-laws/">California wrongful termination laws explained</a></span></li>
+              <li><span class="bullet-icon">✓</span><span><a class="inline-link" href="/resources/unruh-civil-rights-act-disability/">The Unruh Civil Rights Act and disability access</a></span></li>
+            </ul>
+          </div>
+
           <!-- Reviewer Box -->
           <div class="author-reviewer-box">
             <div class="reviewer-badge">
@@ -661,6 +746,37 @@ const breadcrumbs = [
 </Layout>
 
 <style>
+  .faq-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .faq-item {
+    background: var(--color-white);
+    border: 1px solid var(--color-gold-border);
+    border-radius: var(--radius-md);
+    padding: 1rem 1.25rem;
+  }
+
+  .faq-question {
+    font-weight: 600;
+    color: var(--color-dark-green);
+    cursor: pointer;
+    line-height: 1.5;
+  }
+
+  .faq-answer {
+    margin-top: 0.75rem;
+    color: var(--color-text-dark-muted);
+    line-height: 1.7;
+  }
+
+  .inline-link {
+    color: var(--color-gold-dark);
+    text-decoration: underline;
+  }
+
   .practice-detail-content {
     padding: 4.5rem 0;
     border-bottom: 1px solid rgba(200, 160, 74, 0.2);

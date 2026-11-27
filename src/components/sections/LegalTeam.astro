@@ -44,8 +44,14 @@ const attorneys = [
     image: '/images/attorney-placeholder-3.jpg'
   }
 ];
+
+// Only real, named attorneys are shown. Profiles whose name still contains
+// "Placeholder" are hidden so unverified bios never appear on the live site.
+// Replace the entries above with real names, bar numbers and photos to show this section.
+const publishedAttorneys = attorneys.filter((a) => !/placeholder/i.test(a.name));
 ---
 
+{publishedAttorneys.length > 0 && (
 <section class="section-cream legal-team-section" id="attorneys">
   <div class="section-container">
     <div class="section-header-center">
@@ -75,7 +81,7 @@ const attorneys = [
 
     <!-- Attorney Cards -->
     <div class="attorney-cards-grid">
-      {attorneys.map((atty) => (
+      {publishedAttorneys.map((atty) => (
         <article class="attorney-card">
           <!-- Portrait Header with Scales Watermark -->
           <div class="attorney-photo-box">
@@ -123,6 +129,7 @@ const attorneys = [
     </div>
   </div>
 </section>
+)}
 
 <style>
   .legal-team-section {
